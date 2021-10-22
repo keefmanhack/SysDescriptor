@@ -1,0 +1,14 @@
+$black: #221f1f;
+$less_black: #242726;
+$dark_grey: #2e3233;
+$light_grey: #767676;
+$muted_grey: #7e7e7e;
+$siemens_color: #009999;
+.muted-c{
+    color: $muted_grey,
+}
+
+label{
+    font-size: 18px;
+    color: $light_grey;
+}
