@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Row, Col, CustomProvider } from "rsuite";
 import TitleBar from './Components/TitleBar';
 import SideBar from './Components/SideBar/SideBar';
-import MainStage from './Components/MainStage';
+import MainStage from './Components/MainStage/MainStage';
 
 import './styles/main.scss';
 import './styles/utility.scss';

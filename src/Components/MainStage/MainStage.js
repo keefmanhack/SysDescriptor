@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Row, Col, Button, Input } from 'rsuite'
+import SysGroup from './SysGroup';
 
 const styles = {
     backgroundColor: '#2e3233',
@@ -34,14 +35,14 @@ const MainStage = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={8}>
-                        System
+                    <Col xs={8}>
+                        <SysGroup title='System'/>
                     </Col>
-                    <Col md={8}>
-                        ATC
+                    <Col xs={8}>
+                        <SysGroup title='ATC'/>
                     </Col>
-                    <Col md={8}>
-                        ACSES
+                    <Col xs={8}>
+                        <SysGroup title='ACSES'/>
                     </Col>
                 </Row>
             </Grid>

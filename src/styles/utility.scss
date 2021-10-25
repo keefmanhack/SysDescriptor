@@ -319,3 +319,21 @@ $indent_3: 15px;
 .text-center{
     text-align: center;
 }
+
+.v-scroll {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+
+.v-scroll::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}
+
+.ellip-overflow{
+    text-overflow: ellipsis;
+}
+
+.hide-bullet{
+    list-style: none;
+}
