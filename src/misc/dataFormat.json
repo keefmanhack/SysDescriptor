@@ -1,0 +1,63 @@
+{   
+    "general": {
+        "name" : {
+            "bookmark_location" : null,
+            "value" : null
+        },
+        "owner" : {
+            "bookmark_location" : null,
+            "value" : null
+        },
+        "technician" : {
+            "bookmark_location" : null,
+            "value" : null
+        }
+    },
+    "system": {
+
+    },
+    "atc" : {
+
+    },
+    "acses" : {
+        "required" : true,
+        "properties": {
+            "Main" : {
+                "Software Revision" : {
+                    "bookmark_location" : null,
+                    "value" : null,
+                    "input": "Text"
+                },
+                "Serial Number" : {
+                    "bookmark_location" : null,
+                    "value" : null,
+                    "input": "Text"
+                }
+            },
+            "Interface" : {
+                "Software Revision" : {
+                    "bookmark_location" : null,
+                    "value" : null,
+                    "input": "Text"
+                },
+                "Serial Number" : {
+                    "bookmark_location" : null,
+                    "value" : null,
+                    "input": "Text"
+                }
+            },
+            "Recorder" : {
+                "Test Date" : {
+                    "bookmark_location" : null,
+                    "value" : null,
+                    "input": "Date"
+                },
+                "Serial Number" : {
+                    "bookmark_location" : null,
+                    "value" : null,
+                    "input": "Text"
+                }
+            }
+        }
+    }
+}

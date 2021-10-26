@@ -1,14 +1,20 @@
-import React from 'react';
+import React, {useState } from 'react';
 import { Grid, Row, Col, Button, Input } from 'rsuite'
 import SysGroup from './SysGroup';
+import sysFormat from '../../misc/dataFormat.json';
+
 
 const styles = {
-    backgroundColor: '#2e3233',
+    backgroundColor: 'rgb(40 40 40 / 1)',
     height: '100vh'
 }
 
 const MainStage = () => {
-    console.log();
+    //  const [data, setData] = useState(sysFormat);
+    const [gen, setGen] = useState(sysFormat.general);
+
+    console.log(gen);
+
    return (
        <div style={styles}>
            <div className='p-1 w-100'>
@@ -17,7 +23,7 @@ const MainStage = () => {
            </div>
             <div style={{width: '40%'}} className='mx-auto mb-3'>
                 <label htmlFor='sys-name'>System Name</label>
-                <Input id='sys-name'style={{ fontSize: '32px'}} placeholder='LDL, HST, etc...'/>
+                <Input onChange={(e) => setGen((val) => {val.name.value = e; return val;})} id='sys-name'style={{ fontSize: '32px'}} placeholder='LDL, HST, etc...'/>
             </div>
            <Grid fluid>
                 <Row>

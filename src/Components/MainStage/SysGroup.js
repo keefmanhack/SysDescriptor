@@ -1,4 +1,5 @@
 import React from 'react';
+import { List } from 'rsuite';
 import CustomSelectPicker from '../CustomSelectPicker';
 import SysComp from './SysComp';
 
@@ -6,12 +7,14 @@ import SysComp from './SysComp';
 const SysGroup = ({title}) => {
     console.log();
     return (
-        <div style={{backgroundColor: 'black'}} className='p-2'>
+        <div style={{}} className='p-2'>
             <h3 style={{textAlign: 'center'}}>{title}</h3>
             <hr/>
             <CustomSelectPicker placement="autoHorizontalStart" />
-            <SysComp title='ATC RSSM' compProperties=''/>
-            <SysComp title='ACSES RSSM' compProperties=''/>
+            <List  style={{boxShadow: 'none'}}>
+                <SysComp title='ATC RSSM' compProperties=''/>
+                <SysComp title='ACSES RSSM' compProperties=''/>
+            </List>
         </div>
    );
 };

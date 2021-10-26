@@ -2,7 +2,7 @@ import React from 'react';
 import {version} from '../../package.json';
 
 const styles = {
-    backgroundColor : '#242726',
+   
 }
 
 const TitleBar = () => 
