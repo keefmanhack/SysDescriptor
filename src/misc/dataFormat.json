@@ -14,50 +14,78 @@
         }
     },
     "system": {
+        "required": [
+        
+        ],
+        "optional" : [
 
+        ]
     },
     "atc" : {
-
+        "required": [
+            
+        ],
+        "optional" : [
+        ]
     },
     "acses" : {
-        "required" : true,
-        "properties": {
-            "Main" : {
-                "Software Revision" : {
-                    "bookmark_location" : null,
-                    "value" : null,
-                    "input": "Text"
-                },
-                "Serial Number" : {
-                    "bookmark_location" : null,
-                    "value" : null,
-                    "input": "Text"
-                }
+        "required": [
+            {   
+                "Main" : [
+                    {
+                        "Software Revision" : {
+                            "bookmark_location" : null,
+                            "value" : null,
+                            "input": "Text"
+                        }
+                    },
+                    {
+                        "Serial Number" : {
+                            "bookmark_location" : null,
+                            "value" : null,
+                            "input": "Text"
+                        }
+                    }
+                ]
             },
-            "Interface" : {
-                "Software Revision" : {
-                    "bookmark_location" : null,
-                    "value" : null,
-                    "input": "Text"
-                },
-                "Serial Number" : {
-                    "bookmark_location" : null,
-                    "value" : null,
-                    "input": "Text"
-                }
-            },
-            "Recorder" : {
-                "Test Date" : {
-                    "bookmark_location" : null,
-                    "value" : null,
-                    "input": "Date"
-                },
-                "Serial Number" : {
-                    "bookmark_location" : null,
-                    "value" : null,
-                    "input": "Text"
-                }
+            {
+                "Interface" : [
+                    {
+                        "Software Revision" : {
+                            "bookmark_location" : null,
+                            "value" : null,
+                            "input": "Date"
+                        }
+                    },
+                    {
+                        "Serial Number" : {
+                            "bookmark_location" : null,
+                            "value" : null,
+                            "input": "Text"
+                        }
+                    }
+                ]
             }
-        }
+        ],
+        "optional" : [
+            {
+                "Recorder" : [
+                    {
+                        "Software Date" : {
+                            "bookmark_location" : null,
+                            "value" : null,
+                            "input": "Date"
+                        }
+                    },
+                    {
+                        "Serial Number" : {
+                            "bookmark_location" : null,
+                            "value" : null,
+                            "input": "Text"
+                        }
+                    }
+                ]
+            }
+        ]
     }
 }

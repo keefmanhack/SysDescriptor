@@ -1,11 +1,11 @@
 import React from 'react';
 
-const CompProp = ({Input, id, title }) => {
+const CompProp = ({InputType, id, title, onChange }) => {
     console.log();
     return (
         <li>
             <label htmlFor={id} style={{fontSize:'14px'}}>{title}</label>
-            <Input id={id} style={{fontSize: '12px', width: '75%'}}/>
+            <InputType onChange={e => onChange(e)} id={id} style={{fontSize: '12px', width: '75%', display: 'block'}}/>
         </li>
     );
 };
