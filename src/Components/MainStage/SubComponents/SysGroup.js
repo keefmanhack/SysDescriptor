@@ -9,12 +9,12 @@ const SysGroup = ({data, title, onGroupUpdated}) => {
 
     const dispOptionals = selectedOptions.map((opt, i) => {
         const name = Object.keys(opt)[0];
-        return <SysComp onValueUpdated={(e, propName) => onGroupUpdated(e, name + ',optional,' + propName)} key={i} title={name} compProperties={opt[name]}/>    
+        return <SysComp onValueUpdated={(e) => onGroupUpdated(e, name)} key={i} title={name} compProperties={opt[name]}/>    
     })
 
     const dispRequired = data.required.map((req, i) => {
         const name = Object.keys(req)[0];
-        return <SysComp onValueUpdated={(e, propName) => onGroupUpdated(e, name + ',required,' + propName)} key={i} title={name} compProperties={req[name]}/>
+        return <SysComp onValueUpdated={(e) => onGroupUpdated(e, name)} key={i} title={name} compProperties={req[name]}/>
     })
 
 

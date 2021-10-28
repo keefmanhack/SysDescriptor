@@ -17,9 +17,9 @@ const SysComp = ({title, compProperties, removeButton, onValueUpdate}) => {
     const [isShown, setIsShown] = useState(true);
 
    
-    const dispProperties = compProperties.map(val => {
+    const dispProperties = compProperties.map((val, i) => {
         const name = Object.keys(val)[0];
-        return <CompProp onChange={(e) => onValueUpdate(e, name)} InputType={switchInput(val[name].input)} id={name} title={name}/>
+        return <CompProp key={i} onChange={(e) => onValueUpdate(e, name)} InputType={switchInput(val[name].input)} id={name} title={name}/>
     })
 
     return (

@@ -1,0 +1,52 @@
+{
+    "systems" : {
+        "$system_id" : {
+            "name" : "",
+            "technician" : "",
+            "owner" : "",
+            "timeStamp": null
+        }
+    },
+    "data" : {
+        "$system_id" : {
+            "$general_id" : "id",
+            "$acses_id" : "id",
+            "$atc_id" : "id",
+            "$system_id" : "id"
+        }
+    },
+    "general" : {
+        "$general_id" : {
+            "name" : "",
+            "technician" : "",
+            "owner" : "",
+            "timeStamp": null
+        }
+    },
+    "acses" : {
+        "$acses_id" : {
+            "$acses_main_id" : "id",
+            "$acses_interface_id" : "id",
+            "$acses_recorder_id" : "id"
+        }
+    },
+    "acses_main" : {
+        "$acses_main_id" : {
+            "soft_rev" : "soft rev",
+            "serial_num" : "serial num"
+        }
+    },
+    "acses_interface" : {
+        "$acses_interface_id" : {
+            "soft_rev" : "soft rev",
+            "serial_num" : "serial num"
+        }
+    },
+    "acses_recorder" : {
+        "$acses_recorder_id" : {
+            "soft_date" : "soft date",
+            "serial_num" : "serial num"
+        }
+    }
+
+}
