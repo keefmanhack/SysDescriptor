@@ -331,7 +331,9 @@ $indent_3: 15px;
 }
 
 .ellip-overflow{
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .hide-bullet{

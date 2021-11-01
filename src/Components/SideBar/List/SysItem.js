@@ -6,23 +6,23 @@ const styles = {
 }
 
 
-const SysItem = ({name, tech, owner, timestamp, isNew}) => {
+const SysItem = ({name, tech, owner, timestamp, isNew, onSelected, style}) => {
     console.log();
     return (
-        <List.Item className='height-75' style={styles}>
+        <List.Item onClick={()=>onSelected()} className='height-75' style={{...styles, ...style}}>
             <Grid fluid>
                 <Row>
                     <Col xs={10} md={8} lg={8}>
-                        <h5>{name || "Untitled"}</h5>
+                        <h5 className='ellip-overflow'>{name || "Untitled"}</h5>
                         {isNew ? <span style={{color: 'yellow'}}>New</span> : null}
                     </Col>
                     <Col xs={5} md={6}>
-                        <p className='muted-c'>Technician</p>
-                        <p className='mt-1'>{tech || "..."}</p>
+                        <p className='muted-c ellip-overflow'>Technician</p>
+                        <p className='mt-1 ellip-overflow'>{tech || "..."}</p>
                     </Col>
                     <Col xs={5} md={5}>
-                        <p className='muted-c'>Owner</p>
-                        <p className='mt-1'>{owner || "..."}</p>
+                        <p className='muted-c ellip-overflow'>Owner</p>
+                        <p className='mt-1 ellip-overflow'>{owner || "..."}</p>
                     </Col>
                     <Col xs={2} md={5} className='mt-3 muted-c'>
                         <p className='f-s ls-s mb-1'>{timestamp ? new Date(timestamp).toLocaleDateString() : "..."}</p>

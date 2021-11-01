@@ -39,11 +39,11 @@ function App() {
           <Row className='h-100'>
             <Col xs={24} md={5} className='h-100'>
               <SystemsProvider>
-                <SideBar onNew={() => createNew()}/>
+                <SideBar selectedID={sysID} onSysSelected={(id) => setSysID(id)} onNew={() => createNew()}/>
               </SystemsProvider>
             </Col>
             <Col xs={24} md={19} className='h-100'>
-              {sysID ? <NewMainStage/> : <DefaultMainStage/>}
+              {sysID ? <NewMainStage sysID={sysID} /> : <DefaultMainStage/>}
             </Col>
           </Row>
         </Grid>

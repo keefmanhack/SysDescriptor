@@ -8,7 +8,7 @@ const DefaultMainStage = () => (
                     className='muted-c' 
                     style={{paddingTop: '300px', fontSize: '34px', textAlign: 'center'}}
                 >        
-                    Create a New Description or Edit a Previous Version
+                    Create a <span style={{color: 'lightgreen'}}>New Description</span> or Edit a <span style={{color: "yellow"}}>Previous Version</span>
                 </h1>
             }
         />

@@ -2,15 +2,15 @@
     "general": {
         "name" : {
             "bookmark_location" : null,
-            "value" : null
+            "db" : "name"
         },
         "owner" : {
             "bookmark_location" : null,
-            "value" : null
+            "db" : "owner"
         },
         "technician" : {
             "bookmark_location" : null,
-            "value" : null
+            "db" : "tech"
         }
     },
     "system": {
