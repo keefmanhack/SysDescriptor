@@ -14,6 +14,7 @@ import NewMainStage from './Components/MainStage/NewMainStage';
 import './styles/main.scss';
 import './styles/utility.scss';
 import 'rsuite/dist/rsuite.min.css';
+import { makeid } from './misc/helperfunc';
 
 
 
@@ -23,12 +24,15 @@ function App() {
     const genRef = ref(database, `systems/`);
     const newSysData = {
         timestamp: firebase.database.ServerValue.TIMESTAMP,
+        system: `${Date.now()}${makeid(5)}`,
+        atc: `${Date.now()}${makeid(5)}`,
+        acses: `${Date.now()}${makeid(5)}`
     }
     try{
       const id = await push(genRef, newSysData).key;
       setSysID(id);
     }catch(err){
-      console.log(err); 
+      alert(err);
     }
   }
 

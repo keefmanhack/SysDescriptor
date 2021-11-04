@@ -35,14 +35,14 @@
                     {
                         "Software Revision" : {
                             "bookmark_location" : null,
-                            "value" : null,
+                            "db" : "main/software_revision",
                             "input": "Text"
                         }
                     },
                     {
                         "Serial Number" : {
                             "bookmark_location" : null,
-                            "value" : null,
+                            "db" : "main/serial_number",
                             "input": "Text"
                         }
                     }
@@ -53,14 +53,14 @@
                     {
                         "Software Revision" : {
                             "bookmark_location" : null,
-                            "value" : null,
+                            "db" : "interface/software_revision",
                             "input": "Date"
                         }
                     },
                     {
                         "Serial Number" : {
                             "bookmark_location" : null,
-                            "value" : null,
+                            "db" : "interface/serial_number",
                             "input": "Text"
                         }
                     }
@@ -73,14 +73,14 @@
                     {
                         "Software Date" : {
                             "bookmark_location" : null,
-                            "value" : null,
+                            "db" : "recorder/software_date",
                             "input": "Date"
                         }
                     },
                     {
                         "Serial Number" : {
                             "bookmark_location" : null,
-                            "value" : null,
+                            "db" : "recorder/serial_number",
                             "input": "Text"
                         }
                     }

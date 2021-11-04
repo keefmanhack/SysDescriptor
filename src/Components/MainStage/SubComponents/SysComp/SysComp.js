@@ -1,25 +1,17 @@
 import React, {useState} from 'react';
-import { Button, Input, Animation, List, DatePicker } from 'rsuite';
+import { Button, Animation, List} from 'rsuite';
 import { ArrowDown, ArrowUp } from '@rsuite/icons';
-import CompProp from '../CompProp';
+import CompInput from '../CompInput';
 
 
-const switchInput = (str) => {
-    switch (str) {
-        case "Input": return Input;
-        case "Date": return DatePicker;
-        default: return Input;
-    }
-}
-
-
-const SysComp = ({title, compProperties, removeButton, onValueUpdate}) => {
+const SysComp = ({title, compProperties, removeButton, onUpdated, rootPath}) => {
     const [isShown, setIsShown] = useState(true);
 
    
     const dispProperties = compProperties.map((val, i) => {
         const name = Object.keys(val)[0];
-        return <CompProp key={i} onChange={(e) => onValueUpdate(e, name)} InputType={switchInput(val[name].input)} id={name} title={name}/>
+        const dbPath = `${rootPath}/${val[name].db}`
+        return <li key={i}><CompInput dbPath={dbPath} onChange={(e) => onUpdated(dbPath, e)} inputType={val[name].input} id={name} title={name}/></li>
     })
 
     return (

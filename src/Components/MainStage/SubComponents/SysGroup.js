@@ -3,21 +3,25 @@ import { List, TagPicker } from 'rsuite';
 import SysComp from './SysComp/SysComp';
 
 
-const SysGroup = ({data, title, onGroupUpdated}) => {
+const SysGroup = ({data, title, onUpdated, rootPath}) => {
     const [options, setOptions] = useState([]);
     const [selectedOptions, setSelectedOptions] = useState([]);
 
     const dispOptionals = selectedOptions.map((opt, i) => {
         const name = Object.keys(opt)[0];
-        return <SysComp onValueUpdated={(e) => onGroupUpdated(e, name)} key={i} title={name} compProperties={opt[name]}/>    
+        return <SysComp rootPath={rootPath} onUpdated={(path, val) => onUpdated(path, val)} key={i} title={name} compProperties={opt[name]}/>    
     })
 
     const dispRequired = data.required.map((req, i) => {
         const name = Object.keys(req)[0];
-        return <SysComp onValueUpdated={(e) => onGroupUpdated(e, name)} key={i} title={name} compProperties={req[name]}/>
+        return <SysComp rootPath={rootPath} onUpdated={(path, val) => onUpdated(path, val)} key={i} title={name} compProperties={req[name]}/>
     })
 
 
+
+    useEffect(() => {
+        // what optional components exist
+    }, [rootPath])
 
     useEffect(() => {
         const loadOptions =  () => {
