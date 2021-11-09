@@ -5,7 +5,6 @@ import moment from 'moment';
 import SysItem from './List/SysItem';
 import { useSystems } from '../../Contexts/systems.context';
 import {useMediaQuery, useWindowHeight} from '../../misc/customHooks'
-import { similarity } from '../../misc/helperfunc';
 
 // SysItem from './List/SysItem';
 
@@ -15,19 +14,14 @@ const selectedStyle = {
 }
 
 const findSearchResults = (systems, searchText) => {
-    const result = [];
     const sysIDs = Object.keys(systems);
-    for(let i =0; i< sysIDs.length; i++){
-        const id = sysIDs[i];
-        const data = systems[id];
-        if(data.name && data.name !==''){
-            if(similarity(data.name, searchText) > .25){
-                result.push(id);
-            }
-        }
-    }
-    return result;
+    const resultIDs = sysIDs.filter(id => {
+        const {name} = systems[id];
+        if(!name){return false}
+        return name.includes(searchText)
+    })
 
+    return resultIDs;
 }
 
 const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
@@ -63,26 +57,28 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
                     <Button size='sm' onClick={()=>setNewestSelected(false)} appearance={newestSelected ? 'ghost' : 'primary'}>Oldest</Button>
                 </ButtonGroup>
             </ButtonToolbar>
+
+            <hr/>
             
             <List hover autoScroll>
-                {systems && searchedResultIDs.map((val, i)=> {
-                    const id = systemIDs[i]
-                    const data = systems[id];
-                    const isNew = moment(data.timestamp).isAfter(TWO_DAYS_AGO, 'd');
+                {systems && searchedResultIDs.map(id => {
+                    const {name, timestamp, owner, tech} = systems[id];
+                    const isNew = moment(timestamp).isAfter(TWO_DAYS_AGO, 'd');
                     const isSelected = id === selectedID;
                     return <SysItem 
                         onSelected={()=>onSysSelected(id)}
                         onDeleted={() => onSysDeleted(id)}
                         isNew={isNew} 
-                        key={i}
-                        name={data.name} 
-                        timestamp={data.timestamp} 
-                        owner={data.owner} 
-                        tech={data.tech}
+                        key={id}
+                        name={name} 
+                        timestamp={timestamp} 
+                        owner={owner} 
+                        tech={tech}
                         style={isSelected ? selectedStyle : {}}
                     />
                 })}
             </List>
+            {searchedResultIDs.length===0 ? <span className='muted-c'>No Systems Were Found.</span> : null}
         </div>
     )
 
