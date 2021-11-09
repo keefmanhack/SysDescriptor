@@ -15,7 +15,7 @@ const selectedStyle = {
 
 
 
-const SideBar = ({onNew, onSysSelected, selectedID}) => {
+const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
     const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
 
     const isDesktop = useMediaQuery('(min-width: 992px)');
@@ -37,7 +37,8 @@ const SideBar = ({onNew, onSysSelected, selectedID}) => {
                     const isNew = moment(data.timestamp).isAfter(TWO_DAYS_AGO, 'd');
                     const isSelected = id === selectedID;
                     return <SysItem 
-                        onSelected={()=>onSysSelected(id)} 
+                        onSelected={()=>onSysSelected(id)}
+                        onDeleted={() => onSysDeleted(id)}
                         isNew={isNew} 
                         key={i}
                         name={data.name} 
