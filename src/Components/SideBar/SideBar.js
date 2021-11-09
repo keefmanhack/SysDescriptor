@@ -1,10 +1,11 @@
-import React from 'react';
-import { Button, Input, List } from 'rsuite';
+import React, {useState} from 'react';
+import { Button, ButtonGroup, ButtonToolbar, Input, List } from 'rsuite';
 import moment from 'moment';
 
 import SysItem from './List/SysItem';
 import { useSystems } from '../../Contexts/systems.context';
 import {useMediaQuery, useWindowHeight} from '../../misc/customHooks'
+import { similarity } from '../../misc/helperfunc';
 
 // SysItem from './List/SysItem';
 
@@ -13,26 +14,59 @@ const selectedStyle = {
     transition: '.1s'
 }
 
+const findSearchResults = (systems, searchText) => {
+    const result = [];
+    const sysIDs = Object.keys(systems);
+    for(let i =0; i< sysIDs.length; i++){
+        const id = sysIDs[i];
+        const data = systems[id];
+        if(data.name && data.name !==''){
+            if(similarity(data.name, searchText) > .25){
+                result.push(id);
+            }
+        }
+    }
+    return result;
 
+}
 
 const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
-    const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
+    const [newestSelected, setNewestSelected] = useState(true);
+    const [searchText, setSearchText] = useState('');
 
+    const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
     const isDesktop = useMediaQuery('(min-width: 992px)');
     const windowHeight = useWindowHeight();
+    const systems = useSystems() || {};
+    const systemIDs = Object.keys(systems);
 
-    const systems = useSystems();
+    const searchedResultIDs = searchText === '' ? systemIDs :  findSearchResults(systems, searchText);
 
-    
+    searchedResultIDs.sort((a, b) => {
+        const left = systems[a];
+        const right = systems[b];
+ 
+        if(!newestSelected){
+            return moment.utc(left.timestamp).diff(moment.utc(right.timestamp))
+        }
+        return moment.utc(right.timestamp).diff(moment.utc(left.timestamp))
+    });
 
    return (
         <div className='br-r h-100 p-1 v-scroll' style={{height: isDesktop ? windowHeight  : '300px'}}>
             <Button onClick={onNew} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New</Button>
-            <Input style={{width: '80%'}} className='mx-auto mb-3' placeholder='Search' size='md'/>
-        
-            <List hover>
-                {systems && Object.keys(systems).map((val, i)=> {
-                    const id = Object.keys(systems)[i]
+            <Input onChange={(e) => setSearchText(e)} clearable style={{width: '80%'}} className='mx-auto mb-3' placeholder='Search' size='md'/>
+            
+            <ButtonToolbar style={{margin: '10px 20%'}}>
+                <ButtonGroup justified>
+                    <Button size='sm' onClick={()=>setNewestSelected(true)} appearance={newestSelected ? 'primary' : 'ghost'}>Newest</Button>
+                    <Button size='sm' onClick={()=>setNewestSelected(false)} appearance={newestSelected ? 'ghost' : 'primary'}>Oldest</Button>
+                </ButtonGroup>
+            </ButtonToolbar>
+            
+            <List hover autoScroll>
+                {systems && searchedResultIDs.map((val, i)=> {
+                    const id = systemIDs[i]
                     const data = systems[id];
                     const isNew = moment(data.timestamp).isAfter(TWO_DAYS_AGO, 'd');
                     const isSelected = id === selectedID;
