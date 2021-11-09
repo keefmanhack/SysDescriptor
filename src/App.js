@@ -54,6 +54,8 @@ function App() {
       await Promise.all(refs.map(async (r) => {
         await set(r, null);
       }))
+
+      
     }catch(err){
       console.log(err);
       alert(err);
