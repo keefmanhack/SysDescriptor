@@ -49,17 +49,8 @@ function editDistance(s1, s2) {
 
 
 export function similarity(s1, s2) {
-    let longer = s1;
-    let shorter = s2;
-    if (s1.length < s2.length) {
-      longer = s2;
-      shorter = s1;
-    }
-    const longerLength = longer.length;
-    if (longerLength === 0) {
-      return 1.0;
-    }
-    return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+    let PATTERN = s1;
+    filtered = myArray.filter(function (str) { return str.indexOf(PATTERN) === -1; });
   }
 
 
