@@ -1,6 +1,7 @@
 import { get, ref } from 'firebase/database';
 import React, {useState, useEffect, useRef} from 'react';
 import {DatePicker, Input} from 'rsuite';
+import Alert from '../../../misc/Alert';
 
 import database from '../../../misc/firebase';
 
@@ -18,7 +19,7 @@ const CompInput = ({inputType, id, title, onChange, dbPath, style, placeholder }
                 const snap = await get(db);
                 setValue(snap.val() || "");
             }catch(err){
-                alert(err);
+                Alert.error(`Error pulling ${title} data from the cloud.`);
             }
         }
 

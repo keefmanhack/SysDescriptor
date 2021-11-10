@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState} from 'react';
 import {ref, onValue, off} from 'firebase/database';
 import database from '../misc/firebase';
+import Alert from '../misc/Alert';
 
 const GeneralContext = createContext();
 
@@ -14,8 +15,11 @@ export const GeneralProvider = ({children, sysID}) => {
         const listenOnGeneral = () => {
             onValue(genPath, (snap) =>{
                 setGeneral(snap.val());
+            }, err => {
+                Alert.error(err.message);
             })
         }
+
 
         listenOnGeneral();
 

@@ -10,15 +10,13 @@ import { SystemsProvider } from './Contexts/systems.context';
 import DefaultMainStage from './Components/MainStage/DefaultMainStage';
 import NewMainStage from './Components/MainStage/NewMainStage';
 import Footer from './Components/Footer';
+import Alert from './misc/Alert';
 
 
 import './styles/main.scss';
 import './styles/utility.scss';
 import 'rsuite/dist/rsuite.min.css';
 import { makeid } from './misc/helperfunc';
-import Alert from './misc/Alert';
-
-
 
 function App() {
   const [sysID, setSysID] = useState(null);
@@ -32,7 +30,7 @@ function App() {
     }
     try{
       const id = await push(genRef, newSysData).key;
-      Alert.success("New System-Description Created");
+      Alert.success(`Created new System Description`);
       setSysID(id);
     }catch(err){
       alert(err);
@@ -48,7 +46,7 @@ function App() {
       sys = (await get(sysRef)).val();
     }catch(err){
       console.log(err);
-      alert(err);
+      Alert.error(err.message);
     }
     //  then if that went well I need to delete each of those three ^
     const {acses, atc, system} = sys;
@@ -57,11 +55,10 @@ function App() {
       await Promise.all(refs.map(async (r) => {
         await set(r, null);
       }))
-
-
+      Alert.info(`System Description for ${sys.name || 'Untitled'} deleted`);
     }catch(err){
       console.log(err);
-      alert(err);
+      Alert.error(err.message);
     }
     setSysID(null);
   }

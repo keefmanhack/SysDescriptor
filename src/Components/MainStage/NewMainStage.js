@@ -8,6 +8,7 @@ import MainStage from './MainStage';
 import sysData from '../../misc/dataFormat.json';
 import CompInput from './SubComponents/CompInput';
 import SavedIndicator from '../../misc/SavedIndicator';
+import Alert from '../../misc/Alert';
 
 const NewMainStage = ({sysID, style}) => {
     const [isUpdating, setIsUpdating] = useState(false);
@@ -38,7 +39,7 @@ const NewMainStage = ({sysID, style}) => {
         try{
           await set(db, val)
         }catch(err){
-          alert(err); 
+          Alert.error(`Error writing general system data of ${val} to the cloud`);
         }
         setIsUpdating(false);
     }
@@ -49,7 +50,7 @@ const NewMainStage = ({sysID, style}) => {
         try{
             await set(db, val)
         }catch(err){
-            alert(err); 
+            Alert.error(`Error writing system data of ${val} to the cloud`);
         }
         setIsUpdating(false);
     }
@@ -62,7 +63,7 @@ const NewMainStage = ({sysID, style}) => {
             newStageComp={
                 <>
                     <div className='p-1 w-100'>
-                            <Button color='blue' appearance="primary" className='mr-3'>Generate File</Button>
+                            <Button color='green' appearance="primary" className='mr-3'>Generate File</Button>
                             <SavedIndicator isUpdating={isUpdating} style={{float: 'right', marginRight: '10px'}}/>
                     </div>
                     <div style={{width: '40%'}} className='mx-auto mb-3'>

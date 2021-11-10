@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, ButtonGroup, ButtonToolbar, Input, InputGroup, List } from 'rsuite';
+import { Button, ButtonGroup, ButtonToolbar, Input, InputGroup, List, Loader } from 'rsuite';
 import moment from 'moment';
 import { Close } from '@rsuite/icons';
 
@@ -30,8 +30,8 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
 
     const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
     const isDesktop = useMediaQuery('(min-width: 1200px)');
-    const systems = useSystems() || {};
-    const systemIDs = Object.keys(systems);
+    const {systems, isUpdating} = useSystems();
+    const systemIDs = Object.keys(systems || {});
 
     const searchedResultIDs = searchText === '' ? systemIDs :  findSearchResults(systems, searchText);
 
@@ -47,7 +47,7 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
 
    return (
         <div className='br-r h-100 p-1' style={{}}>
-            <Button onClick={onNew} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New</Button>
+            <Button color="blue" appearance='primary' onClick={onNew} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New</Button>
             <InputGroup style={{width: '80%'}} className='mx-auto'>
                 <Input value={searchText} onChange={(e) => setSearchText(e)} clearable placeholder='Search' size='md'/>
                 <InputGroup.Button onClick={()=>setSearchText('')}>
@@ -67,6 +67,7 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
             <span><strong>{searchedResultIDs.length}</strong> Descriptions Shown</span>
             <hr/>
             <div className='v-scroll' style={{height: isDesktop ? '66vh' : '20vh'}}>
+            {isUpdating ? <Loader/> : null}
             <List hover autoScroll>
                 {systems && searchedResultIDs.map(id => {
                     const {name, timestamp, owner, tech} = systems[id];
@@ -85,8 +86,9 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
                     />
                 })}
             </List>
+                {searchedResultIDs.length===0 && !isUpdating ? <span className='muted-c'>No Systems Were Found.</span> : null}
             </div>
-            {searchedResultIDs.length===0 ? <span className='muted-c'>No Systems Were Found.</span> : null}
+            
         </div>
     )
 
