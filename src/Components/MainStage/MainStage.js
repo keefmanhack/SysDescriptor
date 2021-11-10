@@ -8,8 +8,8 @@ const styles = {
     height: '100vh'
 }
 
-const MainStage = ({newStageComp, defaultComp}) => (
-        <div style={styles}>
+const MainStage = ({newStageComp, defaultComp, style}) => (
+        <div style={{...styles, ...style}}>
             {newStageComp}
             {defaultComp}
         </div>

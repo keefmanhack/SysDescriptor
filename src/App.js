@@ -9,12 +9,14 @@ import SideBar from './Components/SideBar/SideBar';
 import { SystemsProvider } from './Contexts/systems.context';
 import DefaultMainStage from './Components/MainStage/DefaultMainStage';
 import NewMainStage from './Components/MainStage/NewMainStage';
+import Footer from './Components/Footer';
 
 
 import './styles/main.scss';
 import './styles/utility.scss';
 import 'rsuite/dist/rsuite.min.css';
 import { makeid } from './misc/helperfunc';
+import Alert from './misc/Alert';
 
 
 
@@ -30,6 +32,7 @@ function App() {
     }
     try{
       const id = await push(genRef, newSysData).key;
+      Alert.success("New System-Description Created");
       setSysID(id);
     }catch(err){
       alert(err);
@@ -55,7 +58,7 @@ function App() {
         await set(r, null);
       }))
 
-      
+
     }catch(err){
       console.log(err);
       alert(err);
@@ -66,19 +69,22 @@ function App() {
 
   return (
     <CustomProvider theme='dark'>
-       <TitleBar/>
-        <Grid fluid className='h-100' style={{padding:0}}>
-          <Row className='h-100'>
-            <Col xs={24} lg={6} className='h-100'>
+      <div>
+       <TitleBar style={{}}/>
+        <Grid fluid  style={{padding:0}}>
+          <Row >
+            <Col xs={24} lg={6} >
               <SystemsProvider>
                 <SideBar onSysDeleted={(id) => deleteSys(id)} selectedID={sysID} onSysSelected={(id) => setSysID(id)} onNew={() => createNew()}/>
               </SystemsProvider>
             </Col>
-            <Col xs={24} lg={18} className='h-100'>
+            <Col xs={24} lg={18} >
               {sysID ? <NewMainStage sysID={sysID} /> : <DefaultMainStage/>}
             </Col>
           </Row>
         </Grid>
+        <Footer style={{width: '100%'}}/>
+        </div>
       </CustomProvider>
   );
 }

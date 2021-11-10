@@ -1,8 +1,9 @@
 import React from 'react';
 import MainStage from './MainStage';
 
-const DefaultMainStage = () => (
+const DefaultMainStage = ({style}) => (
         <MainStage
+            style={style}
             defaultComp={
                 <h1 
                     className='muted-c' 

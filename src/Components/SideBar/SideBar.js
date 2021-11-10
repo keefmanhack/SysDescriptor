@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import { Button, ButtonGroup, ButtonToolbar, Input, List } from 'rsuite';
+import { Button, ButtonGroup, ButtonToolbar, Input, InputGroup, List } from 'rsuite';
 import moment from 'moment';
+import { Close } from '@rsuite/icons';
 
 import SysItem from './List/SysItem';
 import { useSystems } from '../../Contexts/systems.context';
-import {useMediaQuery, useWindowHeight} from '../../misc/customHooks'
+import {useMediaQuery} from '../../misc/customHooks'
 
-// SysItem from './List/SysItem';
 
 const selectedStyle = {
     borderLeft: '4px solid lightgreen',
@@ -18,7 +18,7 @@ const findSearchResults = (systems, searchText) => {
     const resultIDs = sysIDs.filter(id => {
         const {name} = systems[id];
         if(!name){return false}
-        return name.includes(searchText)
+        return name.toLowerCase().includes(searchText.toLowerCase())
     })
 
     return resultIDs;
@@ -29,8 +29,7 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
     const [searchText, setSearchText] = useState('');
 
     const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
-    const isDesktop = useMediaQuery('(min-width: 992px)');
-    const windowHeight = useWindowHeight();
+    const isDesktop = useMediaQuery('(min-width: 1200px)');
     const systems = useSystems() || {};
     const systemIDs = Object.keys(systems);
 
@@ -47,9 +46,15 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
     });
 
    return (
-        <div className='br-r h-100 p-1 v-scroll' style={{height: isDesktop ? windowHeight  : '300px'}}>
+        <div className='br-r h-100 p-1' style={{}}>
             <Button onClick={onNew} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New</Button>
-            <Input onChange={(e) => setSearchText(e)} clearable style={{width: '80%'}} className='mx-auto mb-3' placeholder='Search' size='md'/>
+            <InputGroup style={{width: '80%'}} className='mx-auto'>
+                <Input value={searchText} onChange={(e) => setSearchText(e)} clearable placeholder='Search' size='md'/>
+                <InputGroup.Button onClick={()=>setSearchText('')}>
+                    <Close/>
+                </InputGroup.Button>
+            </InputGroup>
+
             
             <ButtonToolbar style={{margin: '10px 20%'}}>
                 <ButtonGroup justified>
@@ -57,9 +62,11 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
                     <Button size='sm' onClick={()=>setNewestSelected(false)} appearance={newestSelected ? 'ghost' : 'primary'}>Oldest</Button>
                 </ButtonGroup>
             </ButtonToolbar>
-
-            <hr/>
             
+            <div><strong>{systemIDs.length}</strong> Total Descriptions</div>
+            <span><strong>{searchedResultIDs.length}</strong> Descriptions Shown</span>
+            <hr/>
+            <div className='v-scroll' style={{height: isDesktop ? '66vh' : '20vh'}}>
             <List hover autoScroll>
                 {systems && searchedResultIDs.map(id => {
                     const {name, timestamp, owner, tech} = systems[id];
@@ -78,6 +85,7 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
                     />
                 })}
             </List>
+            </div>
             {searchedResultIDs.length===0 ? <span className='muted-c'>No Systems Were Found.</span> : null}
         </div>
     )

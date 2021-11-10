@@ -1,15 +1,13 @@
 import React from 'react';
+import { Navbar } from 'rsuite';
 import {version} from '../../package.json';
 
-const styles = {
-   
-}
-
-const TitleBar = () => 
+const TitleBar = ({style}) => 
     (
-        <div className='title-bar w-100' style={styles}>
-            <h2 className='px-5'>SysDescriptor {version}</h2> 
-            <hr className='mt-1 mb-0'/> 
-        </div>
+        <Navbar style={style}>
+            <Navbar.Brand >
+                <span >SysDescriptor {version}</span>
+            </Navbar.Brand>
+        </Navbar>
     )
 export default TitleBar;

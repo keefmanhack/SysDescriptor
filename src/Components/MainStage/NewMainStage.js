@@ -9,7 +9,7 @@ import sysData from '../../misc/dataFormat.json';
 import CompInput from './SubComponents/CompInput';
 import SavedIndicator from '../../misc/SavedIndicator';
 
-const NewMainStage = ({sysID}) => {
+const NewMainStage = ({sysID, style}) => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [general, setGeneral] = useState({});
 
@@ -58,6 +58,7 @@ const NewMainStage = ({sysID}) => {
 
     return (
         <MainStage
+            style={style}
             newStageComp={
                 <>
                     <div className='p-1 w-100'>
