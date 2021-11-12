@@ -22,7 +22,7 @@ const SysItem = ({name="Untitled", tech="...", owner="...", timestamp, isNew, on
                     <Row>
                         <Col xs={10} md={8}>
                             <HoverShowAll text={name}>
-                                <h5 className='ellip-overflow'>{name}</h5>
+                                <h5 className='ellip-overflow'>{name==='' ? 'Untitled' : name}</h5>
                             </HoverShowAll>
                             {isNew ? <span style={{color: 'yellow'}}>New</span> : null}
                         </Col>

@@ -17,6 +17,7 @@
       "no-param-reassign": [0],
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
+      "consistent-return": "off",
       "jsx-a11y/label-has-associated-control": ["error", {
         "required": {
           "some": ["nesting", "id"]

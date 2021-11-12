@@ -9,6 +9,7 @@ import sysData from '../../misc/dataFormat.json';
 import CompInput from './SubComponents/CompInput';
 import SavedIndicator from '../../misc/SavedIndicator';
 import Alert from '../../misc/Alert';
+import { generateDocument } from '../../misc/helperfunc';
 
 const NewMainStage = ({sysID, style}) => {
     const [isUpdating, setIsUpdating] = useState(false);
@@ -63,7 +64,7 @@ const NewMainStage = ({sysID, style}) => {
             newStageComp={
                 <>
                     <div className='p-1 w-100'>
-                            <Button color='green' appearance="primary" className='mr-3'>Generate File</Button>
+                            <Button onClick={()=>generateDocument()} color='green' appearance="primary" className='mr-3'>Generate File</Button>
                             <SavedIndicator isUpdating={isUpdating} style={{float: 'right', marginRight: '10px'}}/>
                     </div>
                     <div style={{width: '40%'}} className='mx-auto mb-3'>
