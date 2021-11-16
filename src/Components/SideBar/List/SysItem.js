@@ -29,13 +29,13 @@ const SysItem = ({name="Untitled", tech="...", owner="...", timestamp, isNew, on
                         <Col xs={4} md={4}>
                             <p className='muted-c ellip-overflow'>Technician</p>
                             <HoverShowAll text={tech}>
-                                <p className='mt-1 ellip-overflow'>{tech}</p>
+                                <p className='mt-1 ellip-overflow'>{tech === '' ? '...' : tech}</p>
                             </HoverShowAll>
                         </Col>
                         <Col xs={4} md={4}>
                             <p className='muted-c ellip-overflow'>Owner</p>
                             <HoverShowAll text={owner}>
-                                <p className='mt-1 ellip-overflow'>{owner}</p>
+                                <p className='mt-1 ellip-overflow'>{owner === '' ? '...' : owner}</p>
                             </HoverShowAll>
                             
                         </Col>

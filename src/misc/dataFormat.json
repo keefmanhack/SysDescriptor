@@ -15,15 +15,116 @@
     },
     "system": {
         "required": [
-        
+            {
+                "ADU": [
+                    {
+                        "Part Number" : {
+                            "db" : "ADU/part_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            },
+            {
+                "ATC Power Supply": [
+                    {
+                        "Part Number" : {
+                            "db" : "atc_power_supply/part_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            },
+            {
+                "ACSES Power Supply" : [
+                    {
+                        "Part Number" : {
+                            "db" : "acses_power_supply/part_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            }
         ],
         "optional" : [
-
+            {
+                "ADU 2" : [
+                    {
+                        "Part Number" : {
+                            "db" : "adu_2/part_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            }
         ]
     },
     "atc" : {
         "required": [
-            
+            {   
+                "Main" : [
+                    {
+                        "Part Number" : {
+                            "db" : "main/Part Number",
+                            "input": "Text"
+                        }
+                    },
+                    {
+                        "Serial Number" : {
+                            "db" : "main/serial_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            },
+            {   
+                "Tach I/O" : [
+                    {
+                        "Part Number" : {
+                            "db" : "main/Part Number",
+                            "input": "Text"
+                        }
+                    },
+                    {
+                        "Serial Number" : {
+                            "db" : "main/serial_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            },
+            {   
+                "Cab Test" : [
+                    {
+                        "Part Number" : {
+                            "db" : "main/Part Number",
+                            "input": "Text"
+                        }
+                    },
+                    {
+                        "Serial Number" : {
+                            "db" : "main/serial_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            },
+            {   
+                "Decel" : [
+                    {
+                        "Part Number" : {
+                            "db" : "main/Part Number",
+                            "input": "Text"
+                        }
+                    },
+                    {
+                        "Serial Number" : {
+                            "db" : "main/serial_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            }
         ],
         "optional" : [
         ]
@@ -34,14 +135,12 @@
                 "Main" : [
                     {
                         "Software Revision" : {
-                            "bookmark_location" : null,
                             "db" : "main/software_revision",
                             "input": "Text"
                         }
                     },
                     {
                         "Serial Number" : {
-                            "bookmark_location" : null,
                             "db" : "main/serial_number",
                             "input": "Text"
                         }
@@ -52,15 +151,23 @@
                 "Interface" : [
                     {
                         "Software Revision" : {
-                            "bookmark_location" : null,
                             "db" : "interface/software_revision",
                             "input": "Date"
                         }
                     },
                     {
                         "Serial Number" : {
-                            "bookmark_location" : null,
                             "db" : "interface/serial_number",
+                            "input": "Text"
+                        }
+                    }
+                ]
+            },
+            {
+                "Comm" : [
+                    {
+                        "Part Number" : {
+                            "db" : "Comm/part_number",
                             "input": "Text"
                         }
                     }
@@ -72,14 +179,12 @@
                 "Recorder" : [
                     {
                         "Software Date" : {
-                            "bookmark_location" : null,
                             "db" : "recorder/software_date",
                             "input": "Date"
                         }
                     },
                     {
                         "Serial Number" : {
-                            "bookmark_location" : null,
                             "db" : "recorder/serial_number",
                             "input": "Text"
                         }

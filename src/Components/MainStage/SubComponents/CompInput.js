@@ -9,18 +9,21 @@ const defaultStyle = {fontSize: '12px', width: '75%', display: 'block'}
 
 const CompInput = ({inputType, id, title, onChange, dbPath, style, placeholder }) => {
     const [value, setValue] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const inputRef = useRef();
 
     useEffect(() => {
         const loadValue = async () => {
             const db = ref(database, dbPath);
             inputRef.current.value = "";
+            setIsLoading(true);
             try{
                 const snap = await get(db);
                 setValue(snap.val() || "");
             }catch(err){
                 Alert.error(`Error pulling ${title} data from the cloud.`);
             }
+            setIsLoading(false);
         }
 
         loadValue();
@@ -36,6 +39,7 @@ const CompInput = ({inputType, id, title, onChange, dbPath, style, placeholder }
                     onChange={e=> {setValue(e); onChange(e.toDateString())}} 
                     id={id} 
                     style={style}
+                    disabled={isLoading}
                 />
     }else{
         input = <Input 
@@ -45,6 +49,7 @@ const CompInput = ({inputType, id, title, onChange, dbPath, style, placeholder }
                     onChange={e => {setValue(e); onChange(e)}} 
                     id={id} 
                     style={{...defaultStyle, ...style}}
+                    disabled={isLoading}
                 />
     }
 

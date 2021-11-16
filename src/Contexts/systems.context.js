@@ -18,6 +18,7 @@ export const SystemsProvider = ({children}) => {
                 setIsUpdating(false);
             }, err => {
                 Alert.error(err.message);
+                console.log(err);
             })
         }
 

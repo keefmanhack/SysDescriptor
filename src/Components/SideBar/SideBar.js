@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import { Button, ButtonGroup, ButtonToolbar, Input, InputGroup, List, Loader } from 'rsuite';
+import { Button, Input, InputGroup, List, Loader } from 'rsuite';
 import moment from 'moment';
 import { Close } from '@rsuite/icons';
 
 import SysItem from './List/SysItem';
 import { useSystems } from '../../Contexts/systems.context';
 import {useMediaQuery} from '../../misc/customHooks'
+import ButtonToggle from '../../misc/ButtonToggle';
 
 
 const selectedStyle = {
@@ -55,13 +56,13 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
                 </InputGroup.Button>
             </InputGroup>
 
-            
-            <ButtonToolbar style={{margin: '10px 20%'}}>
-                <ButtonGroup justified>
-                    <Button size='sm' onClick={()=>setNewestSelected(true)} appearance={newestSelected ? 'primary' : 'ghost'}>Newest</Button>
-                    <Button size='sm' onClick={()=>setNewestSelected(false)} appearance={newestSelected ? 'ghost' : 'primary'}>Oldest</Button>
-                </ButtonGroup>
-            </ButtonToolbar>
+            <ButtonToggle
+                onChange={(v) =>setNewestSelected(v)}
+                options={[{disp:'Newest', value: true}, {disp: 'Oldest', value: false}]}
+                style={{margin: '10px 20%'}}
+                size='sm'
+                justified
+            />
             
             <div><strong>{systemIDs.length}</strong> Total Descriptions</div>
             <span><strong>{searchedResultIDs.length}</strong> Descriptions Shown</span>

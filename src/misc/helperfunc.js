@@ -43,35 +43,35 @@ const convertSize = x => (x*2)
 
 
 
-const hasValue = e => { //  eslint consistent-return: ["error", { "treatUndefinedAsUnspecified": false }]
-  if(Object.entries(e).contains("value")){
-    return !(e.value==='')
-  }
-  if(Object.entries(e).length > 0){
-    const entries = Object.entries(e);
-    for(let i =0 ; i<entries.length; i++){
-      hasValue(e[entries[i]]);
-    }
-  }else{
-    return false
-  }
-}
+// const hasValue = e => { //  eslint consistent-return: ["error", { "treatUndefinedAsUnspecified": false }]
+//   if(Object.entries(e).contains("value")){
+//     return !(e.value==='')
+//   }
+//   if(Object.entries(e).length > 0){
+//     const entries = Object.entries(e);
+//     for(let i =0 ; i<entries.length; i++){
+//       hasValue(e[entries[i]]);
+//     }
+//   }else{
+//     return false
+//   }
+// }
 
-const getOptionalValues = optionsArr => {
-  const arr = [];
+// const getOptionalValues = optionsArr => {
+//   const arr = [];
 
-  for(let i =0; i< optionsArr.length; i++){
-    if(hasValue(optionsArr[i])){
-      arr.push(optionsArr[i]);
-    }
-  }
+//   for(let i =0; i< optionsArr.length; i++){
+//     if(hasValue(optionsArr[i])){
+//       arr.push(optionsArr[i]);
+//     }
+//   }
 
-  return arr;
-}
+//   return arr;
+// }
 
-const buildTable = jsonDoc => {
-  const dataToDisplay = [...jsonDoc.required, ...getOptionalValues()]
-}
+// const buildTable = jsonDoc => {
+//   const dataToDisplay = [...jsonDoc.required, ...getOptionalValues()]
+// }
 
 export const generateDocument = () => {
   const doc = new Document({

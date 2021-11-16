@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Row, Col, CustomProvider} from "rsuite";
+import { Grid, Row, Col} from "rsuite";
 import {ref, push, get, set } from "firebase/database";
 import firebase from 'firebase/compat/';
 import database from './misc/firebase';
@@ -17,8 +17,10 @@ import './styles/main.scss';
 import './styles/utility.scss';
 import 'rsuite/dist/rsuite.min.css';
 import { makeid } from './misc/helperfunc';
+import { ThemeProvider } from './Contexts/theme.context';
 
 function App() {
+  const [theme, setTheme] = useState('dark')
   const [sysID, setSysID] = useState(null);
   const createNew = async () => {
     const genRef = ref(database, `systems/`);
@@ -65,9 +67,9 @@ function App() {
 
 
   return (
-    <CustomProvider theme='dark'>
+    <ThemeProvider theme={theme}>
       <div>
-       <TitleBar style={{}}/>
+       <TitleBar style={{}} setTheme={(t) => setTheme(t)}/>
         <Grid fluid  style={{padding:0}}>
           <Row >
             <Col xs={24} lg={6} >
@@ -82,7 +84,7 @@ function App() {
         </Grid>
         <Footer style={{width: '100%'}}/>
         </div>
-      </CustomProvider>
+        </ThemeProvider>
   );
 }
 
