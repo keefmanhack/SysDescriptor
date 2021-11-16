@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Button, Input, InputGroup, List, Loader } from 'rsuite';
+import { Button, Input, InputGroup, List, Loader, Tree } from 'rsuite';
 import moment from 'moment';
 import { Close } from '@rsuite/icons';
 
@@ -68,6 +68,22 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
             <span><strong>{searchedResultIDs.length}</strong> Descriptions Shown</span>
             <hr/>
             <div className='v-scroll' style={{height: isDesktop ? '66vh' : '20vh'}}>
+                <Tree
+                    data={[
+                        {   
+                            value: 'parent', 
+                            label: <span>
+                                LDL AMTRAK sys-num: 23 <Button>My button</Button>
+                            </span>, 
+                            children: [
+                                {
+                                    value: 'value', 
+                                    label: 'child'
+                                }
+                            ]
+                        }
+                    ]}
+                />
             {isUpdating ? <Loader/> : null}
             <List hover autoScroll>
                 {systems && searchedResultIDs.map(id => {
