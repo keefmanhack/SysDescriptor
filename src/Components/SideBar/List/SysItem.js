@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, List, Row, Col, Button } from 'rsuite';
+import { Grid, Row, Col, Button, List } from 'rsuite';
 import TrashIcon from '@rsuite/icons/Trash';
 import DeleteModal from '../../../misc/DeleteModal';
 import { useHover } from '../../../misc/customHooks';
@@ -10,14 +10,14 @@ const styles = {
 }
 
 
-const SysItem = ({name="Untitled", tech="...", owner="...", timestamp, isNew, onSelected, onDeleted, style}) => {
+const SysItem = ({name="Untitled", tech="...", owner="...", timestamp, isNew, onDeleted, style}) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const handleClose = () => setShowDeleteModal(false);
     const [ref, hover] = useHover();
 
     return (
         <>
-            <List.Item ref={ref} onClick={()=>onSelected()} className='height-75' style={{...styles, ...style}}>
+            <List.Item ref={ref} className='height-75' style={{...styles, ...style}}>
                 <Grid fluid>
                     <Row>
                         <Col xs={10} md={8}>
@@ -57,6 +57,14 @@ const SysItem = ({name="Untitled", tech="...", owner="...", timestamp, isNew, on
                         </Col>
                     </Row>
                 </Grid>
+                <List>
+                    <List.Item>
+                        Rev 1
+                    </List.Item>
+                    <List.Item>
+                        Rev 2
+                    </List.Item>
+                </List>
             </List.Item>
             <DeleteModal onDelete={()=>{handleClose(); onDeleted()}} handleClose={handleClose} show={showDeleteModal} title={name} tech={tech} owner={owner} timestamp={timestamp}/>
         </>

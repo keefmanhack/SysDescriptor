@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navbar, Nav } from 'rsuite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import {faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 import ButtonToggle from '../misc/ButtonToggle';
 
@@ -18,6 +18,8 @@ const lightDarkDisp = [
         value: "light"
     }
 ]
+
+
 
 const TitleBar = ({style, setTheme}) => 
     (

@@ -1,18 +1,18 @@
 import React, {useState} from 'react';
-import { Button, Input, InputGroup, List, Loader, Tree } from 'rsuite';
+import { Button, Input, InputGroup, Loader} from 'rsuite';
 import moment from 'moment';
 import { Close } from '@rsuite/icons';
 
-import SysItem from './List/SysItem';
 import { useSystems } from '../../Contexts/systems.context';
 import {useMediaQuery} from '../../misc/customHooks'
 import ButtonToggle from '../../misc/ButtonToggle';
+import { System } from './System';
 
 
-const selectedStyle = {
-    borderLeft: '4px solid lightgreen',
-    transition: '.1s'
-}
+// const selectedStyle = {
+//     borderLeft: '4px solid lightgreen',
+//     transition: '.1s'
+// }
 
 const findSearchResults = (systems, searchText) => {
     const sysIDs = Object.keys(systems);
@@ -25,11 +25,11 @@ const findSearchResults = (systems, searchText) => {
     return resultIDs;
 }
 
-const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
+const SideBar = ({onNew}) => {
     const [newestSelected, setNewestSelected] = useState(true);
     const [searchText, setSearchText] = useState('');
 
-    const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
+    // const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
     const isDesktop = useMediaQuery('(min-width: 1200px)');
     const {systems, isUpdating} = useSystems();
     const systemIDs = Object.keys(systems || {});
@@ -48,7 +48,7 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
 
    return (
         <div className='br-r h-100 p-1' style={{}}>
-            <Button color="blue" appearance='primary' onClick={onNew} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New</Button>
+            <Button color="blue" appearance='primary' onClick={onNew} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New System</Button>
             <InputGroup style={{width: '80%'}} className='mx-auto'>
                 <Input value={searchText} onChange={(e) => setSearchText(e)} clearable placeholder='Search' size='md'/>
                 <InputGroup.Button onClick={()=>setSearchText('')}>
@@ -63,29 +63,18 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
                 size='sm'
                 justified
             />
-            
-            <div><strong>{systemIDs.length}</strong> Total Descriptions</div>
-            <span><strong>{searchedResultIDs.length}</strong> Descriptions Shown</span>
+            <div style={{paddingLeft: '5px'}}>
+                <div><strong>{systemIDs.length}</strong> Total Descriptions</div>
+                <span><strong>{searchedResultIDs.length}</strong> Descriptions Shown</span>
+            </div>
             <hr/>
             <div className='v-scroll' style={{height: isDesktop ? '66vh' : '20vh'}}>
-                <Tree
-                    data={[
-                        {   
-                            value: 'parent', 
-                            label: <span>
-                                LDL AMTRAK sys-num: 23 <Button>My button</Button>
-                            </span>, 
-                            children: [
-                                {
-                                    value: 'value', 
-                                    label: 'child'
-                                }
-                            ]
-                        }
-                    ]}
-                />
             {isUpdating ? <Loader/> : null}
-            <List hover autoScroll>
+            <System/>
+            <System/>
+            <System/>
+            <System/>
+            {/* <List hover autoScroll>
                 {systems && searchedResultIDs.map(id => {
                     const {name, timestamp, owner, tech} = systems[id];
                     const isNew = moment(timestamp).isAfter(TWO_DAYS_AGO, 'd');
@@ -102,10 +91,9 @@ const SideBar = ({onNew, onSysSelected, selectedID, onSysDeleted}) => {
                         style={isSelected ? selectedStyle : {}}
                     />
                 })}
-            </List>
+            </List> */}
                 {searchedResultIDs.length===0 && !isUpdating ? <span className='muted-c'>No Systems Were Found.</span> : null}
             </div>
-            
         </div>
     )
 

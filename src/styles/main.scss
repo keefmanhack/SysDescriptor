@@ -19,3 +19,13 @@ label{
 .c-r{
     color: $red;
 }
+
+.rs-theme-dark{
+    .new{
+        color: yellow;
+    }
+}
+    
+.rs-theme-light .new{
+    color: #5cdb00
+}
