@@ -6,7 +6,7 @@ import Alert from '../misc/Alert';
 const SystemsContext = createContext();
 
 export const SystemsProvider = ({children}) => {
-    const [systems, setSystems] = useState(null);
+    const [systems, setSystems] = useState([]);
     const [isUpdating, setIsUpdating] = useState(false);
 
     const systemsRef = ref(database, `systems/`);
@@ -14,7 +14,11 @@ export const SystemsProvider = ({children}) => {
         const listenForSystems = () => {
             setIsUpdating(true);
             onValue(systemsRef, (snap) =>{
-                setSystems(snap.val());
+                const systemJSON = (snap.val()) || {};
+                const ids = Object.keys(systemJSON);
+                let sysArr = ids.map(id => systemJSON[id]);
+                sysArr = sysArr || [];
+                setSystems(sysArr);
                 setIsUpdating(false);
             }, err => {
                 Alert.error(err.message);
