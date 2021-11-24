@@ -5,7 +5,7 @@ import { Close } from '@rsuite/icons';
 import { useSystems } from '../../Contexts/systems.context';
 import {useMediaQuery} from '../../misc/customHooks'
 import { System } from './List/System';
-import NewSystemModal from './NewSystemModal';
+import NewSystemModal from './SystemModal/NewSystemModal';
 
 
 // const selectedStyle = {

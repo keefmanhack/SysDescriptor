@@ -1,0 +1,412 @@
+{
+  "systems": [
+    {
+      "label": "LIRR M9 ATC",
+      "value": {
+        "sysNumber": "1",
+        "title": "LIRR M9 ATC",
+        "partNumber": "R7716H01-A01"
+      }
+    },
+    {
+      "label": "MARC ATC",
+      "value": {
+        "sysNumber": "2",
+        "title": "MARC ATC",
+        "partNumber": "D6726H01-A01 and D6726H01-A03"
+      }
+    },
+    {
+      "label": "PAN-AM - ICAB / ACSES",
+      "value": {
+        "sysNumber": "3",
+        "title": "PAN-AM - ICAB / ACSES",
+        "partNumber": "F3601H51-A07 (ACSES) / D2291H01-A07 (ICAB)"
+      }
+    },
+    {
+      "label": "AMTRAK - ATC / ACSES",
+      "value": {
+        "sysNumber": "4",
+        "title": "AMTRAK - ATC / ACSES",
+        "partNumber": "R2196H01-A03"
+      }
+    },
+    {
+      "label": "SEPTA - ATC / ACSES",
+      "value": {
+        "sysNumber": "5",
+        "title": "SEPTA - ATC / ACSES",
+        "partNumber": "F5664H149-A01"
+      }
+    },
+    {
+      "label": "METRA - ATC",
+      "value": {
+        "sysNumber": "6",
+        "title": "METRA - ATC",
+        "partNumber": "D1249H01-A01 or D3597H01-A01 or D4652H01-A01"
+      }
+    },
+    {
+      "label": "LIRR M7 - ACSES",
+      "value": {
+        "sysNumber": "7",
+        "title": "LIRR M7 - ACSES",
+        "partNumber": "D7710H0201-A01"
+      }
+    },
+    {
+      "label": "MNR M7A ACSES",
+      "value": {
+        "sysNumber": "8",
+        "title": "MNR M7A ACSES",
+        "partNumber": "D7711H0201- A01"
+      }
+    },
+    {
+      "label": "MNR M7A ACSES",
+      "value": {
+        "sysNumber": "9",
+        "title": "MNR M7A ACSES",
+        "partNumber": "D7711H0201- A01"
+      }
+    },
+    {
+      "label": "MBTA 3601 - ATC / ACSES",
+      "value": {
+        "sysNumber": "10",
+        "title": "MBTA 3601 - ATC / ACSES",
+        "partNumber": "D3601H301-A01"
+      }
+    },
+    {
+      "label": "MNR M7A ACSES",
+      "value": {
+        "sysNumber": "11",
+        "title": "MNR M7A ACSES",
+        "partNumber": "D7711H0201- A01"
+      }
+    },
+    {
+      "label": "LIRR DEDM ACSES ",
+      "value": {
+        "sysNumber": "12",
+        "title": "LIRR DEDM ACSES ",
+        "partNumber": "D7710H0136-A01"
+      }
+    },
+    {
+      "label": "CTA 7000 - ATC",
+      "value": {
+        "sysNumber": "15",
+        "title": "CTA 7000 - ATC",
+        "partNumber": "P000510001-A01"
+      }
+    },
+    {
+      "label": "SEATTLE - ST2 - ATC",
+      "value": {
+        "sysNumber": "16",
+        "title": "SEATTLE - ST2 - ATC",
+        "partNumber": "P000620100-A01"
+      }
+    },
+    {
+      "label": "MNR M7A ACSES",
+      "value": {
+        "sysNumber": "17",
+        "title": "MNR M7A ACSES",
+        "partNumber": "D7711H0201- A01"
+      }
+    },
+    {
+      "label": "SEPTA - ATC / ACSES",
+      "value": {
+        "sysNumber": "18",
+        "title": "SEPTA - ATC / ACSES",
+        "partNumber": "F5664H149-A01"
+      }
+    },
+    {
+      "label": "LIRR M7 - ACSES",
+      "value": {
+        "sysNumber": "20",
+        "title": "LIRR M7 - ACSES",
+        "partNumber": "D7710H0201-A01"
+      }
+    },
+    {
+      "label": "LIRR C3 - ACSES",
+      "value": {
+        "sysNumber": "21",
+        "title": "LIRR C3 - ACSES",
+        "partNumber": "D7710H0604-A01"
+      }
+    },
+    {
+      "label": "MBTA 803/490 - ATC / ACSES",
+      "value": {
+        "sysNumber": "22",
+        "title": "MBTA 803/490 - ATC / ACSES",
+        "partNumber": "F803H01-A01 / F490H101-A01"
+      }
+    },
+    {
+      "label": "MBTA 3601 - ATC / ACSES",
+      "value": {
+        "sysNumber": "23",
+        "title": "MBTA 3601 - ATC / ACSES",
+        "partNumber": "D3601H301-A01"
+      }
+    },
+    {
+      "label": "M9 ATC / ACSES",
+      "value": {
+        "sysNumber": "24",
+        "title": "M9 ATC / ACSES",
+        "partNumber": "R7716H01-A01 / D7710H1400-A01"
+      }
+    },
+    {
+      "label": "AMTRAK ACS64 - ATC / ACSES",
+      "value": {
+        "sysNumber": "27",
+        "title": "AMTRAK ACS64 - ATC / ACSES",
+        "partNumber": "R5384H01-A01"
+      }
+    },
+    {
+      "label": "MNR M3A - ATC/ACSES",
+      "value": {
+        "sysNumber": "28",
+        "title": "MNR M3A - ATC/ACSES",
+        "partNumber": "D7711H0250-A01"
+      }
+    },
+    {
+      "label": "MNR P32 - ATC/ACSES",
+      "value": {
+        "sysNumber": "29",
+        "title": "MNR P32 - ATC/ACSES",
+        "partNumber": "R6407H01-A01"
+      }
+    },
+    {
+      "label": "MNR Shoreliner - ATC/ACSES",
+      "value": {
+        "sysNumber": "30",
+        "title": "MNR Shoreliner - ATC/ACSES",
+        "partNumber": "R6020H01-A01"
+      }
+    },
+    {
+      "label": "MNR BL20/BL14 - ATC/ACSES",
+      "value": {
+        "sysNumber": "31",
+        "title": "MNR BL20/BL14 - ATC/ACSES",
+        "partNumber": "R3485H501-A01 (BL20) / R3485H505-A01 (BL14)"
+      }
+    },
+    {
+      "label": "AMTRAK P32 - ATC/ACSES",
+      "value": {
+        "sysNumber": "33",
+        "title": "AMTRAK P32 - ATC/ACSES",
+        "partNumber": "R5096H01-A01"
+      }
+    },
+    {
+      "label": "CSX O/S 4-ASPECT",
+      "value": {
+        "sysNumber": "34",
+        "title": "CSX O/S 4-ASPECT",
+        "partNumber": "D1563H01-A01"
+      }
+    },
+    {
+      "label": "CSX iCab - Phase II - ICAB / ACSES",
+      "value": {
+        "sysNumber": "35",
+        "title": "CSX iCab - Phase II - ICAB / ACSES",
+        "partNumber": "P000910100-A01"
+      }
+    },
+    {
+      "label": "AMTRAK 490H - ACSES",
+      "value": {
+        "sysNumber": "37",
+        "title": "AMTRAK 490H - ACSES",
+        "partNumber": "F490H124-A01"
+      }
+    },
+    {
+      "label": "SEATTLE - ST1 - ATC",
+      "value": {
+        "sysNumber": "41",
+        "title": "SEATTLE - ST1 - ATC",
+        "partNumber": "P000620101-A01"
+      }
+    },
+    {
+      "label": "NJT MP20 Switcher - ATC / ACSES",
+      "value": {
+        "sysNumber": "42",
+        "title": "NJT MP20 Switcher - ATC / ACSES",
+        "partNumber": "R2453H01-A01"
+      }
+    },
+    {
+      "label": "SEATTLE - ST2 - ATC",
+      "value": {
+        "sysNumber": "43",
+        "title": "SEATTLE - ST2 - ATC",
+        "partNumber": "P000620100-A01"
+      }
+    },
+    {
+      "label": "Marc - ATC",
+      "value": {
+        "sysNumber": "45",
+        "title": "Marc - ATC",
+        "partNumber": "D6443H01-A01"
+      }
+    },
+    {
+      "label": "SEPTA - ATC / ACSES - ACTIVE S.S",
+      "value": {
+        "sysNumber": "49",
+        "title": "SEPTA - ATC / ACSES - ACTIVE S.S",
+        "partNumber": "F5664H149-A03"
+      }
+    },
+    {
+      "label": "AMTRAK LDL - ATC/ACSES",
+      "value": {
+        "sysNumber": "53",
+        "title": "AMTRAK LDL - ATC/ACSES",
+        "partNumber": "P001660100-A01"
+      }
+    },
+    {
+      "label": "AMTRAK LDL - ATC/ACSES",
+      "value": {
+        "sysNumber": "54",
+        "title": "AMTRAK LDL - ATC/ACSES",
+        "partNumber": "P001660100-A01"
+      }
+    },
+    {
+      "label": "AMTRAK LDL - ATC/ACSES",
+      "value": {
+        "sysNumber": "55",
+        "title": "AMTRAK LDL - ATC/ACSES",
+        "partNumber": "P001660100-A01"
+      }
+    },
+    {
+      "label": "ALSTOM HST - ATC/ACSES",
+      "value": {
+        "sysNumber": "56",
+        "title": "ALSTOM HST - ATC/ACSES",
+        "partNumber": "P001940100-A01"
+      }
+    },
+    {
+      "label": "ALSTOM HST - ATC/ACSES",
+      "value": {
+        "sysNumber": "57",
+        "title": "ALSTOM HST - ATC/ACSES",
+        "partNumber": "P001940100-A01"
+      }
+    },
+    {
+      "label": "ALSTOM HST - ATC/ACSES",
+      "value": {
+        "sysNumber": "58",
+        "title": "ALSTOM HST - ATC/ACSES",
+        "partNumber": "P001940100-A01"
+      }
+    },
+    {
+      "label": "NJT III - ATC/ACSES",
+      "value": {
+        "sysNumber": "59",
+        "title": "NJT III - ATC/ACSES",
+        "partNumber": "P002070100-A01"
+      }
+    },
+    {
+      "label": "NJT III - ATC/ACSES",
+      "value": {
+        "sysNumber": "60",
+        "title": "NJT III - ATC/ACSES",
+        "partNumber": "P002070100-A01"
+      }
+    },
+    {
+      "label": "NJT III - ATC/ACSES",
+      "value": {
+        "sysNumber": "61",
+        "title": "NJT III - ATC/ACSES",
+        "partNumber": "P002070100-A01"
+      }
+    },
+    {
+      "label": "P40/P32 AMTRAK B to B",
+      "value": {
+        "sysNumber": "62",
+        "title": "P40/P32 AMTRAK B to B",
+        "partNumber": "R5096H01-A01"
+      }
+    },
+    {
+      "label": "P40/P32 AMTRAK B to B",
+      "value": {
+        "sysNumber": "63",
+        "title": "P40/P32 AMTRAK B to B",
+        "partNumber": "R5096H01-A01"
+      }
+    },
+    {
+      "label": "P40/P32 AMTRAK B to B",
+      "value": {
+        "sysNumber": "64",
+        "title": "P40/P32 AMTRAK B to B",
+        "partNumber": "R5096H01-A01"
+      }
+    },
+    {
+      "label": "NJT F4410 ALP",
+      "value": {
+        "sysNumber": "66",
+        "title": "NJT F4410 ALP",
+        "partNumber": "F4410H01-A01"
+      }
+    },
+    {
+      "label": "CTA 7000 - ATC",
+      "value": {
+        "sysNumber": "67",
+        "title": "CTA 7000 - ATC",
+        "partNumber": "P000510001-A01"
+      }
+    },
+    {
+      "label": "AMTRAK LDL - ATC/ACSES",
+      "value": {
+        "sysNumber": "78",
+        "title": "AMTRAK LDL - ATC/ACSES",
+        "partNumber": "P001660100-A01"
+      }
+    },
+    {
+      "label": "NJT III - ATC/ACSES",
+      "value": {
+        "sysNumber": "79",
+        "title": "NJT III - ATC/ACSES",
+        "partNumber": "P002070100-A01"
+      }
+    }
+  ]
+}

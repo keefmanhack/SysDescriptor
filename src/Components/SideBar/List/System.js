@@ -15,6 +15,9 @@ export const System = ({title='Untitled', sysNumber, technician='...', owner='..
     technician = technician ==='' ? '...' : technician;
     owner = owner ==='' ? '...' : owner;
 
+    const onNewRevision = () => {
+
+    }
 
     return (
         <div className='rs-list rs-list-hover'>
