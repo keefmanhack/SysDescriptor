@@ -11,6 +11,10 @@ export const System = () => {
     const [isExpanded, setIsExpanded] = useState(false);
     const ref = useRef();
 
+    const onNewRevision = () => {
+        
+    }
+
     return (
         <div className='rs-list rs-list-hover'>
             <div className='rs-list-item pointer p-2'>
@@ -39,7 +43,7 @@ export const System = () => {
                                 controlId="control-id-with-dropdown"
                                 trigger="click"
                                 ref={ref}
-                                speaker={<SystemOptions/>}                              
+                                speaker={<SystemOptions onNewRevision={()=>onNewRevision()}/>}                              
                             >
                                 <Button appearance='subtle' size='xs'><MoreIcon/></Button>
                             </Whisper>
