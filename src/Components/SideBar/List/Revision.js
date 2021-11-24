@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Col, Row, Grid } from 'rsuite';
 import TrashIcon from '@rsuite/icons/Trash';
-import { useHover } from '../../misc/customHooks';
+import { useHover } from '../../../misc/customHooks';
 
 export const Revision = () => {
     const [ref, hover] = useHover();

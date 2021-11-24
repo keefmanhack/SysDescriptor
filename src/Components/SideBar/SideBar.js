@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import { Button, Input, InputGroup, Loader} from 'rsuite';
-import moment from 'moment';
+import {Input, InputGroup, Loader, List} from 'rsuite';
 import { Close } from '@rsuite/icons';
 
 import { useSystems } from '../../Contexts/systems.context';
 import {useMediaQuery} from '../../misc/customHooks'
-import ButtonToggle from '../../misc/ButtonToggle';
-import { System } from './System';
+import { System } from './List/System';
+import NewSystemModal from './NewSystemModal';
 
 
 // const selectedStyle = {
@@ -15,40 +14,34 @@ import { System } from './System';
 // }
 
 const findSearchResults = (systems, searchText) => {
-    const sysIDs = Object.keys(systems);
-    const resultIDs = sysIDs.filter(id => {
-        const {name} = systems[id];
-        if(!name){return false}
-        return name.toLowerCase().includes(searchText.toLowerCase())
+    if(searchText===''){return systems}
+
+    const results = systems.filter(sys => {
+        const {title} = sys
+        if(!title){return false}
+        return title.toLowerCase().includes(searchText.toLowerCase())
     })
 
-    return resultIDs;
+    return results;
 }
 
-const SideBar = ({onNew}) => {
-    const [newestSelected, setNewestSelected] = useState(true);
+const SideBar = () => {
     const [searchText, setSearchText] = useState('');
 
-    // const TWO_DAYS_AGO = moment().clone().subtract(2, 'days').startOf('day');
     const isDesktop = useMediaQuery('(min-width: 1200px)');
     const {systems, isUpdating} = useSystems();
-    const systemIDs = Object.keys(systems || {});
 
-    const searchedResultIDs = searchText === '' ? systemIDs :  findSearchResults(systems, searchText);
+    const searchResults =  findSearchResults(systems, searchText);
 
-    searchedResultIDs.sort((a, b) => {
-        const left = systems[a];
-        const right = systems[b];
+
+    const onEdit = () => {
+        console.log('adskfjadslkfj')
+    }
+
  
-        if(!newestSelected){
-            return moment.utc(left.timestamp).diff(moment.utc(right.timestamp))
-        }
-        return moment.utc(right.timestamp).diff(moment.utc(left.timestamp))
-    });
-
    return (
         <div className='br-r h-100 p-1' style={{}}>
-            <Button color="blue" appearance='primary' onClick={onNew} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New System</Button>
+            <NewSystemModal/>
             <InputGroup style={{width: '80%'}} className='mx-auto'>
                 <Input value={searchText} onChange={(e) => setSearchText(e)} clearable placeholder='Search' size='md'/>
                 <InputGroup.Button onClick={()=>setSearchText('')}>
@@ -56,43 +49,32 @@ const SideBar = ({onNew}) => {
                 </InputGroup.Button>
             </InputGroup>
 
-            <ButtonToggle
-                onChange={(v) =>setNewestSelected(v)}
-                options={[{disp:'Newest', value: true}, {disp: 'Oldest', value: false}]}
-                style={{margin: '10px 20%'}}
-                size='sm'
-                justified
-            />
-            <div style={{paddingLeft: '5px'}}>
-                <div><strong>{systemIDs.length}</strong> Total Descriptions</div>
-                <span><strong>{searchedResultIDs.length}</strong> Descriptions Shown</span>
+            <div style={{paddingLeft: '5px'}} className='mt-2'>
+                <div><strong>{systems.length}</strong> Total Descriptions</div>
+                <span><strong>{searchResults.length}</strong> Descriptions Shown</span>
             </div>
-            <hr/>
+            <hr style={{marginTop: '5px', marginBottom: '5px'}}/>
             <div className='v-scroll' style={{height: isDesktop ? '66vh' : '20vh'}}>
             {isUpdating ? <Loader/> : null}
-            <System/>
-            <System/>
-            <System/>
-            <System/>
-            {/* <List hover autoScroll>
-                {systems && searchedResultIDs.map(id => {
-                    const {name, timestamp, owner, tech} = systems[id];
-                    const isNew = moment(timestamp).isAfter(TWO_DAYS_AGO, 'd');
-                    const isSelected = id === selectedID;
-                    return <SysItem 
-                        onSelected={()=>onSysSelected(id)}
-                        onDeleted={() => onSysDeleted(id)}
-                        isNew={isNew} 
-                        key={id}
-                        name={name} 
-                        timestamp={timestamp} 
-                        owner={owner} 
-                        tech={tech}
-                        style={isSelected ? selectedStyle : {}}
+            <List hover autoScroll>
+                {searchResults.map((sys, i) => {
+                    const {title, sysNumber, technician, owner} = sys;
+                    return <System
+                        title={title}
+                        owner={owner}
+                        technician={technician}
+                        sysNumber={sysNumber}
+                        key={i}
+                        onSelect={(x)=>{
+                            switch(x){
+                                case 2: onEdit();break;
+                                default: ;
+                            }
+                        }}
                     />
                 })}
-            </List> */}
-                {searchedResultIDs.length===0 && !isUpdating ? <span className='muted-c'>No Systems Were Found.</span> : null}
+            </List>
+                {searchResults.length===0 && !isUpdating ? <span className='muted-c'>No Systems Were Found.</span> : null}
             </div>
         </div>
     )

@@ -1,19 +1,20 @@
 import React, { useRef, useState } from 'react';
-import {Row, Col, Grid, Button, Whisper} from 'rsuite';
+import {Row, Col, Grid, Button, Whisper, Animation} from 'rsuite';
 import MoreIcon from '@rsuite/icons/More';
 import ArrowRightIcon from '@rsuite/icons/ArrowRight';
 import ArrowDownIcon from '@rsuite/icons/ArrowDown';
 import { Revision } from './Revision';
 import { SystemOptions } from './SystemOptions';
-// import { useHover } from '../../misc/customHooks';
+import HoverShowAll from '../../../misc/HoverShowAll';
 
-export const System = () => {
+export const System = ({title='Untitled', sysNumber, technician='...', owner='...'}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const ref = useRef();
 
-    const onNewRevision = () => {
-        
-    }
+    title = title ==='' ? 'Untitled' : title;
+    technician = technician ==='' ? '...' : technician;
+    owner = owner ==='' ? '...' : owner;
+
 
     return (
         <div className='rs-list rs-list-hover'>
@@ -26,16 +27,24 @@ export const System = () => {
                             </Button>
                         </Col>
                         <Col xs={8}>
-                            <h5 className='ellip-overflow'>Untitled</h5>
+                            <HoverShowAll text={title}>
+                                <h5 className='ellip-overflow'>{title}</h5>
+                            </HoverShowAll>
                         </Col>
                         <Col xs={2}>
-                            <p className='muted-c ellip-overflow'>1</p>
+                            <HoverShowAll text="System Number">
+                                <p className='muted-c ellip-overflow'>{sysNumber}</p>
+                            </HoverShowAll>
                         </Col>
                         <Col xs={5}>
-                            <p className='muted-c ellip-overflow'>Technician</p>
+                            <HoverShowAll text={`Technician: ${technician}`}>
+                                <p className='muted-c ellip-overflow'>{technician}</p>
+                            </HoverShowAll>
                         </Col>
                         <Col xs={5}>
-                            <p className='muted-c ellip-overflow'>Owner</p>
+                            <HoverShowAll text={`Owner: ${owner}`}>
+                                <p className='muted-c ellip-overflow'>{owner}</p>
+                            </HoverShowAll>
                         </Col>
                         <Col xs={2}>
                             <Whisper
@@ -51,13 +60,13 @@ export const System = () => {
                     </Row>
                 </Grid>         
             </div>
-            {isExpanded ? 
-                <div className='rs-list rs-list-hover' style={{marginLeft: '10%'}}>  
+            <Animation.Collapse in={isExpanded}>
+                <div className='rs-list rs-list-hover v-scroll' style={{marginLeft: '10%'}}>
                     <Revision/>
                     <Revision/>
                     <Revision/>
                 </div>
-            : null}
+            </Animation.Collapse>
         </div>
     )
 }
