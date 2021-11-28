@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Row, Col} from "rsuite";
-import {ref, push, get, set } from "firebase/database";
+import {ref, push, get, set} from "firebase/database";
 import firebase from 'firebase/compat/';
 import database from './misc/firebase';
 
@@ -21,21 +21,22 @@ import { ThemeProvider } from './Contexts/theme.context';
 
 function App() {
   const [theme, setTheme] = useState('dark')
-  const [sysID, setSysID] = useState(null);
-  const createNew = async () => {
-    const genRef = ref(database, `systems/`);
-    const newSysData = {
+  const [revID, setRevID] = useState(null);
+
+  const createNewRev = async (sysId) => {
+    const revRef = ref(database, `revisions/${sysId}`);
+    const newRevData = {
         timestamp: firebase.database.ServerValue.TIMESTAMP,
         system: `${Date.now()}${makeid(5)}`,
         atc: `${Date.now()}${makeid(5)}`,
         acses: `${Date.now()}${makeid(5)}`
     }
     try{
-      const id = await push(genRef, newSysData).key;
-      Alert.success(`Created new System Description`);
-      setSysID(id);
+      const revID = await push(revRef, newRevData).key;
+      Alert.success(`Created a new System Revision`);
+      setRevID(revID);
     }catch(err){
-      alert(err);
+      Alert.error(err);
       console.log(err);
     }
   }
@@ -62,7 +63,7 @@ function App() {
       console.log(err);
       Alert.error(err.message);
     }
-    setSysID(null);
+    setRevID(null);
   }
 
 
@@ -74,11 +75,15 @@ function App() {
           <Row >
             <Col xs={24} lg={6} >
               <SystemsProvider>
-                <SideBar onSysDeleted={(id) => deleteSys(id)} selectedID={sysID} onSysSelected={(id) => setSysID(id)} onNew={() => createNew()}/>
+                <SideBar 
+                  onSysDeleted={(id) => deleteSys(id)} 
+                  selectedID={revID} onSysSelected={(id) => setRevID(id)} 
+                  onNewRevision={(sysID)=>createNewRev(sysID)}
+                />
               </SystemsProvider>
             </Col>
             <Col xs={24} lg={18} >
-              {sysID ? <NewMainStage sysID={sysID} /> : <DefaultMainStage/>}
+              {revID ? <NewMainStage sysID={revID} /> : <DefaultMainStage/>}
             </Col>
           </Row>
         </Grid>

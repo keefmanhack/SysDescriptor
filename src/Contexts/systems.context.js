@@ -16,7 +16,7 @@ export const SystemsProvider = ({children}) => {
             onValue(systemsRef, (snap) =>{
                 const systemJSON = (snap.val()) || {};
                 const ids = Object.keys(systemJSON);
-                let sysArr = ids.map(id => systemJSON[id]);
+                let sysArr = ids.map(id =>  ({id, ...systemJSON[id]}));
                 sysArr = sysArr || [];
                 setSystems(sysArr);
                 setIsUpdating(false);

@@ -1,4 +1,6 @@
+import { off, onValue, ref } from "firebase/database";
 import { useState, useEffect, useRef } from "react";
+import Alert from "./Alert";
 
 export const useMediaQuery = query => {
     const [matches, setMatches] = useState(
@@ -54,6 +56,31 @@ export const useHover = () => {
     [ref.current] // Recall only if ref changes
   );
   return [ref, value];
+}
+
+
+export const useRevisions = listID => {
+  const [revs, setRevs] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+  
+  const listRef = ref(`revisions/${listID}`);
+  useEffect(() => {
+    setIsUpdating(true);
+    
+    onValue(listRef, snap => {
+      setRevs(snap.val());
+      setIsUpdating(false);
+    }, err => {
+      Alert.error(err);
+      console.log(err);
+    })
+    
+    return () => {
+      off(listRef);
+    }
+  }, [listID]);
+
+  return [revs, isUpdating];
 }
 
 

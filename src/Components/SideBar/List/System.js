@@ -1,23 +1,20 @@
 import React, { useRef, useState } from 'react';
-import {Row, Col, Grid, Button, Whisper, Animation} from 'rsuite';
+import {Row, Col, Grid, Button, Whisper, Animation, Loader} from 'rsuite';
 import MoreIcon from '@rsuite/icons/More';
 import ArrowRightIcon from '@rsuite/icons/ArrowRight';
 import ArrowDownIcon from '@rsuite/icons/ArrowDown';
 import { Revision } from './Revision';
 import { SystemOptions } from './SystemOptions';
 import HoverShowAll from '../../../misc/HoverShowAll';
+import { useRevisions } from '../../../misc/customHooks';
 
-export const System = ({title='Untitled', sysNumber, technician='...', owner='...'}) => {
+export const System = ({title='Untitled', revListID, partNumber, sysNumber, technician, owner, onNewRevision}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const ref = useRef();
 
     title = title ==='' ? 'Untitled' : title;
-    technician = technician ==='' ? '...' : technician;
-    owner = owner ==='' ? '...' : owner;
 
-    const onNewRevision = () => {
-
-    }
+    const [revData, isUpdating] = useRevisions(revListID);
 
     return (
         <div className='rs-list rs-list-hover'>
@@ -32,6 +29,9 @@ export const System = ({title='Untitled', sysNumber, technician='...', owner='..
                         <Col xs={8}>
                             <HoverShowAll text={title}>
                                 <h5 className='ellip-overflow'>{title}</h5>
+                            </HoverShowAll>
+                            <HoverShowAll text={partNumber}>
+                                <span className='muted-c ellip-overflow'>{partNumber}</span>
                             </HoverShowAll>
                         </Col>
                         <Col xs={2}>
@@ -65,9 +65,13 @@ export const System = ({title='Untitled', sysNumber, technician='...', owner='..
             </div>
             <Animation.Collapse in={isExpanded}>
                 <div className='rs-list rs-list-hover v-scroll' style={{marginLeft: '10%'}}>
-                    <Revision/>
-                    <Revision/>
-                    <Revision/>
+                    {isUpdating ? <Loader/> : null}
+                    {!isUpdating ? revData.map((val, i) => (
+                        <Revision 
+
+                            key={i}
+                        />
+                    )): null}
                 </div>
             </Animation.Collapse>
         </div>

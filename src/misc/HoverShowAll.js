@@ -9,7 +9,7 @@ const HoverShowAll = ({text="missing", children}) => {
       );
 
     return (
-        <Whisper placement="topLeft" controlId="control-id-hover" trigger="hover" speaker={tooltip}>
+        <Whisper placement="top" controlId="control-id-hover" trigger="hover" speaker={tooltip}>
             {children}
         </Whisper>
     );

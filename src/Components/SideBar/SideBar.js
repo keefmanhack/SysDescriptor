@@ -25,18 +25,13 @@ const findSearchResults = (systems, searchText) => {
     return results;
 }
 
-const SideBar = () => {
+const SideBar = ({onNewRevision}) => {
     const [searchText, setSearchText] = useState('');
 
     const isDesktop = useMediaQuery('(min-width: 1200px)');
     const {systems, isUpdating} = useSystems();
 
     const searchResults =  findSearchResults(systems, searchText);
-
-
-    const onEdit = () => {
-        console.log('adskfjadslkfj')
-    }
 
  
    return (
@@ -58,19 +53,16 @@ const SideBar = () => {
             {isUpdating ? <Loader/> : null}
             <List hover autoScroll>
                 {searchResults.map((sys, i) => {
-                    const {title, sysNumber, technician, owner} = sys;
+                    const {title, sysNumber, technician, owner, partNumber, id} = sys;
                     return <System
                         title={title}
                         owner={owner}
                         technician={technician}
                         sysNumber={sysNumber}
+                        partNumber={partNumber}
+                        revListID={id}
                         key={i}
-                        onSelect={(x)=>{
-                            switch(x){
-                                case 2: onEdit();break;
-                                default: ;
-                            }
-                        }}
+                        onNewRevision={()=>onNewRevision(id)}
                     />
                 })}
             </List>
