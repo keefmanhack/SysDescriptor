@@ -25,7 +25,7 @@ const findSearchResults = (systems, searchText) => {
     return results;
 }
 
-const SideBar = ({onNewRevision}) => {
+const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) => {
     const [searchText, setSearchText] = useState('');
 
     const isDesktop = useMediaQuery('(min-width: 1200px)');
@@ -52,7 +52,7 @@ const SideBar = ({onNewRevision}) => {
             <div className='v-scroll' style={{height: isDesktop ? '66vh' : '20vh'}}>
             {isUpdating ? <Loader/> : null}
             <List hover autoScroll>
-                {searchResults.map((sys, i) => {
+                {searchResults.map(sys => {
                     const {title, sysNumber, technician, owner, partNumber, id} = sys;
                     return <System
                         title={title}
@@ -61,8 +61,11 @@ const SideBar = ({onNewRevision}) => {
                         sysNumber={sysNumber}
                         partNumber={partNumber}
                         revListID={id}
-                        key={i}
+                        key={id}
+                        isSelected={sysSelectedID===id}
+                        revSelectedID={revSelectedID}
                         onNewRevision={()=>onNewRevision(id)}
+                        onRevSelected={(revID)=>onRevSelected(id, revID)}
                     />
                 })}
             </List>

@@ -5,38 +5,39 @@ import database from '../../misc/firebase';
 
 import SysGroup from './SubComponents/SysGroup';
 import MainStage from './MainStage';
-import sysData from '../../misc/dataFormat.json';
+import revData from '../../misc/dataFormat.json';
 import CompInput from './SubComponents/CompInput';
 import SavedIndicator from '../../misc/SavedIndicator';
 import Alert from '../../misc/Alert';
 import { generateDocument } from '../../misc/helperfunc';
 
-const NewMainStage = ({sysID, style}) => {
+const NewMainStage = ({sysID, revID, style}) => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [general, setGeneral] = useState({});
 
+    const DBROOT= `revisions/${sysID}/${revID}`;
 
     useEffect(() => {
         const loadGeneral = async () => {
             setGeneral({});
-            const systemsRef = ref(database, `systems/${sysID}`);
+            const revRef = ref(database, DBROOT);
             try{
-                const snap = await get(systemsRef); 
+                const snap = await get(revRef); 
                 setGeneral(snap.val())
             }catch(err){
                 console.log(err);
-                alert(err);
+                Alert.error("Error loading revision data");
             }
         }   
         loadGeneral();
 
-    }, [sysID])
+    }, [revID])
 
     const updateGeneralDB = async (path, val) => {
         setIsUpdating(true);
         general[path] = val;
         setGeneral(general);
-        const db = ref(database, `systems/${sysID}/${path}`);
+        const db = ref(database, `${DBROOT}/${path}`);
         try{
           await set(db, val)
         }catch(err){
@@ -56,8 +57,6 @@ const NewMainStage = ({sysID, style}) => {
         setIsUpdating(false);
     }
 
-
-
     return (
         <MainStage
             style={style}
@@ -69,35 +68,35 @@ const NewMainStage = ({sysID, style}) => {
                     </div>
                     <div style={{width: '40%'}} className='mx-auto mb-3'>
                         <CompInput 
-                            onChange={(e) => {updateGeneralDB(sysData.general.name.db, e)}}
-                            dbPath={`systems/${sysID}/${sysData.general.name.db}`}
-                            title="System Name" 
+                            onChange={(e) => {updateGeneralDB(revData.general.name.db, e)}}
+                            dbPath={`${DBROOT}/${revData.general.name.db}`}
+                            title="Revision Name" 
                             inputType="Text" 
                             id='name' 
-                            style={{ fontSize: '32px'}} 
-                            placeholder='LDL, HST, etc...'
+                            style={{ fontSize: '32px', width: '100%'}} 
+                            placeholder='Revision Name'
                         />
                     </div>
                     <Grid fluid>
                         <Row>
                             <Col xs={12}>
-                            <div style={{width: '50%'}} className='mx-auto mb-3'>
+                            {/* <div style={{width: '50%'}} className='mx-auto mb-3'>
                                 <CompInput 
                                     onChange={(e) => {updateGeneralDB(sysData.general.technician.db, e)}}
-                                    dbPath={`systems/${sysID}/${sysData.general.technician.db}`}
+                                    dbPath={`systems/${revID}/${sysData.general.technician.db}`}
                                     title="Technician" 
                                     inputType="Text" 
                                     id='tech' 
                                     style={{ fontSize: '24px'}} 
                                     placeholder='John Smith'
                                 />
-                            </div>  
+                            </div>   */}
                             </Col>
                             <Col xs={12}>
-                                <div style={{width: '50%'}} className='mx-auto mb-3'>
+                                {/* <div style={{width: '50%'}} className='mx-auto mb-3'>
                                     <CompInput 
                                         onChange={(e) => {updateGeneralDB(sysData.general.owner.db, e)}}
-                                        dbPath={`systems/${sysID}/${sysData.general.owner.db}`}
+                                        dbPath={`systems/${revID}/${sysData.general.owner.db}`}
                                         title="Owner" 
                                         inputType="Text" 
                                         id='owner' 
@@ -105,18 +104,18 @@ const NewMainStage = ({sysID, style}) => {
                                         placeholder='John Smith'
                                         className='mx-auto'
                                     />
-                                </div> 
+                                </div>  */}
                             </Col>
                         </Row>
                         <Row>
                             <Col xs={8}>
-                                <SysGroup rootPath={`system/${general.system}`} data={sysData.system} onUpdated={(path, e) => updateSubComp(path, e)} title='System'/>
+                                <SysGroup rootPath={`general/${general.system}`} data={revData.system} onUpdated={(path, e) => updateSubComp(path, e)} title='System'/>
                             </Col>
                             <Col xs={8}>
-                                <SysGroup rootPath={`atc/${general.atc}`} data={sysData.atc} onUpdated={(path, e) => updateSubComp(path, e)} title='ATC'/>
+                                <SysGroup rootPath={`atc/${general.atc}`} data={revData.atc} onUpdated={(path, e) => updateSubComp(path, e)} title='ATC'/>
                             </Col>
                             <Col xs={8}>
-                                <SysGroup rootPath={`acses/${general.acses}`} data={sysData.acses} onUpdated={(path, e) => updateSubComp(path, e)} title='ACSES'/>
+                                <SysGroup rootPath={`acses/${general.acses}`} data={revData.acses} onUpdated={(path, e) => updateSubComp(path, e)} title='ACSES'/>
                             </Col>
                         </Row>
                     </Grid>

@@ -1,28 +1,26 @@
 import React, { useRef, useState } from 'react';
-import {Row, Col, Grid, Button, Whisper, Animation, Loader} from 'rsuite';
+import {Row, Col, Grid, Button, Whisper} from 'rsuite';
 import MoreIcon from '@rsuite/icons/More';
 import ArrowRightIcon from '@rsuite/icons/ArrowRight';
 import ArrowDownIcon from '@rsuite/icons/ArrowDown';
-import { Revision } from './Revision';
 import { SystemOptions } from './SystemOptions';
 import HoverShowAll from '../../../misc/HoverShowAll';
-import { useRevisions } from '../../../misc/customHooks';
+import RevList from './RevList';
 
-export const System = ({title='Untitled', revListID, partNumber, sysNumber, technician, owner, onNewRevision}) => {
+export const System = ({title='Untitled', revListID, partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const ref = useRef();
-
     title = title ==='' ? 'Untitled' : title;
 
-    const [revData, isUpdating] = useRevisions(revListID);
+    const selStyle= isSelected ? {borderLeft: '1px solid lightgreen'} : null
 
     return (
         <div className='rs-list rs-list-hover'>
-            <div className='rs-list-item pointer p-2'>
+            <button type='button' onClick={() => setIsExpanded(v => !v)} className='rs-list-item pointer p-2' style={{...selStyle, width: '100%'}}>
                 <Grid fluid>
                     <Row>
                         <Col xs={2}>
-                            <Button style={{fontSize: '18px'}} appearance='subtle' size='xs' onClick={() => setIsExpanded(v => !v)}>
+                            <Button style={{fontSize: '18px'}} appearance='subtle' size='xs'>
                                 {isExpanded ? <ArrowDownIcon/> : <ArrowRightIcon/>}
                             </Button>
                         </Col>
@@ -55,6 +53,7 @@ export const System = ({title='Untitled', revListID, partNumber, sysNumber, tech
                                 controlId="control-id-with-dropdown"
                                 trigger="click"
                                 ref={ref}
+                                onClick={(e)=>e.stopPropagation()}
                                 speaker={<SystemOptions onNewRevision={()=>onNewRevision()}/>}                              
                             >
                                 <Button appearance='subtle' size='xs'><MoreIcon/></Button>
@@ -62,18 +61,8 @@ export const System = ({title='Untitled', revListID, partNumber, sysNumber, tech
                         </Col>
                     </Row>
                 </Grid>         
-            </div>
-            <Animation.Collapse in={isExpanded}>
-                <div className='rs-list rs-list-hover v-scroll' style={{marginLeft: '10%'}}>
-                    {isUpdating ? <Loader/> : null}
-                    {!isUpdating ? revData.map((val, i) => (
-                        <Revision 
-
-                            key={i}
-                        />
-                    )): null}
-                </div>
-            </Animation.Collapse>
+            </button>
+            {isExpanded ? <RevList revSelectedID={revSelectedID} onRevSelected={(id)=>onRevSelected(id)} id={revListID}/> : null}           
         </div>
     )
 }

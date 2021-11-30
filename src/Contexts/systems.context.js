@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState} from 'react';
 import {ref, onValue, off} from 'firebase/database';
 import database from '../misc/firebase';
 import Alert from '../misc/Alert';
+import { snapToArr } from '../misc/helperfunc';
 
 const SystemsContext = createContext();
 
@@ -14,11 +15,7 @@ export const SystemsProvider = ({children}) => {
         const listenForSystems = () => {
             setIsUpdating(true);
             onValue(systemsRef, (snap) =>{
-                const systemJSON = (snap.val()) || {};
-                const ids = Object.keys(systemJSON);
-                let sysArr = ids.map(id =>  ({id, ...systemJSON[id]}));
-                sysArr = sysArr || [];
-                setSystems(sysArr);
+                setSystems(snapToArr(snap.val()));
                 setIsUpdating(false);
             }, err => {
                 Alert.error(err.message);
@@ -31,7 +28,6 @@ export const SystemsProvider = ({children}) => {
         return () => {
             off(systemsRef);
         }
-
     }, [])
 
     return <SystemsContext.Provider value={{systems, isUpdating}}>

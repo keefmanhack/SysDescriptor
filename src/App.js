@@ -22,6 +22,7 @@ import { ThemeProvider } from './Contexts/theme.context';
 function App() {
   const [theme, setTheme] = useState('dark')
   const [revID, setRevID] = useState(null);
+  const [sysID, setSysID] = useState(null);
 
   const createNewRev = async (sysId) => {
     const revRef = ref(database, `revisions/${sysId}`);
@@ -77,13 +78,15 @@ function App() {
               <SystemsProvider>
                 <SideBar 
                   onSysDeleted={(id) => deleteSys(id)} 
-                  selectedID={revID} onSysSelected={(id) => setRevID(id)} 
+                  revSelectedID={revID}
+                  sysSelectedID={sysID}
                   onNewRevision={(sysID)=>createNewRev(sysID)}
+                  onRevSelected={(sysID, revID)=> {setSysID(sysID); setRevID(revID); }}
                 />
               </SystemsProvider>
             </Col>
             <Col xs={24} lg={18} >
-              {revID ? <NewMainStage sysID={revID} /> : <DefaultMainStage/>}
+              {revID ? <NewMainStage revID={revID} sysID={sysID} /> : <DefaultMainStage/>}
             </Col>
           </Row>
         </Grid>

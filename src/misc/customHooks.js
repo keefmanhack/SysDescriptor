@@ -1,6 +1,8 @@
-import { off, onValue, ref } from "firebase/database";
 import { useState, useEffect, useRef } from "react";
+import { off, onValue, ref } from "firebase/database";
+import database from './firebase';
 import Alert from "./Alert";
+import { snapToArr } from "./helperfunc";
 
 export const useMediaQuery = query => {
     const [matches, setMatches] = useState(
@@ -58,17 +60,16 @@ export const useHover = () => {
   return [ref, value];
 }
 
-
 export const useRevisions = listID => {
   const [revs, setRevs] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   
-  const listRef = ref(`revisions/${listID}`);
+  const listRef = ref(database, `revisions/${listID}`);
   useEffect(() => {
     setIsUpdating(true);
     
     onValue(listRef, snap => {
-      setRevs(snap.val());
+      setRevs(snapToArr(snap.val()));
       setIsUpdating(false);
     }, err => {
       Alert.error(err);
