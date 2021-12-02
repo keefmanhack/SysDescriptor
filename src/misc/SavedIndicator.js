@@ -17,7 +17,7 @@ const SavedIndicator = ({style, isUpdating, persistFor=1000}) => {
 
 
     return (
-        <Tag style={style}  color={delayedIsUpdating ? "green" : ""}>
+        <Tag style={{...style, transition: '.3s', textAlign: 'left'}}  color={delayedIsUpdating ? "green" : ""} appearance={delayedIsUpdating ? "primary" : "ghost"} >
             {delayedIsUpdating ? "Saving..." : "Saved"}
         </Tag>
     );

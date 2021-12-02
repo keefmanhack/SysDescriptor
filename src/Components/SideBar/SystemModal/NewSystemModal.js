@@ -7,11 +7,11 @@ import systemChoices from '../../../misc/SystemChoices/systemChoices.json';
 
 
 const validationModel  = Schema.Model({
-    System: Schema.Types.NumberType().isRequired("This property is required"),
+    System: Schema.Types.NumberType().min(0, "This value is required")
 })
 
 const NewSystemModal = () => {
-    const [selectedSystemIndex, setSelectedSystemIndex] = useState(5);
+    const [selectedSystemIndex, setSelectedSystemIndex] = useState(null);
     const [owner, setOwner] = useState('');
     const [technician, setTechnician] = useState('');
     const [utfNumber, setutfNumber] = useState(0);
@@ -22,7 +22,7 @@ const NewSystemModal = () => {
     }
 
     const onNewSystem = async () => {
-        if(!selectedSystemIndex){return}
+        if(selectedSystemIndex===null){return}
         const newRef = ref(database, `systems/`);
         const sysParent = systemChoices.systems[selectedSystemIndex].data;
         const {title, partNumber, sysNumber} = sysParent;
@@ -44,7 +44,7 @@ const NewSystemModal = () => {
             console.log(err);
         }
     }
-    
+
     return (
     <>
         <Button color="blue" appearance='primary' onClick={()=> setShow(true)} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New System</Button>
@@ -68,20 +68,20 @@ const NewSystemModal = () => {
                     </Form.Group>
                     <Form.Group style={{marginBottom: '10px'}}>
                         <Form.ControlLabel style={{fontSize: '14px'}}>UTF Number</Form.ControlLabel>
-                        <Form.Control value={utfNumber} onChange={(e) => setutfNumber(e)} size='xs' style={{width: '80px'}} placeholder={0} min={0} scrollable defaultValue={0} accepter={InputNumber} />
+                        <Form.Control name='UTF Number' value={utfNumber} onChange={(e) => setutfNumber(e)} size='xs' style={{width: '80px'}} placeholder={0} min={0} scrollable defaultValue={0} accepter={InputNumber} />
                     </Form.Group>
                     <Grid style={{padding: 0}} fluid>
                         <Row>
                             <Col xs={12}>
                                 <Form.Group>
                                     <Form.ControlLabel style={{fontSize: '16px'}}>Technician</Form.ControlLabel>
-                                    <Form.Control value={technician} onChange={(e) => setTechnician(e)} size='sm' accepter={Input} />
+                                    <Form.Control name='technician' value={technician} onChange={(e) => setTechnician(e)} size='sm' accepter={Input} />
                                 </Form.Group>
                             </Col>
                             <Col xs={12}>
                                 <Form.Group>
                                     <Form.ControlLabel style={{fontSize: '16px'}}>Owner</Form.ControlLabel>
-                                    <Form.Control value={owner} onChange={(e) => setOwner(e)} size='sm' accepter={Input} />
+                                    <Form.Control name='owner' value={owner} onChange={(e) => setOwner(e)} size='sm' accepter={Input} />
                                 </Form.Group>
                             </Col>
                         </Row>

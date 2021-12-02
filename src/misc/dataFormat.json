@@ -1,16 +1,12 @@
 {   
     "general": {
         "name" : {
-            "bookmark_location" : null,
-            "db" : "name"
+            "db" : "name",
+            "input" : "Text"
         },
-        "owner" : {
-            "bookmark_location" : null,
-            "db" : "owner"
-        },
-        "technician" : {
-            "bookmark_location" : null,
-            "db" : "tech"
+        "revision_number" : {
+            "db" : "revisionNumber",
+            "input": "Number"
         }
     },
     "system": {

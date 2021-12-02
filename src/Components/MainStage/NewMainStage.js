@@ -1,19 +1,26 @@
 import React, {useState, useEffect } from 'react';
-import { Grid, Row, Col, Button } from 'rsuite';
+import { Grid, Row, Col, Button, Drawer, Input } from 'rsuite';
 import {set, ref, get} from 'firebase/database';
-import database from '../../misc/firebase';
 
+import database from '../../misc/firebase';
 import SysGroup from './SubComponents/SysGroup';
 import MainStage from './MainStage';
 import revData from '../../misc/dataFormat.json';
-import CompInput from './SubComponents/CompInput';
 import SavedIndicator from '../../misc/SavedIndicator';
 import Alert from '../../misc/Alert';
 import { generateDocument } from '../../misc/helperfunc';
+import { DBTextInput } from './SubComponents/DBInput/Extensions/DBTextInput';
+import DefaultMainStage from './DefaultMainStage';
+import { DBNumberInput } from './SubComponents/DBInput/Extensions/DBNumberInput';
+import {useModal} from '../../misc/customHooks';
+
 
 const NewMainStage = ({sysID, revID, style}) => {
     const [isUpdating, setIsUpdating] = useState(false);
     const [general, setGeneral] = useState({});
+
+    const {isOpen, onOpen, onClose} = useModal();
+
 
     const DBROOT= `revisions/${sysID}/${revID}`;
 
@@ -22,7 +29,7 @@ const NewMainStage = ({sysID, revID, style}) => {
             setGeneral({});
             const revRef = ref(database, DBROOT);
             try{
-                const snap = await get(revRef); 
+                const snap = await get(revRef);
                 setGeneral(snap.val())
             }catch(err){
                 console.log(err);
@@ -31,22 +38,10 @@ const NewMainStage = ({sysID, revID, style}) => {
         }   
         loadGeneral();
 
-    }, [revID])
+    }, [DBROOT])
 
-    const updateGeneralDB = async (path, val) => {
-        setIsUpdating(true);
-        general[path] = val;
-        setGeneral(general);
-        const db = ref(database, `${DBROOT}/${path}`);
-        try{
-          await set(db, val)
-        }catch(err){
-          Alert.error(`Error writing general system data of ${val} to the cloud`);
-        }
-        setIsUpdating(false);
-    }
 
-    const updateSubComp = async (path, val) => {
+    const updateDB = async (val, path) => {
         setIsUpdating(true);
         const db = ref(database, path);
         try{
@@ -57,68 +52,72 @@ const NewMainStage = ({sysID, revID, style}) => {
         setIsUpdating(false);
     }
 
+
+    if(!general){
+        return <DefaultMainStage/>
+    }
+
+
     return (
         <MainStage
             style={style}
             newStageComp={
                 <>
                     <div className='p-1 w-100'>
-                            <Button onClick={()=>generateDocument()} color='green' appearance="primary" className='mr-3'>Generate File</Button>
-                            <SavedIndicator isUpdating={isUpdating} style={{float: 'right', marginRight: '10px'}}/>
+                     <div style={{position:'relative'}}>
+                        <Button onClick={onOpen} style={{float: 'right'}}>Notes</Button>
+                        <SavedIndicator isUpdating={isUpdating} style={{position: 'absolute', left: '45%', marginTop: '10px'}}/>
+                        </div>    
+                    
+                    <Button style={{display: 'block', marginBottom: '10px'}} onClick={()=>generateDocument()} color='green' appearance="primary">Generate File</Button>
+                            
                     </div>
                     <div style={{width: '40%'}} className='mx-auto mb-3'>
-                        <CompInput 
-                            onChange={(e) => {updateGeneralDB(revData.general.name.db, e)}}
+                        <DBTextInput
+                            onChange={(e, path) => {updateDB(e, path)}}
                             dbPath={`${DBROOT}/${revData.general.name.db}`}
                             title="Revision Name" 
-                            inputType="Text" 
-                            id='name' 
                             style={{ fontSize: '32px', width: '100%'}} 
                             placeholder='Revision Name'
                         />
+                        <DBNumberInput
+                            onChange={(e, path) => updateDB(e, path)}
+                            dbPath={`${DBROOT}/${revData.general.revision_number.db}`}
+                            title="Rev. Number"
+                            placeholder='0'
+                            style={{width: '100px'}}
+                        />
+
+
                     </div>
                     <Grid fluid>
                         <Row>
-                            <Col xs={12}>
-                            {/* <div style={{width: '50%'}} className='mx-auto mb-3'>
-                                <CompInput 
-                                    onChange={(e) => {updateGeneralDB(sysData.general.technician.db, e)}}
-                                    dbPath={`systems/${revID}/${sysData.general.technician.db}`}
-                                    title="Technician" 
-                                    inputType="Text" 
-                                    id='tech' 
-                                    style={{ fontSize: '24px'}} 
-                                    placeholder='John Smith'
-                                />
-                            </div>   */}
-                            </Col>
-                            <Col xs={12}>
-                                {/* <div style={{width: '50%'}} className='mx-auto mb-3'>
-                                    <CompInput 
-                                        onChange={(e) => {updateGeneralDB(sysData.general.owner.db, e)}}
-                                        dbPath={`systems/${revID}/${sysData.general.owner.db}`}
-                                        title="Owner" 
-                                        inputType="Text" 
-                                        id='owner' 
-                                        style={{ fontSize: '24px'}} 
-                                        placeholder='John Smith'
-                                        className='mx-auto'
-                                    />
-                                </div>  */}
-                            </Col>
-                        </Row>
-                        <Row>
                             <Col xs={8}>
-                                <SysGroup rootPath={`general/${general.system}`} data={revData.system} onUpdated={(path, e) => updateSubComp(path, e)} title='System'/>
+                                <SysGroup rootPath={`general/${general.system}`} data={revData.system} onUpdated={(e, path) => updateDB(e, path)} title='System'/>
                             </Col>
                             <Col xs={8}>
-                                <SysGroup rootPath={`atc/${general.atc}`} data={revData.atc} onUpdated={(path, e) => updateSubComp(path, e)} title='ATC'/>
+                                <SysGroup rootPath={`atc/${general.atc}`} data={revData.atc} onUpdated={(e, path) => updateDB(e, path)} title='ATC'/>
                             </Col>
                             <Col xs={8}>
-                                <SysGroup rootPath={`acses/${general.acses}`} data={revData.acses} onUpdated={(path, e) => updateSubComp(path, e)} title='ACSES'/>
+                                <SysGroup rootPath={`acses/${general.acses}`} data={revData.acses} onUpdated={(e, path) => updateDB(e, path)} title='ACSES'/>
                             </Col>
                         </Row>
                     </Grid>
+
+
+                    <Drawer size='xs' backdrop={false} placement='bottom' open={isOpen} onClose={onClose}>
+                        <Drawer.Header>
+                        <Drawer.Title>Notes - {general.name || "Untitled"}</Drawer.Title>
+                        <Drawer.Actions>
+                            <Button onClick={onClose} appearance="primary">
+                            Close
+                            </Button>
+                        </Drawer.Actions>
+                        </Drawer.Header>
+                        <Drawer.Body>
+                            <Input/>
+                        </Drawer.Body>
+                    </Drawer>
                 </>
             }
         />

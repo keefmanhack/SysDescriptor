@@ -3,7 +3,7 @@ import { Tooltip, Whisper } from 'rsuite';
 
 const HoverShowAll = ({text="missing", children}) => {
     const tooltip = (
-        <Tooltip full>
+        <Tooltip>
           {text}
         </Tooltip>
       );

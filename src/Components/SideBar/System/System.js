@@ -1,22 +1,27 @@
-import React, { useRef, useState } from 'react';
-import {Row, Col, Grid, Button, Whisper} from 'rsuite';
-import MoreIcon from '@rsuite/icons/More';
+import React, { useState } from 'react';
+import {Row, Col, Grid, Button} from 'rsuite';
 import ArrowRightIcon from '@rsuite/icons/ArrowRight';
 import ArrowDownIcon from '@rsuite/icons/ArrowDown';
 import { SystemOptions } from './SystemOptions';
 import HoverShowAll from '../../../misc/HoverShowAll';
-import RevList from './RevList';
+import RevList from './Revisions/RevList';
 
 export const System = ({title='Untitled', revListID, partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID}) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const ref = useRef();
     title = title ==='' ? 'Untitled' : title;
 
     const selStyle= isSelected ? {borderLeft: '1px solid lightgreen'} : null
 
+    const handleClick = () => {setIsExpanded(v => !v)}
+
+    const handleNewRev = () => {
+        onNewRevision();
+        if(!isExpanded){setIsExpanded(true)}
+    }
+
     return (
         <div className='rs-list rs-list-hover'>
-            <button type='button' onClick={() => setIsExpanded(v => !v)} className='rs-list-item pointer p-2' style={{...selStyle, width: '100%'}}>
+            <div type='button' tabIndex={0} role="button" styling="link" onClick={handleClick} onKeyDown={handleClick} className='rs-list-item pointer p-2' style={{...selStyle, width: '100%'}}>
                 <Grid fluid>
                     <Row>
                         <Col xs={2}>
@@ -26,10 +31,10 @@ export const System = ({title='Untitled', revListID, partNumber, sysNumber, tech
                         </Col>
                         <Col xs={8}>
                             <HoverShowAll text={title}>
-                                <h5 className='ellip-overflow'>{title}</h5>
+                                <h5 className='ellip-overflow align-l'>{title}</h5>
                             </HoverShowAll>
                             <HoverShowAll text={partNumber}>
-                                <span className='muted-c ellip-overflow'>{partNumber}</span>
+                                <p className='muted-c ellip-overflow'>{partNumber}</p>
                             </HoverShowAll>
                         </Col>
                         <Col xs={2}>
@@ -48,20 +53,13 @@ export const System = ({title='Untitled', revListID, partNumber, sysNumber, tech
                             </HoverShowAll>
                         </Col>
                         <Col xs={2}>
-                            <Whisper
-                                placement="rightStart"
-                                controlId="control-id-with-dropdown"
-                                trigger="click"
-                                ref={ref}
-                                onClick={(e)=>e.stopPropagation()}
-                                speaker={<SystemOptions onNewRevision={()=>onNewRevision()}/>}                              
-                            >
-                                <Button appearance='subtle' size='xs'><MoreIcon/></Button>
-                            </Whisper>
+                            <SystemOptions
+                                onNewRevision={()=>handleNewRev()}
+                            />
                         </Col>
                     </Row>
                 </Grid>         
-            </button>
+            </div>
             {isExpanded ? <RevList revSelectedID={revSelectedID} onRevSelected={(id)=>onRevSelected(id)} id={revListID}/> : null}           
         </div>
     )

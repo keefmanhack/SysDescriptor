@@ -1,62 +1,29 @@
-import { get, ref } from 'firebase/database';
-import React, {useState, useEffect, useRef} from 'react';
-import {DatePicker, Input} from 'rsuite';
-import Alert from '../../../misc/Alert';
+import React from 'react';
+import { DBDateInput } from './DBInput/Extensions/DBDateInput';
+import { DBNumberInput } from './DBInput/Extensions/DBNumberInput';
+import { DBTextInput } from './DBInput/Extensions/DBTextInput';
 
-import database from '../../../misc/firebase';
+// const defaultStyle = {fontSize: '12px', width: '75%', display: 'block'}
 
-const defaultStyle = {fontSize: '12px', width: '75%', display: 'block'}
 
-const CompInput = ({inputType, id, title, onChange, dbPath, style, placeholder }) => {
-    const [value, setValue] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const inputRef = useRef();
+const components = {
+    Text : DBTextInput,
+    Date : DBDateInput,
+    Number: DBNumberInput
+}
 
-    useEffect(() => {
-        const loadValue = async () => {
-            const db = ref(database, dbPath);
-            inputRef.current.value = "";
-            setIsLoading(true);
-            try{
-                const snap = await get(db);
-                setValue(snap.val() || "");
-            }catch(err){
-                Alert.error(`Error pulling ${title} data from the cloud.`);
-            }
-            setIsLoading(false);
-        }
-
-        loadValue();
-    }, [dbPath])
-
-    let input;
-    if(inputType==="Date"){
-        input = <DatePicker 
-                    placeholder={placeholder} 
-                    cleanable={false} 
-                    ref={inputRef} 
-                    value={ value==="" ? new Date() : new Date(value)} 
-                    onChange={e=> {setValue(e); onChange(e.toDateString())}} 
-                    id={id} 
-                    style={style}
-                    disabled={isLoading}
-                />
-    }else{
-        input = <Input 
-                    placeholder={placeholder} 
-                    ref={inputRef}
-                    value={value} 
-                    onChange={e => {setValue(e); onChange(e)}} 
-                    id={id} 
-                    style={{...defaultStyle, ...style}}
-                    disabled={isLoading}
-                />
-    }
+const CompInput = ({inputType, title="[Not Named]", onChange, dbPath, style, placeholder }) => {
+    const SelInput = components[inputType || "Text"];
 
     return (
         <>
-            <label htmlFor={id} style={{fontSize:'14px', display: 'block'}}>{title}</label>
-            {input}
+            <SelInput
+                placeholder={placeholder} 
+                onChange={e=> {onChange(e, dbPath)}} 
+                style={style}
+                dbPath={dbPath}
+                title={title}
+            />
         </>
     );
 };

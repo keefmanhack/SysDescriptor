@@ -1,6 +1,9 @@
 import React from 'react';
-import { Notification, toaster } from "rsuite"
+import { Notification, toaster } from "rsuite";
 
+// PlacementType = 'topCenter' | 'bottomCenter' | 'topStart' | 'topEnd' | 'bottomStart' | 'bottomEnd';
+
+const PLACEMENT = 'topEnd'
 
 const type = {
     success: 'success',
@@ -17,11 +20,11 @@ export default class Alert{
         <Notification 
             header={type.success}  
             duration={this.duration} 
-            closable 
+            closable
             type={type.success}
         >
             {msg}
-        </Notification>);
+        </Notification>, {placement: PLACEMENT});
     }
 
     static warning = (msg) => {
@@ -33,7 +36,7 @@ export default class Alert{
                 type={type.warning}
             >
                 {msg}
-            </Notification>);
+            </Notification>, {placement: PLACEMENT});
     }
 
     static info = (msg) => {
@@ -41,11 +44,11 @@ export default class Alert{
             <Notification 
                 header={type.info}  
                 duration={this.duration} 
-                closable 
+                closable
                 type={type.info}
             >
                 {msg}
-            </Notification>);
+            </Notification>, {placement: PLACEMENT});
     }
 
     static error = (msg) => {
@@ -53,10 +56,10 @@ export default class Alert{
             <Notification 
                 header={type.error}  
                 duration={this.duration} 
-                closable 
+                closable
                 type={type.error}
             >
                 {msg}
-            </Notification>);
+            </Notification>, {placement: PLACEMENT});
     }
 }

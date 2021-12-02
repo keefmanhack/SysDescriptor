@@ -4,7 +4,7 @@ import { Close } from '@rsuite/icons';
 
 import { useSystems } from '../../Contexts/systems.context';
 import {useMediaQuery} from '../../misc/customHooks'
-import { System } from './List/System';
+import { System } from './System/System';
 import NewSystemModal from './SystemModal/NewSystemModal';
 
 
@@ -38,7 +38,7 @@ const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) =
         <div className='br-r h-100 p-1' style={{}}>
             <NewSystemModal/>
             <InputGroup style={{width: '80%'}} className='mx-auto'>
-                <Input value={searchText} onChange={(e) => setSearchText(e)} clearable placeholder='Search' size='md'/>
+                <Input value={searchText} onChange={(e) => setSearchText(e)} placeholder='Search' size='md'/>
                 <InputGroup.Button onClick={()=>setSearchText('')}>
                     <Close/>
                 </InputGroup.Button>

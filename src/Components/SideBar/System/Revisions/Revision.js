@@ -3,26 +3,27 @@ import { Button, Col, Row, Grid } from 'rsuite';
 import TrashIcon from '@rsuite/icons/Trash';
 import moment from 'moment';
 
-import { useHover } from '../../../misc/customHooks';
-import HoverShowAll from '../../../misc/HoverShowAll';
+import { useHover } from '../../../../misc/customHooks';
+import HoverShowAll from '../../../../misc/HoverShowAll';
 
 
-export const Revision = ({onSelected, name, timestamp, isSelected}) => {
+export const Revision = ({onSelected, name, timestamp, revisionNumber=0, isSelected}) => {
     const [ref, hover] = useHover();
     name=name || 'Untitled';
 
     const t = moment(timestamp);
     const isNew = moment().subtract(2, "days").isBefore(t);
 
-
     const selStyle = isSelected ? {borderLeft: '2px solid white'} : null;
+
+    const handleClick = () => {onSelected()}
     return (
-        <button type='button' style={{display: 'block', width: '100%', ...selStyle}} onClick={()=>onSelected()} ref={ref} className='rs-list-item pointer p-1'>
+        <div type='button' tabIndex={0} role="button" styling="link" onClick={handleClick} onKeyDown={handleClick} style={{display: 'block', width: '100%', ...selStyle}}  ref={ref} className='rs-list-item pointer p-1'>
             <Grid fluid>
                 <Row>
                     <Col xs={5}>
                         <HoverShowAll text={name}>
-                            <p className='bold ellip-overflow'>{name}</p>
+                            <p className='bold ellip-overflow align-l'>{name}</p>
                         </HoverShowAll>
                     </Col>
                     <Col xs={5}>
@@ -30,7 +31,7 @@ export const Revision = ({onSelected, name, timestamp, isSelected}) => {
                         
                     </Col>
                     <Col xs={5}>
-                        <span className='muted-c'>Rev </span>1
+                        <span className='muted-c'>Rev </span>{revisionNumber}
                     </Col>
                     <Col xs={7}>
                         <span style={{fontSize: '12px'}}>
@@ -45,6 +46,6 @@ export const Revision = ({onSelected, name, timestamp, isSelected}) => {
                     </Col>
                 </Row>
             </Grid>
-        </button>
+        </div>
     )
 }

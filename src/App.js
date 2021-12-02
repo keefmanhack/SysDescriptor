@@ -24,8 +24,11 @@ function App() {
   const [revID, setRevID] = useState(null);
   const [sysID, setSysID] = useState(null);
 
-  const createNewRev = async (sysId) => {
-    const revRef = ref(database, `revisions/${sysId}`);
+  const hideMainStage = () => {setRevID(null); setSysID(null);}
+
+  const createNewRev = async (sysID) => {
+    hideMainStage();
+    const revRef = ref(database, `revisions/${sysID}`);
     const newRevData = {
         timestamp: firebase.database.ServerValue.TIMESTAMP,
         system: `${Date.now()}${makeid(5)}`,
@@ -35,6 +38,7 @@ function App() {
     try{
       const revID = await push(revRef, newRevData).key;
       Alert.success(`Created a new System Revision`);
+      setSysID(sysID)
       setRevID(revID);
     }catch(err){
       Alert.error(err);
@@ -64,7 +68,7 @@ function App() {
       console.log(err);
       Alert.error(err.message);
     }
-    setRevID(null);
+    hideMainStage()
   }
 
 
@@ -86,7 +90,7 @@ function App() {
               </SystemsProvider>
             </Col>
             <Col xs={24} lg={18} >
-              {revID ? <NewMainStage revID={revID} sysID={sysID} /> : <DefaultMainStage/>}
+              {revID && sysID ? <NewMainStage revID={revID} sysID={sysID} /> : <DefaultMainStage/>}
             </Col>
           </Row>
         </Grid>

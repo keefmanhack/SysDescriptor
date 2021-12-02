@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { off, onValue, ref } from "firebase/database";
 import database from './firebase';
 import Alert from "./Alert";
@@ -82,6 +82,19 @@ export const useRevisions = listID => {
   }, [listID]);
 
   return [revs, isUpdating];
+}
+
+
+export const useModal = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onOpen = useCallback(() => setIsOpen(true), []);
+  const onClose = useCallback(() => setIsOpen(false), []);
+
+  console.log(isOpen);
+
+
+  return {isOpen, onOpen, onClose};
 }
 
 

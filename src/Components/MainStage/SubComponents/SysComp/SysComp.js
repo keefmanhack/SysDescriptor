@@ -11,7 +11,7 @@ const SysComp = ({title, compProperties, removeButton, onUpdated, rootPath}) => 
     const dispProperties = compProperties.map((val, i) => {
         const name = Object.keys(val)[0];
         const dbPath = `${rootPath}/${val[name].db}`
-        return <li key={i}><CompInput dbPath={dbPath} onChange={(e) => onUpdated(dbPath, e)} inputType={val[name].input} id={name} title={name}/></li>
+        return <li key={i}><CompInput dbPath={dbPath} onChange={(e, path) => onUpdated(e, path)} inputType={val[name].input} title={name}/></li>
     })
 
     return (
