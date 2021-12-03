@@ -23,15 +23,15 @@ const lightDarkDisp = [
 
 const TitleBar = ({style, setTheme}) => 
     (
-        <Navbar style={style}>
-            <Navbar.Brand >
+        <Navbar style={{...style}}>
+            <Navbar.Brand style={{paddingLeft: '5px'}}>
                 <span >SysDescriptor {version}</span>
             </Navbar.Brand>
             <Nav pullRight>
                 <ButtonToggle
                     options={lightDarkDisp}
                     onChange={(e) => setTheme(e)}
-                    style={{marginTop: '10px', marginRight: '10px'}}
+                    style={{marginTop: '10px', marginRight: '5px'}}
                     size='xs'
                 />
             </Nav>

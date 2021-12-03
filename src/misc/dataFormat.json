@@ -188,5 +188,9 @@
                 ]
             }
         ]
+    },
+    "notes" : {
+        "db:": "notes",
+        "input": "TextArea"
     }
 }

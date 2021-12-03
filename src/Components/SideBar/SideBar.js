@@ -44,7 +44,7 @@ const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) =
                 </InputGroup.Button>
             </InputGroup>
 
-            <div style={{paddingLeft: '5px'}} className='mt-2'>
+            <div className='mt-2'>
                 <div><strong>{systems.length}</strong> Total Descriptions</div>
                 <span><strong>{searchResults.length}</strong> Descriptions Shown</span>
             </div>

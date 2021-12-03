@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react';
-import { Grid, Row, Col, Button, Drawer, Input } from 'rsuite';
+import { Grid, Row, Col, Button } from 'rsuite';
 import {set, ref, get} from 'firebase/database';
 
 import database from '../../misc/firebase';
@@ -13,11 +13,12 @@ import { DBTextInput } from './SubComponents/DBInput/Extensions/DBTextInput';
 import DefaultMainStage from './DefaultMainStage';
 import { DBNumberInput } from './SubComponents/DBInput/Extensions/DBNumberInput';
 import {useModal} from '../../misc/customHooks';
+import { NotesDrawer } from './NotesDrawer';
 
 
 const NewMainStage = ({sysID, revID, style}) => {
     const [isUpdating, setIsUpdating] = useState(false);
-    const [general, setGeneral] = useState({});
+    const [revision, setRevision] = useState({});
 
     const {isOpen, onOpen, onClose} = useModal();
 
@@ -26,11 +27,11 @@ const NewMainStage = ({sysID, revID, style}) => {
 
     useEffect(() => {
         const loadGeneral = async () => {
-            setGeneral({});
+            setRevision({});
             const revRef = ref(database, DBROOT);
             try{
                 const snap = await get(revRef);
-                setGeneral(snap.val())
+                setRevision(snap.val());
             }catch(err){
                 console.log(err);
                 Alert.error("Error loading revision data");
@@ -52,8 +53,7 @@ const NewMainStage = ({sysID, revID, style}) => {
         setIsUpdating(false);
     }
 
-
-    if(!general){
+    if(!revision){
         return <DefaultMainStage/>
     }
 
@@ -74,7 +74,7 @@ const NewMainStage = ({sysID, revID, style}) => {
                     </div>
                     <div style={{width: '40%'}} className='mx-auto mb-3'>
                         <DBTextInput
-                            onChange={(e, path) => {updateDB(e, path)}}
+                            onChange={(e, path) => {updateDB(e, path);  setRevision(v=> {v.name=e; return v})}} 
                             dbPath={`${DBROOT}/${revData.general.name.db}`}
                             title="Revision Name" 
                             style={{ fontSize: '32px', width: '100%'}} 
@@ -87,37 +87,27 @@ const NewMainStage = ({sysID, revID, style}) => {
                             placeholder='0'
                             style={{width: '100px'}}
                         />
-
-
                     </div>
                     <Grid fluid>
                         <Row>
                             <Col xs={8}>
-                                <SysGroup rootPath={`general/${general.system}`} data={revData.system} onUpdated={(e, path) => updateDB(e, path)} title='System'/>
+                                <SysGroup rootPath={`general/${revision.system}`} data={revData.system} onUpdated={(e, path) => updateDB(e, path)} title='System'/>
                             </Col>
                             <Col xs={8}>
-                                <SysGroup rootPath={`atc/${general.atc}`} data={revData.atc} onUpdated={(e, path) => updateDB(e, path)} title='ATC'/>
+                                <SysGroup rootPath={`atc/${revision.atc}`} data={revData.atc} onUpdated={(e, path) => updateDB(e, path)} title='ATC'/>
                             </Col>
                             <Col xs={8}>
-                                <SysGroup rootPath={`acses/${general.acses}`} data={revData.acses} onUpdated={(e, path) => updateDB(e, path)} title='ACSES'/>
+                                <SysGroup rootPath={`acses/${revision.acses}`} data={revData.acses} onUpdated={(e, path) => updateDB(e, path)} title='ACSES'/>
                             </Col>
                         </Row>
                     </Grid>
-
-
-                    <Drawer size='xs' backdrop={false} placement='bottom' open={isOpen} onClose={onClose}>
-                        <Drawer.Header>
-                        <Drawer.Title>Notes - {general.name || "Untitled"}</Drawer.Title>
-                        <Drawer.Actions>
-                            <Button onClick={onClose} appearance="primary">
-                            Close
-                            </Button>
-                        </Drawer.Actions>
-                        </Drawer.Header>
-                        <Drawer.Body>
-                            <Input/>
-                        </Drawer.Body>
-                    </Drawer>
+                    <NotesDrawer 
+                        isOpen={isOpen} 
+                        onClose={onClose} 
+                        id={revision.notes} 
+                        name={revision.name} 
+                        onChange={(e,path) => updateDB(e, path)}
+                    />
                 </>
             }
         />

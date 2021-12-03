@@ -91,9 +91,6 @@ export const useModal = () => {
   const onOpen = useCallback(() => setIsOpen(true), []);
   const onClose = useCallback(() => setIsOpen(false), []);
 
-  console.log(isOpen);
-
-
   return {isOpen, onOpen, onClose};
 }
 

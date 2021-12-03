@@ -33,7 +33,8 @@ function App() {
         timestamp: firebase.database.ServerValue.TIMESTAMP,
         system: `${Date.now()}${makeid(5)}`,
         atc: `${Date.now()}${makeid(5)}`,
-        acses: `${Date.now()}${makeid(5)}`
+        acses: `${Date.now()}${makeid(5)}`,
+        notes: `${Date.now()}${makeid(5)}`
     }
     try{
       const revID = await push(revRef, newRevData).key;
@@ -75,7 +76,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-       <TitleBar style={{}} setTheme={(t) => setTheme(t)}/>
+       <TitleBar setTheme={(t) => setTheme(t)}/>
         <Grid fluid  style={{padding:0}}>
           <Row >
             <Col xs={24} lg={6} >

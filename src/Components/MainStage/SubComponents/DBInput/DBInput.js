@@ -7,12 +7,13 @@ import database from '../../../../misc/firebase';
 
 const defaultStyle = {fontSize: '12px', width: '75%', display: 'block'}
 
-const DBInput = ({id, title="[Not Named]", onChange, dbPath, style, placeholder, InputType=Input, min, DataType=String, defaultValue=""}) => {
+const DBInput = ({id, title="[Not Named]", onChange, dbPath, style, placeholder, InputType=Input, min, DataType=String, defaultValue="", as, rows}) => {
     const [value, setValue] = useState(new DataType(defaultValue));
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const loadValue = async () => {
+            if(!dbPath){return}
             const db = ref(database, dbPath);
             setIsLoading(true);
             try{
@@ -39,6 +40,8 @@ const DBInput = ({id, title="[Not Named]", onChange, dbPath, style, placeholder,
                 style={{...defaultStyle, ...style}}
                 onChange={(e) => {onChange(e, dbPath); setValue(e)}}
                 min={min}
+                as={as}
+                rows={rows}
             />
         </>
     );

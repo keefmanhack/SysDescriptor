@@ -47,7 +47,7 @@ const NewSystemModal = () => {
 
     return (
     <>
-        <Button color="blue" appearance='primary' onClick={()=> setShow(true)} style={{marginBottom: '10px', display: 'block'}} className='mr-0 ml-auto'>New System</Button>
+        <Button color="blue" appearance='primary' onClick={()=> setShow(true)} style={{marginBottom: '20px', display: 'block'}}>New System</Button>
         <Modal size='xs' open={show} onClose={()=>setShow(false)}>
             <Modal.Header><Modal.Title>New System</Modal.Title></Modal.Header>
             <Modal.Body>
