@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Button, Drawer } from 'rsuite'
-import { DBTextAreaInput } from './SubComponents/DBInput/Extensions/DBTextAreaInput'
+import React, { useState } from 'react';
+import { Button, Drawer } from 'rsuite';
+import {DBTextAreaInput} from '../SubComponents/DBInput/Extensions/DBTextAreaInput';
 
 export const NotesDrawer = ({onClose, isOpen, id, name, onChange}) => {
     const [isEnlarged, setIsEnlarged] = useState(false);

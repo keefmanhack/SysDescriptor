@@ -1,5 +1,5 @@
 import React from 'react';
-import MainStage from './MainStage';
+import MainStage from '../MainStage';
 
 const DefaultMainStage = ({style}) => (
         <MainStage
@@ -9,7 +9,7 @@ const DefaultMainStage = ({style}) => (
                     className='muted-c' 
                     style={{paddingTop: '300px', fontSize: '34px', textAlign: 'center'}}
                 >        
-                    Create a <span style={{color: 'lightgreen'}}>New Description</span> or Edit a <span style={{color: "yellow"}}>Previous Version</span>
+                    Create a <strong>New Description</strong> or Edit a <strong >Previous Version</strong>
                 </h1>
             }
         />

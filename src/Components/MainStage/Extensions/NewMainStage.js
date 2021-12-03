@@ -2,18 +2,18 @@ import React, {useState, useEffect } from 'react';
 import { Grid, Row, Col, Button } from 'rsuite';
 import {set, ref, get} from 'firebase/database';
 
-import database from '../../misc/firebase';
-import SysGroup from './SubComponents/SysGroup';
-import MainStage from './MainStage';
-import revData from '../../misc/dataFormat.json';
-import SavedIndicator from '../../misc/SavedIndicator';
-import Alert from '../../misc/Alert';
-import { generateDocument } from '../../misc/helperfunc';
-import { DBTextInput } from './SubComponents/DBInput/Extensions/DBTextInput';
+import database from '../../../misc/firebase';
+import SysGroup from '../SubComponents/SysGroup';
+import MainStage from '../MainStage';
+import revData from '../../../misc/dataFormat.json';
+import SavedIndicator from '../../../misc/SavedIndicator';
+import Alert from '../../../misc/Alert';
+import { generateDocument } from '../../../misc/helperfunc';
+import { DBTextInput } from '../SubComponents/DBInput/Extensions/DBTextInput';
 import DefaultMainStage from './DefaultMainStage';
-import { DBNumberInput } from './SubComponents/DBInput/Extensions/DBNumberInput';
-import {useModal} from '../../misc/customHooks';
-import { NotesDrawer } from './NotesDrawer';
+import { DBNumberInput } from '../SubComponents/DBInput/Extensions/DBNumberInput';
+import {useModal} from '../../../misc/customHooks';
+import { NotesDrawer } from '../misc/NotesDrawer';
 
 
 const NewMainStage = ({sysID, revID, style}) => {

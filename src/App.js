@@ -7,8 +7,8 @@ import database from './misc/firebase';
 import TitleBar from './Components/TitleBar';
 import SideBar from './Components/SideBar/SideBar';
 import { SystemsProvider } from './Contexts/systems.context';
-import DefaultMainStage from './Components/MainStage/DefaultMainStage';
-import NewMainStage from './Components/MainStage/NewMainStage';
+import DefaultMainStage from './Components/MainStage/Extensions/DefaultMainStage';
+import NewMainStage from './Components/MainStage/Extensions/NewMainStage';
 import Footer from './Components/Footer';
 import Alert from './misc/Alert';
 
