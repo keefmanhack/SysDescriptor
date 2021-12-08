@@ -1,9 +1,10 @@
 import React, {useState, useEffect } from 'react';
-import { Grid, Row, Col, Button } from 'rsuite';
-import {set, ref, get} from 'firebase/database';
+import {Button, ButtonToolbar, ButtonGroup } from 'rsuite';
+import { faRedo, faUndo } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {set, ref, off, onValue} from 'firebase/database';
 
 import database from '../../../misc/firebase';
-import SysGroup from '../SubComponents/SysGroup';
 import MainStage from '../MainStage';
 import revData from '../../../misc/dataFormat.json';
 import SavedIndicator from '../../../misc/SavedIndicator';
@@ -14,6 +15,10 @@ import DefaultMainStage from './DefaultMainStage';
 import { DBNumberInput } from '../SubComponents/DBInput/Extensions/DBNumberInput';
 import {useModal} from '../../../misc/customHooks';
 import { NotesDrawer } from '../misc/NotesDrawer';
+import SubSystemNav from '../SubSystemNav';
+import AddACSESATC from '../AddACSESATC';
+
+
 
 
 const NewMainStage = ({sysID, revID, style}) => {
@@ -26,19 +31,21 @@ const NewMainStage = ({sysID, revID, style}) => {
     const DBROOT= `revisions/${sysID}/${revID}`;
 
     useEffect(() => {
-        const loadGeneral = async () => {
+        const revRef = ref(database, DBROOT);
+        const linkToRevision = () => {
             setRevision({});
-            const revRef = ref(database, DBROOT);
-            try{
-                const snap = await get(revRef);
+            onValue((revRef, snap) => {
                 setRevision(snap.val());
-            }catch(err){
+            }, (err) => {
                 console.log(err);
                 Alert.error("Error loading revision data");
-            }
-        }   
-        loadGeneral();
+            })
+        }
+        linkToRevision();
 
+        return () => {
+            off(revRef);
+        }
     }, [DBROOT])
 
 
@@ -57,50 +64,61 @@ const NewMainStage = ({sysID, revID, style}) => {
         return <DefaultMainStage/>
     }
 
-
     return (
         <MainStage
             style={style}
             newStageComp={
                 <>
                     <div className='p-1 w-100'>
-                     <div style={{position:'relative'}}>
-                        <Button onClick={onOpen} style={{float: 'right'}}>Notes</Button>
-                        <SavedIndicator isUpdating={isUpdating} style={{position: 'absolute', left: '45%', marginTop: '10px'}}/>
-                        </div>    
+                        <div style={{display: 'inline-block', width: '30%', float: 'left'}}>
+                            <Button style={{display: 'block', marginBottom: '10px'}} onClick={()=>generateDocument()} color='green' appearance="primary">Generate File</Button>
+                            <AddACSESATC subSystems={revision.subSystems} sysID={sysID} revID={revID}/>
+                        </div>
+                        <div style={{display: 'inline-block', width: '40%'}}>   
+                            <div style={{width: '100%'}} className='mx-auto'>
+                                <DBTextInput
+                                    onChange={(e, path) => {updateDB(e, path);  setRevision(v=> {v.name=e; return v})}} 
+                                    dbPath={`${DBROOT}/${revData.revision.name.db}`}
+                                    title="Revision Name" 
+                                    style={{ fontSize: '32px', textAlign: 'center'}} 
+                                    placeholder='Revision Name'
+                                    noLabel
+                                />
+                                <DBNumberInput
+                                    onChange={(e, path) => updateDB(e, path)}
+                                    dbPath={`${DBROOT}/${revData.revision.revision_number.db}`}
+                                    title="Rev. Number"
+                                    placeholder='0'
+                                    style={{width: '50px'}}
+                                    size='xs'
+                                />
+                            </div>
+                        </div>
+                        <div style={{display: 'contents', width: '30%'}}>
+                            <div style={{float: 'right'}}>
+                                <ButtonToolbar style={{display: 'inline'}}>
+                                    <ButtonGroup>
+                                        <Button size='xs' appearance='subtle'><FontAwesomeIcon icon={faUndo}/></Button>
+                                        <Button size='xs' appearance='subtle'><FontAwesomeIcon icon={faRedo}/></Button>
+                                    </ButtonGroup>
+                                </ButtonToolbar>
+                                <span style={{marginRight: '5px', marginLeft: '5px', borderRight: '1px solid white'}}/>
+                                <SavedIndicator isUpdating={isUpdating}/>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='p-1 w-100'>
+                        
+                     <div style={{position: 'relative'}}>
+                        <div style={{position: 'absolute', right: '0px'}}>
+                            <Button onClick={onOpen}>Notes</Button>
+                        </div>
+                    </div>    
                     
-                    <Button style={{display: 'block', marginBottom: '10px'}} onClick={()=>generateDocument()} color='green' appearance="primary">Generate File</Button>
-                            
+
+                   
                     </div>
-                    <div style={{width: '40%'}} className='mx-auto mb-3'>
-                        <DBTextInput
-                            onChange={(e, path) => {updateDB(e, path);  setRevision(v=> {v.name=e; return v})}} 
-                            dbPath={`${DBROOT}/${revData.general.name.db}`}
-                            title="Revision Name" 
-                            style={{ fontSize: '32px', width: '100%'}} 
-                            placeholder='Revision Name'
-                        />
-                        <DBNumberInput
-                            onChange={(e, path) => updateDB(e, path)}
-                            dbPath={`${DBROOT}/${revData.general.revision_number.db}`}
-                            title="Rev. Number"
-                            placeholder='0'
-                            style={{width: '100px'}}
-                        />
-                    </div>
-                    <Grid fluid>
-                        <Row>
-                            <Col xs={8}>
-                                <SysGroup rootPath={`general/${revision.system}`} data={revData.system} onUpdated={(e, path) => updateDB(e, path)} title='System'/>
-                            </Col>
-                            <Col xs={8}>
-                                <SysGroup rootPath={`atc/${revision.atc}`} data={revData.atc} onUpdated={(e, path) => updateDB(e, path)} title='ATC'/>
-                            </Col>
-                            <Col xs={8}>
-                                <SysGroup rootPath={`acses/${revision.acses}`} data={revData.acses} onUpdated={(e, path) => updateDB(e, path)} title='ACSES'/>
-                            </Col>
-                        </Row>
-                    </Grid>
+                    <SubSystemNav subSystems={revision.subSystems}/>
                     <NotesDrawer 
                         isOpen={isOpen} 
                         onClose={onClose} 

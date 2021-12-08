@@ -6,7 +6,7 @@ import { SystemOptions } from './SystemOptions';
 import HoverShowAll from '../../../misc/HoverShowAll';
 import RevList from './Revisions/RevList';
 
-export const System = ({title='Untitled', revListID, partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID}) => {
+export const System = ({title='Untitled', revIDs, partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     title = title ==='' ? 'Untitled' : title;
 
@@ -60,7 +60,7 @@ export const System = ({title='Untitled', revListID, partNumber, sysNumber, tech
                     </Row>
                 </Grid>         
             </div>
-            {isExpanded ? <RevList revSelectedID={revSelectedID} onRevSelected={(id)=>onRevSelected(id)} id={revListID}/> : null}           
+            {isExpanded ? <RevList revSelectedID={revSelectedID} onRevSelected={(id)=>onRevSelected(id)} revIDs={revIDs}/> : null}           
         </div>
     )
 }

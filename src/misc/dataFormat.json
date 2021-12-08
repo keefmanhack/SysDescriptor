@@ -1,5 +1,5 @@
 {   
-    "general": {
+    "revision": {
         "name" : {
             "db" : "name",
             "input" : "Text"
@@ -9,7 +9,7 @@
             "input": "Number"
         }
     },
-    "system": [
+    "general": [
         {
             "ADU": {
                 "Software" : [{

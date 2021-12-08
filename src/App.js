@@ -28,20 +28,26 @@ function App() {
 
   const createNewRev = async (sysID) => {
     hideMainStage();
-    const revRef = ref(database, `revisions/${sysID}`);
-    const newRevData = {
-        timestamp: firebase.database.ServerValue.TIMESTAMP,
-        system: `${Date.now()}${makeid(5)}`,
-        atc: `${Date.now()}${makeid(5)}`,
-        acses: `${Date.now()}${makeid(5)}`,
-        notes: `${Date.now()}${makeid(5)}`
-    }
-    try{
+    try {
+      //  create generalSubSystem
+      const subSysRef = ref(database, `subSystems/`);
+      const genSubSysID  = await push(subSysRef, {name: 'General'}).key;
+      //  create revision
+      const revRef = ref(database, `revisions/`);
+      const newRevData = {
+          timestamp: firebase.database.ServerValue.TIMESTAMP,
+          subSystems : [genSubSysID],
+          notes: `${Date.now()}${makeid(5)}`
+      }
       const revID = await push(revRef, newRevData).key;
-      Alert.success(`Created a new System Revision`);
-      setSysID(sysID)
+      //  add to system list
+      const revIDsRef = ref(database, `systems/${sysID}/revIDs`);
+      const revIDsCurrArr = (await get(revIDsRef)).val() || []; 
+      await set(revIDsRef, [...revIDsCurrArr, revID]);
+
       setRevID(revID);
-    }catch(err){
+      Alert.success('New revision created!');
+    }catch(err){;
       Alert.error(err);
       console.log(err);
     }
@@ -91,7 +97,7 @@ function App() {
               </SystemsProvider>
             </Col>
             <Col xs={24} lg={18} >
-              {revID && sysID ? <NewMainStage revID={revID} sysID={sysID} /> : <DefaultMainStage/>}
+              {revID ? <NewMainStage revID={revID}/> : <DefaultMainStage/>}
             </Col>
           </Row>
         </Grid>

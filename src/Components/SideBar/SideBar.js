@@ -53,14 +53,14 @@ const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) =
             {isUpdating ? <Loader/> : null}
             <List hover autoScroll>
                 {searchResults.map(sys => {
-                    const {title, sysNumber, technician, owner, partNumber, id} = sys;
+                    const {title, sysNumber, technician, owner, partNumber, id, revIDs} = sys;
                     return <System
                         title={title}
                         owner={owner}
                         technician={technician}
                         sysNumber={sysNumber}
                         partNumber={partNumber}
-                        revListID={id}
+                        revIDs={revIDs}
                         key={id}
                         isSelected={sysSelectedID===id}
                         revSelectedID={revSelectedID}

@@ -60,9 +60,10 @@ export const useHover = () => {
   return [ref, value];
 }
 
-export const useRevisions = listID => {
+export const useRevisions = revIDs => {
   const [revs, setRevs] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
+  
   
   const listRef = ref(database, `revisions/${listID}`);
   useEffect(() => {

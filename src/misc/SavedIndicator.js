@@ -1,8 +1,8 @@
+import { CheckRound, DoingRound } from '@rsuite/icons';
 import React, { useEffect, useState } from 'react';
-import { Tag } from 'rsuite';
 
 let to;
-const SavedIndicator = ({style, isUpdating, persistFor=1000}) => {
+const SavedIndicator = ({isUpdating, persistFor=1000}) => {
     const [delayedIsUpdating, setDelayedIsUpdating] = useState(false);    
     useEffect(() => {
         clearTimeout(to);
@@ -17,9 +17,9 @@ const SavedIndicator = ({style, isUpdating, persistFor=1000}) => {
 
 
     return (
-        <Tag style={{...style, transition: '.3s', textAlign: 'left'}}  color={delayedIsUpdating ? "green" : ""} appearance={delayedIsUpdating ? "primary" : "ghost"} >
-            {delayedIsUpdating ? "Saving..." : "Saved"}
-        </Tag>
+        <>
+        {delayedIsUpdating ? <DoingRound pulse/> : <CheckRound color='green'/>}
+        </>
     );
 };
 

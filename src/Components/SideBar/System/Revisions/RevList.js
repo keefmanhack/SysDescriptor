@@ -3,8 +3,9 @@ import { Loader } from 'rsuite';
 import { useRevisions } from '../../../../misc/customHooks';
 import {Revision} from './Revision';
 
-const RevList = ({id, onRevSelected, revSelectedID}) => {
-    const [revData, isUpdating] = useRevisions(id);
+const RevList = ({revIDs, onRevSelected, revSelectedID}) => {
+    const [revData, isUpdating] = useRevisions(revIDs);
+
     return (
         <div className='rs-list rs-list-hover v-scroll' style={{marginLeft: '10%'}}>
             {isUpdating ? <Loader style={{padding: '10px'}}/> : null}

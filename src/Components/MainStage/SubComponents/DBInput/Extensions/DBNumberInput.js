@@ -2,7 +2,7 @@ import React from 'react'
 import {InputNumber } from 'rsuite'
 import DBInput from '../DBInput'
 
-export const DBNumberInput = ({placeholder, onChange, dbPath, id, style, title}) => (
+export const DBNumberInput = ({placeholder, onChange, dbPath, id, style, title, size}) => (
     <DBInput
         placeholder={placeholder} 
         onChange={(e, path) => {onChange(e, path)}} 
@@ -14,5 +14,6 @@ export const DBNumberInput = ({placeholder, onChange, dbPath, id, style, title})
         title={title}
         DataType={Number}
         defaultValue={0}
+        size={size}
     />
 )

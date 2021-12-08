@@ -5,9 +5,9 @@ import Alert from '../../../../misc/Alert';
 
 import database from '../../../../misc/firebase';
 
-const defaultStyle = {fontSize: '12px', width: '75%', display: 'block'}
+const defaultStyle = {fontSize: '12px', display: 'block'}
 
-const DBInput = ({id, title="[Not Named]", onChange, dbPath, style, placeholder, InputType=Input, min, DataType=String, defaultValue="", as, rows}) => {
+const DBInput = ({id, title="[Not Named]", onChange, dbPath, style, placeholder, InputType=Input, min, DataType=String, defaultValue="", as, rows, size='sm', noLabel=false}) => {
     const [value, setValue] = useState(new DataType(defaultValue));
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,7 +31,9 @@ const DBInput = ({id, title="[Not Named]", onChange, dbPath, style, placeholder,
 
     return (
         <>
-            <label htmlFor={id} style={{fontSize:'14px', display: 'block'}}>{title}</label>
+            {noLabel? null :
+                <label htmlFor={id} style={{fontSize:'14px', display: 'block'}}>{title}</label>
+            }
             <InputType
                 placeholder={placeholder}
                 value={value.valueOf()}
@@ -42,6 +44,7 @@ const DBInput = ({id, title="[Not Named]", onChange, dbPath, style, placeholder,
                 min={min}
                 as={as}
                 rows={rows}
+                size={size}
             />
         </>
     );
