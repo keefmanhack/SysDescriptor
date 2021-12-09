@@ -1,5 +1,4 @@
-import {SoftWareDataDB } from "../Data/SoftwareDataDB";
-
+import { SoftWareDataDB } from "../SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/Data/SoftwareDataDB";
 
 it('can update db', async () => {
     await SoftWareDataDB.update('someRandomID', 'the new value', 'the title')

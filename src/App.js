@@ -26,58 +26,6 @@ function App() {
 
   const hideMainStage = () => {setRevID(null); setSysID(null);}
 
-  const createNewRev = async (sysID) => {
-    hideMainStage();
-    try {
-      //  create generalSubSystem
-      const subSysRef = ref(database, `subSystems/`);
-      const genSubSysID  = await push(subSysRef, {name: 'General'}).key;
-      //  create revision
-      const revRef = ref(database, `revisions/`);
-      const newRevData = {
-          timestamp: firebase.database.ServerValue.TIMESTAMP,
-          subSystems : [genSubSysID],
-          notes: `${Date.now()}${makeid(5)}`
-      }
-      const revID = await push(revRef, newRevData).key;
-      //  add to system list
-      const revIDsRef = ref(database, `systems/${sysID}/revIDs`);
-      const revIDsCurrArr = (await get(revIDsRef)).val() || []; 
-      await set(revIDsRef, [...revIDsCurrArr, revID]);
-
-      setRevID(revID);
-      Alert.success('New revision created!');
-    }catch(err){;
-      Alert.error(err);
-      console.log(err);
-    }
-  }
-
-  const deleteSys = async id => {
-    //  get the System so that I can delete the acses, atc, and system portions first
-    const sysRef = ref(database, `systems/${id}`);
-    let sys
-    try{
-      sys = (await get(sysRef)).val();
-    }catch(err){
-      console.log(err);
-      Alert.error(err.message);
-    }
-    //  then if that went well I need to delete each of those three ^
-    const {acses, atc, system} = sys;
-    const refs = [ref(database, `acses/${acses}`), ref(database, `atc/${atc}`), ref(database, `system/${system}`), sysRef]
-    try{
-      await Promise.all(refs.map(async (r) => {
-        await set(r, null);
-      }))
-      Alert.info(`System Description for ${sys.name || 'Untitled'} deleted`);
-    }catch(err){
-      console.log(err);
-      Alert.error(err.message);
-    }
-    hideMainStage()
-  }
-
 
   return (
     <ThemeProvider theme={theme}>

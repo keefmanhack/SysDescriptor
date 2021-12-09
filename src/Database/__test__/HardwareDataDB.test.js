@@ -1,5 +1,4 @@
-import { HardWareDataDB } from "../Data/HarwareDataDB";
-
+import { HardWareDataDB } from "../SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/Data/HarwareDataDB";
 
 it('can update db', async () => {
     await HardWareDataDB.update('someRandomID', 'the new value', 'the title')

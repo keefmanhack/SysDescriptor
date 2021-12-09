@@ -1,14 +1,14 @@
 import {Document, Packer, Paragraph, HeadingLevel, UnderlineType, TextRun, Table, TableRow, TableCell } from 'docx';
 import {saveAs} from 'file-saver';
 
-export function makeid(length) {
+export function makeid(length=5) {
     let result           = '';
     const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
     for ( let i = 0; i < length; i++ ) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
    }
-   return result;
+   return `${Date.now()}${result}`;
 }
 
 
@@ -18,11 +18,6 @@ export const arrRemove = (arr, item) =>{
 
     return arr.splice(i, 1);
 }
-
-export const generateId = () => (
-    makeid(20)
-)
-
 
 export function filterList(sysArr, searchString) {
   const filtered = sysArr.filter(str => {
