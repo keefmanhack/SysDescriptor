@@ -1,0 +1,44 @@
+/*
+Database Design 
+
+-> Systems
+    -> SYS_UNIQUE_ID : arr
+        -> title
+        -> owner
+        -> technician
+        -> sysNumber
+        -> partNumber
+->Revisions
+    -> SYS_UNIQUE_ID : arr
+        ->REV_UNIQUE_ID: arr
+            -> Name
+            -> birthdate : Date
+            -> lastUpdated : Date
+            -> utfNumber
+->SubSystems
+    ->REV_UNIQUE_ID : arr 
+        ->SUBSYS_UNIQUE_ID : arr
+            -> Name
+->SubComponents
+    ->SUBSYS_UNIQUE_ID: arr
+        ->SUBCOMPONENT_UNIQUE_ID : arr
+            ->Name
+->Components
+    ->SUBCOMPONENT_UNIQUE_ID : arr
+        ->COMPONENT_UNIQUE_ID : arr
+->HardWareData
+    ->COMPONENT_UNIQUE_ID : arr
+        ->title
+        ->value
+        ->lastUpdated
+        ->updatedBy : user (in the future)
+->SoftWareData
+    ->COMPONENT_UNIQUE_ID : arr
+        ->title
+        ->value
+        ->lastUpdated
+        ->updatedBy : user (in the future)
+->Notes
+    ->REV_UNIQUE_ID : arr
+        -> text
+*/

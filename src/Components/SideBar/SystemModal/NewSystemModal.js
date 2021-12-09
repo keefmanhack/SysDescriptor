@@ -31,7 +31,6 @@ const NewSystemModal = () => {
                 title,
                 technician,
                 owner,
-                utfNumber,
                 sysNumber,
                 partNumber 
             }

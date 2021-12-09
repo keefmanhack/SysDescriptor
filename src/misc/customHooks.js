@@ -65,7 +65,7 @@ export const useRevisions = revIDs => {
   const [isUpdating, setIsUpdating] = useState(false);
   
   
-  const listRef = ref(database, `revisions/${listID}`);
+  const listRef = ref(database, `revisions/${revIDs}`);
   useEffect(() => {
     setIsUpdating(true);
     
@@ -80,7 +80,7 @@ export const useRevisions = revIDs => {
     return () => {
       off(listRef);
     }
-  }, [listID]);
+  }, [revIDs]);
 
   return [revs, isUpdating];
 }
