@@ -37,7 +37,7 @@ function App() {
        <TitleBar setTheme={(t) => setTheme(t)}/>
         <Grid fluid  style={{padding:0}}>
           <Row >
-            <Col xs={24} lg={6} >
+            <Col xs={24} lg={7} >
               <SideBar 
                 onSysDeleted={(id) => onDeleteSys(id)} 
                 revSelectedID={revID}
@@ -46,7 +46,7 @@ function App() {
                 onRevSelected={(sysID, revID)=> {setSysID(sysID); setRevID(revID); }}
               />
             </Col>
-            <Col xs={24} lg={18} >
+            <Col xs={24} lg={17} >
               {revID ? <NewMainStage revID={revID}/> : <DefaultMainStage/>}
             </Col>
           </Row>

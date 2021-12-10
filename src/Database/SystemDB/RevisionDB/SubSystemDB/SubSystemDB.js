@@ -55,4 +55,21 @@ export class SubSystemDB {
             console.log(err);
         }
     }
+
+    static deleteSpecific = async (revID, subSysID) => {
+        try{
+            if(!revID){throw new this.NoIDErr}
+            if(!subSysID){throw new this.NoIDErr}
+
+            const db = ref(database, `${this.DBPARENT}/${revID}/${subSysID}`)
+            
+            await ComponentDB.delete(subSysID);
+
+            await set(db, null);
+
+        }catch(err){
+            Alert.error(err.message);
+            console.log(err);
+        }
+    }
 }

@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { off} from "firebase/database";
+import { off } from "@firebase/database";
 import { idObjToArr} from "./helperfunc";
 import { SystemDB } from "../Database/SystemDB/SystemDB";
 import { RevisionDB } from "../Database/SystemDB/RevisionDB/RevisionDB";
 import { SubSystemDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB";
+
 
 export const useMediaQuery = query => {
     const [matches, setMatches] = useState(
@@ -106,21 +107,25 @@ export const useSystems = () => {
   return {systems, isUpdating}
 }
 
-export const useSubSystems = (revID) => {
+export const useSubSystems = revID => {
   const [subSys, setSubSys] = useState([]);
-  let subRef;
+
   useEffect(() => {
-    console.log(' sub call')
-    subRef = SubSystemDB.addListener(revID, (v) => {
+    SubSystemDB.addListener(revID, (v) => {
       const subObj = v;
       const subArr = idObjToArr(subObj);
+      subArr.sort((a,b) => (a.name>b.name ?  -1 :  1))
       setSubSys(subArr);
     })
 
-    return () => {
-      off(subRef);
-    }
   }, [revID]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     off(subRef);
+  //   }
+  // }, []);
+
   return subSys
 }
 
