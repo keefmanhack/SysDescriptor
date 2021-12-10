@@ -21,11 +21,11 @@ export class SystemDB{
     }
 
     static read = async sysID => {
-        return await DBHelper.read(this.DBPARENT, sysID);
+        return DBHelper.read(this.DBPARENT, sysID);
     }
 
-    static onValue = (sysID, cb) => {
-        DBHelper.onValue(this.DBPARENT, sysID, cb);
+    static addListener = (cb) => {
+       return DBHelper.onValue(this.DBPARENT, '', cb);
     }
 
     static create = async (title='Untitled', owner=null, technician=null, sysNumber=null, partNumber=null) => {
@@ -80,7 +80,7 @@ export class SystemDB{
 
             const db = ref(database, `${this.DBPARENT}/${sysID}`)
 
-            //delete revisions first
+            //  delete revisions first
             await RevisionDB.deleteAll(sysID);
 
             await set(db, null);

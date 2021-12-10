@@ -11,7 +11,7 @@ FunctionInputs
 1) Parent SUB_COMPONENT_ID
 */
 
-import { get, push, ref, set } from "firebase/database";
+import { get, ref, set } from "firebase/database";
 import Alert from "../../../../../misc/Alert";
 import database from "../../../../../misc/firebase";
 import { DBHelper } from "../../../../DBHelper";
@@ -19,28 +19,29 @@ import { ComponentItemDB } from "./ComponentItemDB/ComponentItemDB";
 
 export class ComponentDB {
     static DBPARENT = 'Component';
-    static noIDErr = Error('Missing parent sub-system identification.');
+
+    static NoIDErr = Error('Missing parent sub-system identification.');
 
     static read = async (subSysID) => {
-        return await DBHelper.read(this.DBPARENT, subSysID);
+        return DBHelper.read(this.DBPARENT, subSysID);
     }
 
     static create = async (subSysID, name) => {
-        return await DBHelper.create(this.DBPARENT, subSysID, name);
+        return DBHelper.create(this.DBPARENT, subSysID, name);
     }
 
     static delete = async (subSysID) => {
         try{
-            if(!subSysID){throw new this.noIDErr}
+            if(!subSysID){throw new this.NoIDErr}
 
             const db = ref(database, `${this.DBPARENT}/${subSysID}`)
             
-            //delete children first
+            //  delete children first
             const compItemIDs = await get(db);
             const compItemIDsArr = Object.keys(compItemIDs.val() || []) ;
             for(let i = 0 ; i< compItemIDsArr.length; i++){
                 const id = compItemIDsArr[i];
-                await ComponentItemDB.delete(id);
+                ComponentItemDB.delete(id);
             }
 
             await set(db, null);

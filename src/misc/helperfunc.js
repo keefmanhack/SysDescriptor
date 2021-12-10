@@ -11,6 +11,15 @@ export function makeid(length=5) {
    return `${Date.now()}${result}`;
 }
 
+export const idObjToArr = obj => {
+  if(!obj){return []}
+  
+  const ids = Object.keys(obj);
+
+  return ids.map(id => {
+    return {id, ...obj[id]}
+  })
+}
 
 export const arrRemove = (arr, item) =>{
     const i = arr.findIndex(item);

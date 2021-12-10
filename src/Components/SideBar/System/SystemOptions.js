@@ -8,18 +8,20 @@ const OptionsPopOver = React.forwardRef(({ handleSelect, ...rest }, ref) => (
       <Dropdown.Menu onSelect={(n, e)=>{handleSelect(n); e.stopPropagation()}}>
         <Dropdown.Item eventKey={1} >New Revision</Dropdown.Item>
         <Dropdown.Item>Edit System</Dropdown.Item>
-        <Dropdown.Item>Delete System</Dropdown.Item>
+        <Dropdown.Item eventKey={3}>Delete System</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
 ));
 
 
 
-export const SystemOptions = ({onNewRevision}) => {
+export const SystemOptions = ({onNewRevision, onDeleteSystem}) => {
   const ref = useRef();
   const handleSelect = n => {
     if(n===1){
       onNewRevision();
+    }else if(n===3){
+      onDeleteSystem();
     }
 
     ref.current.close();

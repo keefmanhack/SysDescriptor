@@ -4,7 +4,7 @@ export class SoftWareDataDB {
     static DBPARENT = `SoftWareData`;
 
     static read = async componentID => {
-        return (await DataDB.read(this.DBPARENT, componentID));
+        return DataDB.read(this.DBPARENT, componentID);
     }
 
     static update = async (componentID, value, title) => {

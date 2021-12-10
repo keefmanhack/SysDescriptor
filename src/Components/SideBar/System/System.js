@@ -6,7 +6,7 @@ import { SystemOptions } from './SystemOptions';
 import HoverShowAll from '../../../misc/HoverShowAll';
 import RevList from './Revisions/RevList';
 
-export const System = ({title='Untitled', revIDs, partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID}) => {
+export const System = ({sysID, title='Untitled', partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID, onDeleteSystem}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     title = title ==='' ? 'Untitled' : title;
 
@@ -55,12 +55,13 @@ export const System = ({title='Untitled', revIDs, partNumber, sysNumber, technic
                         <Col xs={2}>
                             <SystemOptions
                                 onNewRevision={()=>handleNewRev()}
+                                onDeleteSystem={onDeleteSystem}
                             />
                         </Col>
                     </Row>
                 </Grid>         
             </div>
-            {isExpanded ? <RevList revSelectedID={revSelectedID} onRevSelected={(id)=>onRevSelected(id)} revIDs={revIDs}/> : null}           
+            {isExpanded ? <RevList revSelectedID={revSelectedID} onRevSelected={(id)=>onRevSelected(id)} sysID={sysID}/> : null}           
         </div>
     )
 }

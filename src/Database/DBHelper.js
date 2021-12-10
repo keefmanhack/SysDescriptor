@@ -1,4 +1,4 @@
-import { get, ref, push } from "firebase/database";
+import { get, ref, push, onValue } from "firebase/database";
 import firebase from 'firebase/compat/';
 
 import Alert from "../misc/Alert";
@@ -19,6 +19,7 @@ export class DBHelper {
             console.log(err);
         }
     }
+
     static create = async (DBPARENT, id, name) => {
         try{
             if(!id){throw new Error('Missing parent ID')}
@@ -42,16 +43,15 @@ export class DBHelper {
 
     static onValue = (DBPARENT, id, cb) => {
         try{
-            if(!id){throw new Error('Missing identification.')}
-
             const db = ref(database, `${DBPARENT}/${id}`);
 
-            onValue(db, snap => {
+            onValue(db, snap => {    
                 cb(snap.val());
             }, err => {
                 Alert.error(err)
             })
 
+            return db;
         }catch(err){
             Alert.error(err);
             console.log(err);

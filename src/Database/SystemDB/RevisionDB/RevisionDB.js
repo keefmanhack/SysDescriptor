@@ -1,5 +1,5 @@
 
-import { get, ref, set, push, update} from "firebase/database";
+import { get, ref, set, push} from "firebase/database";
 import firebase from 'firebase/compat/';
 import { SubSystemDB } from "./SubSystemDB/SubSystemDB";
 import Alert from "../../../misc/Alert";
@@ -9,12 +9,13 @@ import database from "../../../misc/firebase";
 
 export class RevisionDB {
     static DBPARENT = 'revisions';
+    
     static readAll = async (sysID) => {
-        return await DBHelper.read(this.DBPARENT, sysID);
+        return DBHelper.read(this.DBPARENT, sysID);
     }
 
-    static onValue = (sysID, cb) => {
-        DBHelper.onValue(this.DBPARENT, sysID, cb);
+    static addListener = (sysID, cb) => {
+       return DBHelper.onValue(this.DBPARENT, sysID, cb);
     }
 
     static readSpecific = async (sysID, revID) => {
@@ -79,7 +80,7 @@ export class RevisionDB {
 
             const db = ref(database, `${this.DBPARENT}/${sysID}/${revID}`)
 
-            //delete sub systems first
+            //  delete sub systems first
             await SubSystemDB.delete(revID);
 
             await set(db, null);
@@ -97,12 +98,12 @@ export class RevisionDB {
 
             const db = ref(database, `${this.DBPARENT}/${sysID}`)
 
-            //delete sub systems first
+            //  delete sub systems first
             const revIDs = await get(db);
             const revIDsArr = Object.keys(revIDs.val() || []) ;
             for(let i = 0 ; i< revIDsArr.length; i++){
                 const id = revIDsArr[i];
-                await SubSystemDB.delete(id);
+                SubSystemDB.delete(id);
             }
 
             await set(db, null);

@@ -20,30 +20,31 @@ import { SoftWareDataDB } from "./Data/SoftwareDataDB";
 
 export class ComponentItemDB {
     static DBPARENT = 'ComponentItems';
-    static noIDErr = Error('Missing parent sub-component identification.');
+
+    static NoIDErr = Error('Missing parent sub-component identification.');
 
     static read = async (compID) => {
-        return await DBHelper.read(this.DBPARENT, compID);
+        return DBHelper.read(this.DBPARENT, compID);
     }
 
 
     static create = async (compID, name) => {
-        return await DBHelper.create(this.DBPARENT, compID, name);
+        return DBHelper.create(this.DBPARENT, compID, name);
     }
 
     static delete = async (compID) => {
         try{
-            if(!compID){throw new this.noIDErr}
+            if(!compID){throw new this.NoIDErr}
 
             const db = ref(database, `${this.DBPARENT}/${compID}`)
             
-            //delete children first
+            //  delete children first
             const componentIDs = await get(db);
             const compIDsArr = Object.keys(componentIDs.val() || []) ;
             for(let i = 0 ; i< compIDsArr.length; i++){
                 const id = compIDsArr[i];
-                await SoftWareDataDB.delete(id);
-                await HardWareDataDB.delete(id);
+                SoftWareDataDB.delete(id);
+                HardWareDataDB.delete(id);
             }
 
             await set(db, null);

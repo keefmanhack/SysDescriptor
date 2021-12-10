@@ -19,6 +19,7 @@
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
       "consistent-return": "off",
+      "arrow-body-style" : "off",
       "jsx-a11y/label-has-associated-control": ["error", {
         "required": {
           "some": ["nesting", "id"]

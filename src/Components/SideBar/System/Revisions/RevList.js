@@ -3,13 +3,13 @@ import { Loader } from 'rsuite';
 import { useRevisions } from '../../../../misc/customHooks';
 import {Revision} from './Revision';
 
-const RevList = ({revIDs, onRevSelected, revSelectedID}) => {
-    const [revData, isUpdating] = useRevisions(revIDs);
+const RevList = ({sysID, onRevSelected, revSelectedID}) => {
+    const {revs, isUpdating} = useRevisions(sysID);
 
     return (
         <div className='rs-list rs-list-hover v-scroll' style={{marginLeft: '10%'}}>
             {isUpdating ? <Loader style={{padding: '10px'}}/> : null}
-            {!isUpdating && revData ? revData.map(val => {
+            {!isUpdating && revs ? revs.map(val => {
                 const {id, name, timestamp, revisionNumber} = val;
                     return(
                     <Revision 
@@ -22,6 +22,7 @@ const RevList = ({revIDs, onRevSelected, revSelectedID}) => {
                     />
                 )
             }): null}
+            {!isUpdating && !revs.length ? <span className='muted-c' style={{padding: '5px 0', display: 'block'}}>Create a new revision to get started</span> : null}
         </div>
     );
 };

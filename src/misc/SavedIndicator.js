@@ -18,7 +18,7 @@ const SavedIndicator = ({isUpdating, persistFor=1000}) => {
 
     return (
         <>
-        {delayedIsUpdating ? <DoingRound pulse/> : <CheckRound color='green'/>}
+        {delayedIsUpdating ? <DoingRound pulse/> : <CheckRound style={{color: 'lightgreen'}}/>}
         </>
     );
 };

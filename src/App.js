@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
 import { Grid, Row, Col} from "rsuite";
-import {ref, push, get, set} from "firebase/database";
-import firebase from 'firebase/compat/';
-import database from './misc/firebase';
 
 import TitleBar from './Components/TitleBar';
 import SideBar from './Components/SideBar/SideBar';
-import { SystemsProvider } from './Contexts/systems.context';
 import DefaultMainStage from './Components/MainStage/Extensions/DefaultMainStage';
 import NewMainStage from './Components/MainStage/Extensions/NewMainStage';
 import Footer from './Components/Footer';
-import Alert from './misc/Alert';
 
 
 import './styles/main.scss';
 import './styles/utility.scss';
 import 'rsuite/dist/rsuite.min.css';
-import { makeid } from './misc/helperfunc';
 import { ThemeProvider } from './Contexts/theme.context';
+import { RevisionDB } from './Database/SystemDB/RevisionDB/RevisionDB';
 
 function App() {
   const [theme, setTheme] = useState('dark')
   const [revID, setRevID] = useState(null);
   const [sysID, setSysID] = useState(null);
 
-  const hideMainStage = () => {setRevID(null); setSysID(null);}
+  // const hideMainStage = () => {setRevID(null); setSysID(null);}
+
+  const onNewRevision = async (sysID) => {
+    const revID = await RevisionDB.create(sysID);
+    setSysID(sysID);
+    setRevID(revID);
+  }
+  
+  const onDeleteSys = () => {}
+
 
 
   return (
@@ -34,15 +38,13 @@ function App() {
         <Grid fluid  style={{padding:0}}>
           <Row >
             <Col xs={24} lg={6} >
-              <SystemsProvider>
-                <SideBar 
-                  onSysDeleted={(id) => deleteSys(id)} 
-                  revSelectedID={revID}
-                  sysSelectedID={sysID}
-                  onNewRevision={(sysID)=>createNewRev(sysID)}
-                  onRevSelected={(sysID, revID)=> {setSysID(sysID); setRevID(revID); }}
-                />
-              </SystemsProvider>
+              <SideBar 
+                onSysDeleted={(id) => onDeleteSys(id)} 
+                revSelectedID={revID}
+                sysSelectedID={sysID}
+                onNewRevision={(sysID)=>onNewRevision(sysID)}
+                onRevSelected={(sysID, revID)=> {setSysID(sysID); setRevID(revID); }}
+              />
             </Col>
             <Col xs={24} lg={18} >
               {revID ? <NewMainStage revID={revID}/> : <DefaultMainStage/>}

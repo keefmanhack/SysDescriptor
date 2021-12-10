@@ -19,28 +19,33 @@ import { ComponentDB } from "./ComponentDB/ComponentDB";
 
 export class SubSystemDB {
     static DBPARENT = 'SubSystem';
-    static noIDErr = Error('Missing parent revision identification.');
+
+    static NoIDErr = Error('Missing parent revision identification.');
+
+    static addListener = async (revID, cb) => {
+        return DBHelper.onValue(this.DBPARENT, revID, cb);
+    }
 
     static read = async (revID) => {
-        return await DBHelper.read(this.DBPARENT, revID);
+        return DBHelper.read(this.DBPARENT, revID);
     }
 
     static create = async (revID, name) => {
-        return await DBHelper.create(this.DBPARENT, revID, name);
+        return DBHelper.create(this.DBPARENT, revID, name);
     }
 
     static delete = async (revID) => {
         try{
-            if(!revID){throw new this.noIDErr}
+            if(!revID){throw new this.NoIDErr}
 
             const db = ref(database, `${this.DBPARENT}/${revID}`)
             
-            //delete children first
+            //  delete children first
             const subSysIDs = await get(db);
             const subSysIDsArr = Object.keys(subSysIDs.val() || []) ;
             for(let i = 0 ; i< subSysIDsArr.length; i++){
                 const id = subSysIDsArr[i];
-                await ComponentDB.delete(id);
+                ComponentDB.delete(id);
             }
 
             await set(db, null);

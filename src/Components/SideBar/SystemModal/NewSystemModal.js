@@ -1,8 +1,7 @@
-import { push, ref } from 'firebase/database';
 import React, {useState} from 'react';
 import { Button, Form, InputNumber, InputPicker, Modal, Input, Grid, Row, Col, ButtonToolbar, Schema} from 'rsuite';
+import { SystemDB } from '../../../Database/SystemDB/SystemDB';
 import Alert from '../../../misc/Alert';
-import database from '../../../misc/firebase';
 import systemChoices from '../../../misc/SystemChoices/systemChoices.json';
 
 
@@ -23,18 +22,10 @@ const NewSystemModal = () => {
 
     const onNewSystem = async () => {
         if(selectedSystemIndex===null){return}
-        const newRef = ref(database, `systems/`);
         const sysParent = systemChoices.systems[selectedSystemIndex].data;
         const {title, partNumber, sysNumber} = sysParent;
         try{
-            const data = {
-                title,
-                technician,
-                owner,
-                sysNumber,
-                partNumber 
-            }
-            await push(newRef, data);
+            await SystemDB.create(title, owner, technician, sysNumber, partNumber);
             clearInputs();
             setShow(false);
             Alert.success(`New System ${title} Created`);

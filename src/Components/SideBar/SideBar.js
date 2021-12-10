@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {Input, InputGroup, Loader, List} from 'rsuite';
 import { Close } from '@rsuite/icons';
 
-import { useSystems } from '../../Contexts/systems.context';
-import {useMediaQuery} from '../../misc/customHooks'
+import {useMediaQuery, useSystems} from '../../misc/customHooks'
 import { System } from './System/System';
 import NewSystemModal from './SystemModal/NewSystemModal';
+import { SystemDB } from '../../Database/SystemDB/SystemDB';
 
 
 // const selectedStyle = {
@@ -33,6 +33,9 @@ const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) =
 
     const searchResults =  findSearchResults(systems, searchText);
 
+    const onDeleteSystem = async id => {
+        await SystemDB.delete(id);
+    }
  
    return (
         <div className='br-r h-100 p-1' style={{}}>
@@ -62,9 +65,11 @@ const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) =
                         partNumber={partNumber}
                         revIDs={revIDs}
                         key={id}
+                        sysID={id}
                         isSelected={sysSelectedID===id}
                         revSelectedID={revSelectedID}
                         onNewRevision={()=>onNewRevision(id)}
+                        onDeleteSystem={()=>onDeleteSystem(id)}
                         onRevSelected={(revID)=>onRevSelected(id, revID)}
                     />
                 })}

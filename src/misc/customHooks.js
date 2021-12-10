@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { off, onValue, ref } from "firebase/database";
-import database from './firebase';
-import Alert from "./Alert";
-import { snapToArr } from "./helperfunc";
+import { off} from "firebase/database";
+import { idObjToArr} from "./helperfunc";
+import { SystemDB } from "../Database/SystemDB/SystemDB";
+import { RevisionDB } from "../Database/SystemDB/RevisionDB/RevisionDB";
+import { SubSystemDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB";
 
 export const useMediaQuery = query => {
     const [matches, setMatches] = useState(
@@ -60,30 +61,70 @@ export const useHover = () => {
   return [ref, value];
 }
 
-export const useRevisions = revIDs => {
+export const useRevisions = sysID => {
   const [revs, setRevs] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
   
   
-  const listRef = ref(database, `revisions/${revIDs}`);
+  let revsRef;
   useEffect(() => {
     setIsUpdating(true);
-    
-    onValue(listRef, snap => {
-      setRevs(snapToArr(snap.val()));
+    revsRef = RevisionDB.addListener(sysID, (v) => {
+      const revOBJ = v;
+      const revArr = idObjToArr(revOBJ);
+      setRevs(revArr);
       setIsUpdating(false);
-    }, err => {
-      Alert.error(err);
-      console.log(err);
     })
     
     return () => {
-      off(listRef);
+      off(revsRef);
     }
-  }, [revIDs]);
+  }, [sysID]);
 
-  return [revs, isUpdating];
+  return {revs, isUpdating};
 }
+
+export const useSystems = () => {
+  const [systems, setSystems] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  let sysRef;
+  useEffect(() => {
+    setIsUpdating(true);
+    
+    sysRef = SystemDB.addListener((v) => {
+      const systemsObj = v;
+      const systemsArr = idObjToArr(systemsObj);
+      setSystems(systemsArr);
+      setIsUpdating(false);
+    })
+    
+    return () => {
+      off(sysRef);
+    }
+  }, []);
+  return {systems, isUpdating}
+}
+
+export const useSubSystems = (revID) => {
+  const [subSys, setSubSys] = useState([]);
+  let subRef;
+  useEffect(() => {
+    console.log(' sub call')
+    subRef = SubSystemDB.addListener(revID, (v) => {
+      const subObj = v;
+      const subArr = idObjToArr(subObj);
+      setSubSys(subArr);
+    })
+
+    return () => {
+      off(subRef);
+    }
+  }, [revID]);
+  return subSys
+}
+
+
 
 
 export const useModal = () => {
