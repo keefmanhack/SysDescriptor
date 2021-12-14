@@ -4,6 +4,7 @@ import { idObjToArr} from "./helperfunc";
 import { SystemDB } from "../Database/SystemDB/SystemDB";
 import { RevisionDB } from "../Database/SystemDB/RevisionDB/RevisionDB";
 import { SubSystemDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB";
+import { ComponentDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB";
 
 
 export const useMediaQuery = query => {
@@ -113,9 +114,9 @@ export const useSubSystems = revID => {
   useEffect(() => {
     SubSystemDB.addListener(revID, (v) => {
       const subObj = v;
-      const subArr = idObjToArr(subObj);
-      subArr.sort((a,b) => (a.name>b.name ?  -1 :  1))
-      setSubSys(subArr);
+      const compArr = idObjToArr(subObj);
+      compArr.sort((a,b) => (a.name>b.name ?  -1 :  1))
+      setSubSys(compArr);
     })
 
   }, [revID]);
@@ -129,7 +130,29 @@ export const useSubSystems = revID => {
   return subSys
 }
 
+export const useComponents = subSysID => {
+  const [comps, setComps] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
 
+  useEffect(() => {
+    setIsUpdating(true);
+    ComponentDB.addListener(subSysID, (v) => {
+      const compObj = v;
+      const compArr = idObjToArr(compObj);
+      setComps(compArr);
+      setIsUpdating(false);
+    })
+
+  }, [subSysID]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     off(compRef);
+  //   }
+  // }, []);
+
+  return {comps, isUpdating}
+}
 
 
 export const useModal = () => {

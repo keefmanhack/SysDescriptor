@@ -77,6 +77,10 @@ const convertSize = x => (x*2)
 //   const dataToDisplay = [...jsonDoc.required, ...getOptionalValues()]
 // }
 
+export const getKeyName = obj => {
+  return Object.keys(obj)[0];
+}
+
 export const snapToArr = snapArr => {
   const json = (snapArr) || {};
   const ids = Object.keys(json);

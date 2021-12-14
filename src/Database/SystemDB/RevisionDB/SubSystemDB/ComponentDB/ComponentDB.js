@@ -20,10 +20,14 @@ import { ComponentItemDB } from "./ComponentItemDB/ComponentItemDB";
 export class ComponentDB {
     static DBPARENT = 'Component';
 
-    static NoIDErr = Error('Missing parent sub-system identification.');
+    
 
     static read = async (subSysID) => {
         return DBHelper.read(this.DBPARENT, subSysID);
+    }
+
+    static addListener = async (subSysID, cb) => {
+        return DBHelper.onValue(this.DBPARENT, subSysID, cb);
     }
 
     static create = async (subSysID, name) => {
@@ -32,7 +36,7 @@ export class ComponentDB {
 
     static delete = async (subSysID) => {
         try{
-            if(!subSysID){throw new this.NoIDErr}
+            if(!subSysID){throw new Error('Missing parent sub-system identification.');}
 
             const db = ref(database, `${this.DBPARENT}/${subSysID}`)
             
@@ -44,6 +48,21 @@ export class ComponentDB {
                 ComponentItemDB.delete(id);
             }
 
+            await set(db, null);
+
+        }catch(err){
+            Alert.error(err.message);
+            console.log(err);
+        }
+    }
+
+    static deleteSpecific =  async (subSysID, id) => {
+        try{
+            if(!subSysID){throw Error('Missing parent sub-system identification.');}
+            if(!id){throw Error('Missing component identification.');}
+
+            const db = ref(database, `${this.DBPARENT}/${subSysID}/${id}`)
+            
             await set(db, null);
 
         }catch(err){

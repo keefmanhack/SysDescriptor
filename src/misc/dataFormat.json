@@ -9,32 +9,40 @@
             "input": "Number"
         }
     },
-    "general": [
-        {
-            "ADU": {
-                "Software" : [{
-                    "Revision" : {
-                        "db" : "ADU/software/revision",
-                        "input": "Text"
-                    }
-                }],
-                "Hardware" : [{
-                    "Part Number" : {
-                        "db" : "ADU/hardware/part_number",
-                        "input": "Text"
-                    }
-                }]
-            }
+    "General": {
+        "ADU": {
+            "Software" : [{
+                "Revision" : {
+                    "db" : "ADU/software/revision",
+                    "input": "Text"
+                }
+            }],
+            "Hardware" : [{
+                "Part Number" : {
+                    "db" : "ADU/hardware/part_number",
+                    "input": "Text"
+                }
+            }]
+        },
+        "Decel": {
+            "Software" : [{
+                "Revision" : {
+                    "db" : "ADU/software/revision",
+                    "input": "Text"
+                }
+            }],
+            "Hardware" : [{
+                "Part Number" : {
+                    "db" : "ADU/hardware/part_number",
+                    "input": "Text"
+                }
+            }]
         }
-    ],
-    "atc" : [
+    },
+    "ATC" : {
 
-    ],
-    "acses" : [
+    },
+    "ACSES" : {
 
-    ],
-    "notes" : {
-        "db:": "notes",
-        "input": "TextArea"
     }
 }
