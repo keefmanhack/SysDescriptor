@@ -2,28 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { Nav } from 'rsuite';
 import CloseIcon from '@rsuite/icons/Close';
 import { SubSystemDB } from '../../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB';
-import dataFormat from '../../misc/dataFormat.json';
 import ComponentHandler from './ComponentHandler/ComponentHandler';
 
 const SubSystemNav = ({subSystems=[], revID}) => {
-    const [selectedID, setselectedID] = useState();
-    const [selectedName, setSelectedName] = useState();
+    const [selI, setSelI] = useState(null);
 
     useEffect(() => {
-        if(!selectedID && subSystems[0]){
-            setselectedID(subSystems[0].id);
-            setSelectedName(subSystems[0].name);
+        setSelI(null);
+    }, [revID]);
+
+    const handleDelete = () => {
+        if(selI-1 >=0){
+            setSelI(i=>i-1);
+        }else{
+            setSelI(null);
         }
-    }, [subSystems])
+
+    }
 
     const createSubSystemNavs = () => (
-        subSystems.map((subSys) => {
+        subSystems.map((subSys, i) => {
             const {name, id} = subSys;
-            const isActive = id===selectedID;
+            const isActive = i===selI;
             const btnColor = isActive ? 'red' : null;
             return (
                 <Nav.Item 
-                    onClick={()=>{setselectedID(id); setSelectedName(name)}} 
+                    onClick={()=>setSelI(i)} 
                     key={id} 
                     active={isActive}
                 >
@@ -31,7 +35,7 @@ const SubSystemNav = ({subSystems=[], revID}) => {
                     <button 
                         style={{background: 'transparent', color: btnColor, fontSize: '12px', position: 'relative', top:'-2px', left: '3px'}} 
                         type='button'
-                        onClick={(e) => {e.stopPropagation(); SubSystemDB.deleteSpecific(revID, id); setSelectedName(null); setselectedID(null)}}
+                        onClick={(e) => {e.stopPropagation(); SubSystemDB.deleteSpecific(revID, id); handleDelete()}}
                         disabled={!isActive}
                     > 
                         <CloseIcon/> 
@@ -46,8 +50,8 @@ const SubSystemNav = ({subSystems=[], revID}) => {
             <Nav appearance="tabs">
                 {createSubSystemNavs()}
             </Nav>
-            {selectedID && dataFormat[selectedName] ? 
-                <ComponentHandler subSysID={selectedID} subSysFormat={dataFormat[selectedName]}/>
+            {selI!==null ? 
+                <ComponentHandler subSysID={subSystems[selI].id} dataKey={subSystems[selI].name}/>
             :
                 <div className='muted-c mx-auto w-100'>
                     Select a subsystem to begin editing.

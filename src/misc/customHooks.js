@@ -5,6 +5,7 @@ import { SystemDB } from "../Database/SystemDB/SystemDB";
 import { RevisionDB } from "../Database/SystemDB/RevisionDB/RevisionDB";
 import { SubSystemDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB";
 import { ComponentDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB";
+import { ComponentItemDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/ComponentItemDB";
 
 
 export const useMediaQuery = query => {
@@ -152,6 +153,31 @@ export const useComponents = subSysID => {
   // }, []);
 
   return {comps, isUpdating}
+}
+
+
+export const useCompItems = compID => {
+  const [compItems, setCompItems] = useState([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    setIsUpdating(true);
+    ComponentItemDB.addListener(compID, (v) => {
+      const obj = v;
+      const arr = idObjToArr(obj);
+      setCompItems(arr);
+      setIsUpdating(false);
+    })
+
+  }, [compID]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     off(compRef);
+  //   }
+  // }, []);
+
+  return {compItems, isUpdating}
 }
 
 

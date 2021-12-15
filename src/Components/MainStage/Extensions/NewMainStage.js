@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState } from 'react';
 import {Button, ButtonToolbar, ButtonGroup, Grid, Row, Col } from 'rsuite';
 import { faRedo, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,11 +30,6 @@ const NewMainStage = ({sysID, revID, style}) => {
 
 
     const DBROOT= `revisions/${sysID}/${revID}`;
-
-    useEffect(() => {
-
-    }, [DBROOT])
-
 
     const updateDB = async (val, path) => {
         setIsUpdating(true);

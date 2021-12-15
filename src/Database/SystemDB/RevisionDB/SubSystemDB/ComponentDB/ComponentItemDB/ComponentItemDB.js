@@ -27,6 +27,10 @@ export class ComponentItemDB {
         return DBHelper.read(this.DBPARENT, compID);
     }
 
+    static addListener = (compID, cb) => {
+        return DBHelper.onValue(this.DBPARENT, compID, cb)
+    }
+
 
     static create = async (compID, name) => {
         return DBHelper.create(this.DBPARENT, compID, name);

@@ -8,8 +8,8 @@ const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
         return  activeComps.map(v => {
             const {name, id} =v;
             return (
-                <Col xs={1}>
-                    <ActiveComp subSysID={subSysID} id={id} name={name}/>
+                <Col xs={4} md={2} key={id}>
+                    <ActiveComp key={id} subSysID={subSysID} id={id} name={name}/>
                 </Col>)
         })
     }
@@ -20,9 +20,11 @@ const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
             if(activeComps.find(ac => ac.name===name)){return null}
 
             return (
-                <Col xs={1}><Button size='xs' className='mr-2' onClick={()=>ComponentDB.create(subSysID, name)}>
-                    + {name}
-                </Button></Col>)
+                <Col key={name} xs={4} md={2}>
+                    <Button size='xs' className='mr-2' onClick={()=>ComponentDB.create(subSysID, name)}>
+                        + {name}
+                    </Button>
+                </Col>)
         })
     }
 

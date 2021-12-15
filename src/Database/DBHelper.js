@@ -20,7 +20,7 @@ export class DBHelper {
         }
     }
 
-    static create = async (DBPARENT, id, name) => {
+    static create = async (DBPARENT, id, name='') => {
         try{
             if(!id){throw new Error('Missing parent ID')}
 

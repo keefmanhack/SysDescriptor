@@ -2,7 +2,7 @@
     "revision": {
         "name" : {
             "db" : "name",
-            "input" : "Text"
+            "input" : "Input"
         },
         "revision_number" : {
             "db" : "revisionNumber",
@@ -11,32 +11,32 @@
     },
     "General": {
         "ADU": {
-            "Software" : [{
+            "Software" : {
                 "Revision" : {
                     "db" : "ADU/software/revision",
-                    "input": "Text"
+                    "input": "Input"
                 }
-            }],
-            "Hardware" : [{
+            },
+            "Hardware" : {
                 "Part Number" : {
                     "db" : "ADU/hardware/part_number",
-                    "input": "Text"
+                    "input": "Input"
                 }
-            }]
+            }
         },
         "Decel": {
-            "Software" : [{
+            "Software" : {
                 "Revision" : {
                     "db" : "ADU/software/revision",
-                    "input": "Text"
+                    "input": "Number"
                 }
-            }],
-            "Hardware" : [{
+            },
+            "Hardware" : {
                 "Part Number" : {
                     "db" : "ADU/hardware/part_number",
-                    "input": "Text"
+                    "input": "Input"
                 }
-            }]
+            }
         }
     },
     "ATC" : {
