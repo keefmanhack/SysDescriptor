@@ -25,7 +25,7 @@ const Comp = ({name, id, format}) => {
 
     return (
         <CustomPanel defaultExpand header={name}>
-            <Button size='xs' color='blue' appearance='primary' onClick={newCompItem}>Add</Button>
+            <Button size='xs' color='blue' appearance='subtle' onClick={newCompItem}>Add</Button>
             <hr/>
             {showCompItems()}
         </CustomPanel>

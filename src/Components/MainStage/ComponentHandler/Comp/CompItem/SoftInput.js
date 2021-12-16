@@ -2,8 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { Input } from 'rsuite';
 import { useToolBar } from '../../../../../Contexts/toolbar.context';
 import { SoftWareDataDB } from '../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/Data/SoftwareDataDB';
+import MyDateInput from '../../../../Custom Inputs/MyDateInput';
+import MyNumberInput from '../../../../Custom Inputs/MyNumberInput';
 
-const SoftInput = ({title, compID}) => {
+const inputs = {
+    Text: Input,
+    Number: MyNumberInput,
+    Date: MyDateInput
+}
+
+const getInput = str => {
+    if(!inputs[str]){return inputs.Text}
+    return inputs[str]
+}
+
+const SoftInput = ({title, compID, inputType='Text'}) => {
+    const MyInput = getInput(inputType);
     const [value, setValue] = useState('');
     const [disabled, setDisabled] = useState(false);
     const {setIsUpdating} = useToolBar();
@@ -27,8 +41,8 @@ const SoftInput = ({title, compID}) => {
     
     return (
         <div>
-            <label htmlFor={title}>{title}</label>
-            <Input size='xs' disabled={disabled} onChange={handleChange} value={value}/>
+            <label style={{fontSize: '14px'}} htmlFor={title}>{title}</label>
+            <MyInput size='sm' disabled={disabled} onChange={handleChange} value={value}/>
         </div>
     );
 };

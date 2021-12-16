@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Drawer } from 'rsuite';
-import {DBTextAreaInput} from '../SubComponents/DBInput/Extensions/DBTextAreaInput';
 
-export const NotesDrawer = ({onClose, isOpen, id, name, onChange}) => {
+export const NotesDrawer = ({onClose, isOpen, name}) => {
     const [isEnlarged, setIsEnlarged] = useState(false);
     if(!isOpen){return null}
     return (
@@ -17,14 +16,14 @@ export const NotesDrawer = ({onClose, isOpen, id, name, onChange}) => {
         </Drawer.Actions>
         </Drawer.Header>
         <Drawer.Body>
-            <DBTextAreaInput
+            {/* <DBTextAreaInput
                 style={{width: '100%', fontSize: '14px', transition: '.3s'}}
                 dbPath={`notes/${id}`}
                 onChange={(e, path) => onChange(e, path)}
                 title=""
                 rows={isEnlarged ? 20 : 5}
                 placeholder="Write any related notes here..."
-            />
+            /> */}
         </Drawer.Body>
     </Drawer>
     )

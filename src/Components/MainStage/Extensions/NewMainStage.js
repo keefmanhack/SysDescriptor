@@ -1,15 +1,11 @@
-import React, {useState } from 'react';
+import React from 'react';
 import {Button, Grid, Row, Col } from 'rsuite';
 import {set, ref} from 'firebase/database';
 
 import database from '../../../misc/firebase';
 import MainStage from '../MainStage';
-import revData from '../../../misc/dataFormat.json';
 import Alert from '../../../misc/Alert';
 import { generateDocument } from '../../../misc/helperfunc';
-import { DBTextInput } from '../SubComponents/DBInput/Extensions/DBTextInput';
-import DefaultMainStage from './DefaultMainStage';
-import { DBNumberInput } from '../SubComponents/DBInput/Extensions/DBNumberInput';
 import {useModal, useSubSystems} from '../../../misc/customHooks';
 import { NotesDrawer } from '../misc/NotesDrawer';
 import SubSystemNav from '../SubSystemNav';
@@ -20,14 +16,14 @@ import ToolBar from '../ToolBar';
 
 
 
-const NewMainStage = ({sysID, revID, style}) => {
+const NewMainStage = ({revID, style}) => {
     const subSystems = useSubSystems(revID);
-    const [revision, setRevision] = useState({});
+    // const [revision, setRevision] = useState({});
 
     const {isOpen, onOpen, onClose} = useModal();
 
 
-    const DBROOT= `revisions/${sysID}/${revID}`;
+    // const DBROOT= `revisions/${sysID}/${revID}`;
 
     const updateDB = async (val, path) => {
         const db = ref(database, path);
@@ -36,10 +32,6 @@ const NewMainStage = ({sysID, revID, style}) => {
         }catch(err){
             Alert.error(`Error writing system data of ${val} to the cloud`);
         }
-    }
-
-    if(!revision){
-        return <DefaultMainStage/>
     }
 
     return (
@@ -57,7 +49,7 @@ const NewMainStage = ({sysID, revID, style}) => {
                                         <SubSystems subSystems={subSystems} revID={revID}/>
                                     </Col>
                                     <Col xs={8}>
-                                        <DBTextInput
+                                        {/* <DBTextInput
                                             onChange={(e, path) => {updateDB(e, path);  setRevision(v=> {v.name=e; return v})}} 
                                             dbPath={`${DBROOT}/${revData.revision.name.db}`}
                                             title="Revision Name" 
@@ -72,7 +64,7 @@ const NewMainStage = ({sysID, revID, style}) => {
                                             placeholder='0'
                                             style={{width: '50px'}}
                                             size='xs'
-                                        />
+                                        /> */}
                                     </Col>
                                     <Col xs={8}>
                                         <div style={{float: 'right'}}>
@@ -86,8 +78,8 @@ const NewMainStage = ({sysID, revID, style}) => {
                         <NotesDrawer 
                             isOpen={isOpen} 
                             onClose={onClose} 
-                            id={revision.notes} 
-                            name={revision.name} 
+                            // id={revision.notes} 
+                            // name={revision.name} 
                             onChange={(e,path) => updateDB(e, path)}
                         />
                     </ToolBarProvider>
