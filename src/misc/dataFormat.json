@@ -15,6 +15,10 @@
                 "Revision" : {
                     "db" : "ADU/software/revision",
                     "input": "Input"
+                },
+                "Data" : {
+                    "db" : "some db reference",
+                    "input" : "Text"
                 }
             },
             "Hardware" : {

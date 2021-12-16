@@ -33,16 +33,31 @@ export class DataDB {
         }
     }
 
+    static readSpecific = async (DBPARENT, componentID, title) => {
+        try{
+            if(!componentID){throw new Error('Missing parent component identification.')}
+            if(!title){throw new Error('Need title to retreive data')}
 
-    static update = async (DBPARENT, componentID, value, title) => {
+            const db = ref(database, `${DBPARENT}/${componentID}/${title}`)
+
+            const data = await get(db);
+
+            return data.val();
+        }catch(err){
+            Alert.error(err);
+            console.log(err);
+        }
+    }
+
+
+    static update = async (DBPARENT, componentID, title, value) => {
         try{
             if(!componentID){throw new Error('Missing parent component identification.')}
 
-            const db = ref(database, `${DBPARENT}/${componentID}`)
+            const db = ref(database, `${DBPARENT}/${componentID}/${title}`)
 
             const payLoad = {
                 value,
-                title,
                 lastUpdated: firebase.database.ServerValue.TIMESTAMP
             }
 

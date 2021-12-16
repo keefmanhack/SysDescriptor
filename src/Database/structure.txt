@@ -33,15 +33,15 @@ Database Design
 ->HardWareData
     ->COMPONENTITEM_UNIQUE_ID : arr
         ->title
-        ->value
-        ->lastUpdated
-        ->updatedBy : user (in the future)
+            ->value
+            ->lastUpdated
+            ->updatedBy : user (in the future)
 ->SoftWareData
     ->COMPONENTITEM_UNIQUE_ID : arr
         ->title
-        ->value
-        ->lastUpdated
-        ->updatedBy : user (in the future)
+            ->value
+            ->lastUpdated
+            ->updatedBy : user (in the future)
 ->Notes
     ->REV_UNIQUE_ID : arr
         -> text

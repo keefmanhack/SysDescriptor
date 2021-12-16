@@ -13,7 +13,8 @@ const Comp = ({name, id, format}) => {
         if(!compItems.length){return "Add new items"}
 
         return compItems.map((v, i) => {
-            return <CompItem key={i} i={i} format={format}/>
+            const {id} = v;
+            return <CompItem compID={id} key={i} i={i} format={format}/>
         })
     }
 
@@ -23,7 +24,7 @@ const Comp = ({name, id, format}) => {
 
 
     return (
-        <CustomPanel header={name}>
+        <CustomPanel defaultExpand header={name}>
             <Button size='xs' color='blue' appearance='primary' onClick={newCompItem}>Add</Button>
             <hr/>
             {showCompItems()}

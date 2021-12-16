@@ -9,7 +9,10 @@ const SubSystemNav = ({subSystems=[], revID}) => {
 
     useEffect(() => {
         setSelI(null);
-    }, [revID]);
+        if(subSystems.length>0){
+            setSelI(0);
+        }
+    }, [revID, subSystems.length]);
 
     const handleDelete = () => {
         if(selI-1 >=0){
@@ -50,7 +53,7 @@ const SubSystemNav = ({subSystems=[], revID}) => {
             <Nav appearance="tabs">
                 {createSubSystemNavs()}
             </Nav>
-            {selI!==null ? 
+            {selI!==null && subSystems.length>0 ? 
                 <ComponentHandler subSysID={subSystems[selI].id} dataKey={subSystems[selI].name}/>
             :
                 <div className='muted-c mx-auto w-100'>
