@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button } from 'rsuite';
-import { SubSystemDB } from '../../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB';
+import { useToolBar } from '../../../Contexts/toolbar.context';
+import { SubSystemDB } from '../../../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB';
+import Alert from '../../../misc/Alert';
 
 const possSubs = {
     general: 'General',
@@ -10,8 +12,17 @@ const possSubs = {
 
 
 const SubSystems = ({subSystems, revID}) => {
+    const {setIsUpdating} = useToolBar();
+    
     const handleAdd = async name => {
-        await SubSystemDB.create(revID, name);
+        setIsUpdating(true);
+        try{
+            await SubSystemDB.create(revID, name);
+            Alert.success(`Created new subsystem ${name}`)
+        }catch(err){
+            Alert.error(err);
+        }
+        setIsUpdating(false);
     }
 
     const hasATC = subSystems.find(v => v.name===possSubs.atc)

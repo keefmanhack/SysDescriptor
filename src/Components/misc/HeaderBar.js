@@ -3,10 +3,10 @@ import {Navbar, Nav } from 'rsuite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
-import ButtonToggle from '../misc/ButtonToggle';
+import ButtonToggle from './Helper Components/ButtonToggle';
 
 
-import {version} from '../../package.json';
+import {version} from '../../../package.json';
 
 const lightDarkDisp = [
     {
@@ -21,7 +21,7 @@ const lightDarkDisp = [
 
 
 
-const TitleBar = ({style, setTheme}) => 
+const HeaderBar = ({style, setTheme}) => 
     (
         <Navbar style={{...style}}>
             <Navbar.Brand style={{paddingLeft: '5px'}}>
@@ -37,4 +37,4 @@ const TitleBar = ({style, setTheme}) =>
             </Nav>
         </Navbar>
     )
-export default TitleBar;
+export default HeaderBar;

@@ -8,15 +8,15 @@ import Alert from '../../../misc/Alert';
 import { generateDocument } from '../../../misc/helperfunc';
 import {useModal, useSubSystems} from '../../../misc/customHooks';
 import { NotesDrawer } from '../misc/NotesDrawer';
-import SubSystemNav from '../SubSystemNav';
-import SubSystems from '../SubSystems';
+import SubSystemNav from '../SubSystem/SubSystemNav';
+import SubSystems from '../SubSystem/SubSystems';
 import { ToolBarProvider } from '../../../Contexts/toolbar.context';
-import ToolBar from '../ToolBar';
+import { TitleBar } from '../misc/TitleBar';
+import ToolBar from '../misc/ToolBar';
 
 
 
-
-const NewMainStage = ({revID, style}) => {
+const NewMainStage = ({sysID, revID, style}) => {
     const subSystems = useSubSystems(revID);
     // const [revision, setRevision] = useState({});
 
@@ -49,22 +49,7 @@ const NewMainStage = ({revID, style}) => {
                                         <SubSystems subSystems={subSystems} revID={revID}/>
                                     </Col>
                                     <Col xs={8}>
-                                        {/* <DBTextInput
-                                            onChange={(e, path) => {updateDB(e, path);  setRevision(v=> {v.name=e; return v})}} 
-                                            dbPath={`${DBROOT}/${revData.revision.name.db}`}
-                                            title="Revision Name" 
-                                            style={{ fontSize: '32px', textAlign: 'center'}} 
-                                            placeholder='Revision Name'
-                                            noLabel
-                                        />
-                                        <DBNumberInput
-                                            onChange={(e, path) => updateDB(e, path)}
-                                            dbPath={`${DBROOT}/${revData.revision.revision_number.db}`}
-                                            title="Rev. Number"
-                                            placeholder='0'
-                                            style={{width: '50px'}}
-                                            size='xs'
-                                        /> */}
+                                        <TitleBar revID={revID} sysID={sysID}/> 
                                     </Col>
                                     <Col xs={8}>
                                         <div style={{float: 'right'}}>

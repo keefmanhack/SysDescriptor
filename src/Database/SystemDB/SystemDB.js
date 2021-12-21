@@ -16,7 +16,6 @@ export class SystemDB{
             return data.val();
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -46,7 +45,6 @@ export class SystemDB{
             return data.key;
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -69,7 +67,6 @@ export class SystemDB{
 
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -86,7 +83,6 @@ export class SystemDB{
             await set(db, null);
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 

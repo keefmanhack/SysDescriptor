@@ -12,7 +12,7 @@ const SavedIndicator = ({isUpdating, persistFor=1000}) => {
                 setDelayedIsUpdating(false);
             }, persistFor);
         }
-    }, [isUpdating])
+    }, [isUpdating, persistFor])
 
 
 

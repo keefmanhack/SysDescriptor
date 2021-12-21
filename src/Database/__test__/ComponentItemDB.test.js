@@ -30,3 +30,17 @@ it('Can delete the component and all of its children', async () => {
     expect(hardwareData).toEqual(null);
     expect(component).toEqual(null);
 })
+
+
+it('Can delete a specific component item', async () => {
+    const compID = `${makeid(5)}test`;
+    
+    const compItemID = await ComponentItemDB.create(compID, 'component item name');
+
+    await ComponentItemDB.deleteSpecific(compID, compItemID);
+
+    const compItems = await ComponentItemDB.read(compID);
+
+    expect(compItems).toEqual(null);
+
+})

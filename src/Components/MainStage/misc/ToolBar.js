@@ -2,8 +2,10 @@ import { faRedo, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Button, ButtonGroup, ButtonToolbar } from 'rsuite';
-import { useToolBar } from '../../Contexts/toolbar.context';
-import SavedIndicator from '../../misc/SavedIndicator';
+import { useToolBar } from '../../../Contexts/toolbar.context';
+import SavedIndicator from './SavedIndicator';
+
+
 
 const ToolBar = () => {
     const {isUpdating} = useToolBar();

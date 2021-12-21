@@ -31,7 +31,6 @@ const NewSystemModal = () => {
             Alert.success(`New System ${title} Created`);
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 

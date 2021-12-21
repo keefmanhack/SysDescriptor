@@ -52,7 +52,6 @@ export class ComponentDB {
 
         }catch(err){
             Alert.error(err.message);
-            console.log(err);
         }
     }
 
@@ -61,13 +60,14 @@ export class ComponentDB {
             if(!subSysID){throw Error('Missing parent sub-system identification.');}
             if(!id){throw Error('Missing component identification.');}
 
-            const db = ref(database, `${this.DBPARENT}/${subSysID}/${id}`)
+            const db = ref(database, `${this.DBPARENT}/${subSysID}/${id}`);
+
+            await ComponentItemDB.delete(id);
             
             await set(db, null);
 
         }catch(err){
             Alert.error(err.message);
-            console.log(err);
         }
     }
 }

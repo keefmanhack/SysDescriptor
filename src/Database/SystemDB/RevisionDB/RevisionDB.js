@@ -29,19 +29,18 @@ export class RevisionDB {
             return data.val()
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
-    static create = async (sysID, title='Untitled', utfNumber=0) => {
+    static create = async (sysID, name='Untitled', revNumber=0) => {
         try{
             if(!sysID){throw new Error('Missing system identification.')}
 
             const db = ref(database, `${this.DBPARENT}/${sysID}`)
 
             const payLoad = {
-                title,
-                utfNumber,
+                name,
+                revNumber,
                 birthday: firebase.database.ServerValue.TIMESTAMP,
                 lastUpdated: firebase.database.ServerValue.TIMESTAMP
             }
@@ -50,7 +49,6 @@ export class RevisionDB {
            return data.key
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -70,7 +68,6 @@ export class RevisionDB {
             await set(db, payLoad);
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -87,7 +84,6 @@ export class RevisionDB {
 
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -109,7 +105,6 @@ export class RevisionDB {
             await set(db, null);
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 }

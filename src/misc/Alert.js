@@ -13,7 +13,7 @@ const type = {
 }
 
 export default class Alert{
-    static duration = 3000; 
+    static duration = 1500; 
     
     static success = (msg) => {
         toaster.push(

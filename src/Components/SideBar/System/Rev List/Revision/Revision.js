@@ -3,11 +3,11 @@ import { Button, Col, Row, Grid } from 'rsuite';
 import TrashIcon from '@rsuite/icons/Trash';
 import moment from 'moment';
 
-import { useHover } from '../../../../misc/customHooks';
-import HoverShowAll from '../../../../misc/HoverShowAll';
+import { useHover } from '../../../../../misc/customHooks';
+import HoverShowAll from '../../../../misc/Helper Components/HoverShowAll';
 
 
-export const Revision = ({onSelected, name, timestamp, revisionNumber=0, isSelected}) => {
+export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected}) => {
     const [ref, hover] = useHover();
     name=name || 'Untitled';
 
@@ -31,7 +31,7 @@ export const Revision = ({onSelected, name, timestamp, revisionNumber=0, isSelec
                         
                     </Col>
                     <Col xs={5}>
-                        <span className='muted-c'>Rev </span>{revisionNumber}
+                        <span className='muted-c'>Rev </span>{revNumber}
                     </Col>
                     <Col xs={7}>
                         <span style={{fontSize: '12px'}}>

@@ -12,7 +12,7 @@ const CustomPanel = ({defaultExpand=false, header, children}) => {
         <div className='rs-panel rs-panel-in rs-panel-collapsible rs-panel-bordered rs-panel-shaded mb-1'>
                <div type='button' tabIndex={0} role="button" styling="link" onKeyDown={handleClick} onClick={handleClick} className='rs-panel-header' style={{paddingBottom: '5px', paddingTop: '5px'}}>
                         <ArrowDownLine flip={isExpanded ? 'vertical' : null} className='rs-icon' style={{top: '10px'}}/>
-                        <span className='rs-panel-title'>{header}</span>
+                        <h5 className='rs-panel-title'>{header}</h5>
                 </div>
                     {isExpanded ?  
                         <div className='rs-anim-collapse rs-anim-in rs-panel-collapse' style={{height: 'auto'}}>

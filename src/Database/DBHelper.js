@@ -16,7 +16,6 @@ export class DBHelper {
             return data.val();
         }catch(err){
             Alert.error(err.message);
-            console.log(err);
         }
     }
 
@@ -37,7 +36,6 @@ export class DBHelper {
 
         }catch(err){
             Alert.error(err.message);
-            console.log(err);
         }
     }
 
@@ -54,7 +52,6 @@ export class DBHelper {
             return db;
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 }

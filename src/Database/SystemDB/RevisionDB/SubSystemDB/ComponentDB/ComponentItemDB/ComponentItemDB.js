@@ -55,7 +55,24 @@ export class ComponentItemDB {
 
         }catch(err){
             Alert.error(err.message);
-            console.log(err);
+        }
+    }
+
+    static deleteSpecific = async (compID, compItemID) => {
+        try{
+            if(!compID){throw new this.NoIDErr}
+            if(!compItemID){throw new this.NoIDErr}
+
+
+            const db = ref(database, `${this.DBPARENT}/${compID}/${compItemID}`);
+            
+           await SoftWareDataDB.delete(compItemID);
+           await HardWareDataDB.delete(compItemID);
+
+            await set(db, null);
+
+        }catch(err){
+            Alert.error(err.message);
         }
     }
 }

@@ -58,7 +58,7 @@ export const useHover = () => {
           node.removeEventListener("mouseout", handleMouseOut);
       };
     },
-    // es-lint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
     [ref.current] // Recall only if ref changes
   );
   return [ref, value];
@@ -69,10 +69,10 @@ export const useRevisions = sysID => {
   const [isUpdating, setIsUpdating] = useState(false);
   
   
-  let revsRef;
+  const revsRef = useRef();
   useEffect(() => {
     setIsUpdating(true);
-    revsRef = RevisionDB.addListener(sysID, (v) => {
+    revsRef.current = RevisionDB.addListener(sysID, (v) => {
       const revOBJ = v;
       const revArr = idObjToArr(revOBJ);
       setRevs(revArr);
@@ -80,7 +80,7 @@ export const useRevisions = sysID => {
     })
     
     return () => {
-      off(revsRef);
+      off(revsRef.current);
     }
   }, [sysID]);
 
@@ -91,11 +91,11 @@ export const useSystems = () => {
   const [systems, setSystems] = useState([]);
   const [isUpdating, setIsUpdating] = useState(false);
 
-  let sysRef;
+  const sysRef = useRef();
   useEffect(() => {
     setIsUpdating(true);
     
-    sysRef = SystemDB.addListener((v) => {
+    sysRef.current = SystemDB.addListener((v) => {
       const systemsObj = v;
       const systemsArr = idObjToArr(systemsObj);
       setSystems(systemsArr);
@@ -103,7 +103,7 @@ export const useSystems = () => {
     })
     
     return () => {
-      off(sysRef);
+      off(sysRef.current);
     }
   }, []);
   return {systems, isUpdating}

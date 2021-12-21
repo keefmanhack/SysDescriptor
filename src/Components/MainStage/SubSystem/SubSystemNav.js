@@ -1,26 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import { Nav } from 'rsuite';
 import CloseIcon from '@rsuite/icons/Close';
-import { SubSystemDB } from '../../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB';
+import { SubSystemDB } from '../../../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB';
 import ComponentHandler from './ComponentHandler/ComponentHandler';
+import Alert from '../../../misc/Alert';
+import { useToolBar } from '../../../Contexts/toolbar.context';
 
 const SubSystemNav = ({subSystems=[], revID}) => {
+    const {setIsUpdating} = useToolBar();
     const [selI, setSelI] = useState(null);
 
     useEffect(() => {
-        setSelI(null);
         if(subSystems.length>0){
             setSelI(0);
-        }
-    }, [revID, subSystems.length]);
-
-    const handleDelete = () => {
-        if(selI-1 >=0){
-            setSelI(i=>i-1);
         }else{
             setSelI(null);
         }
+    }, [revID]);
 
+    const handleDelete = async (id, name) => {
+        setIsUpdating(true);
+        try{
+            await SubSystemDB.deleteSpecific(revID, id);
+
+
+            if(selI-1 >=0){
+                setSelI(i=>i-1);
+            }else{
+                setSelI(null);
+            }
+
+
+            Alert.success(`Deleted subsystem ${name}`)
+        }catch(err){
+            Alert.error(err);
+        }
+        setIsUpdating(false);
     }
 
     const createSubSystemNavs = () => (
@@ -38,7 +53,7 @@ const SubSystemNav = ({subSystems=[], revID}) => {
                     <button 
                         style={{background: 'transparent', color: btnColor, fontSize: '12px', position: 'relative', top:'-2px', left: '3px'}} 
                         type='button'
-                        onClick={(e) => {e.stopPropagation(); SubSystemDB.deleteSpecific(revID, id); handleDelete()}}
+                        onClick={(e) => {e.stopPropagation(); handleDelete(id, name)}}
                         disabled={!isActive}
                     > 
                         <CloseIcon/> 
@@ -53,7 +68,7 @@ const SubSystemNav = ({subSystems=[], revID}) => {
             <Nav appearance="tabs">
                 {createSubSystemNavs()}
             </Nav>
-            {selI!==null && subSystems.length>0 ? 
+            {selI!==null && subSystems.length>0 && subSystems[selI] ? 
                 <ComponentHandler subSysID={subSystems[selI].id} dataKey={subSystems[selI].name}/>
             :
                 <div className='muted-c mx-auto w-100'>

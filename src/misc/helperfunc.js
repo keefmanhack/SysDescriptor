@@ -11,6 +11,13 @@ export function makeid(length=5) {
    return `${Date.now()}${result}`;
 }
 
+export const dispTime = d => {
+  if(Number.isNaN(d)){return '- -'}
+
+  return (new Date(d)).toDateString();  
+
+}
+
 export const idObjToArr = obj => {
   if(!obj){return []}
   

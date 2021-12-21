@@ -3,8 +3,8 @@ import {Row, Col, Grid, Button} from 'rsuite';
 import ArrowRightIcon from '@rsuite/icons/ArrowRight';
 import ArrowDownIcon from '@rsuite/icons/ArrowDown';
 import { SystemOptions } from './SystemOptions';
-import HoverShowAll from '../../../misc/HoverShowAll';
-import RevList from './Revisions/RevList';
+import HoverShowAll from '../../misc/Helper Components/HoverShowAll';
+import RevList from './Rev List/RevList';
 
 export const System = ({sysID, title='Untitled', partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID, onDeleteSystem}) => {
     const [isExpanded, setIsExpanded] = useState(false);

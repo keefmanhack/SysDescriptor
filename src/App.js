@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Grid, Row, Col} from "rsuite";
 
-import TitleBar from './Components/TitleBar';
+import HeaderBar from './Components/misc/HeaderBar';
 import SideBar from './Components/SideBar/SideBar';
 import DefaultMainStage from './Components/MainStage/Extensions/DefaultMainStage';
 import NewMainStage from './Components/MainStage/Extensions/NewMainStage';
-import Footer from './Components/Footer';
+import Footer from './Components/misc/Footer';
 
 
 import './styles/main.scss';
@@ -34,7 +34,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-       <TitleBar setTheme={(t) => setTheme(t)}/>
+       <HeaderBar setTheme={(t) => setTheme(t)}/>
         <Grid fluid  style={{padding:0}}>
           <Row >
             <Col xs={24} lg={7} >
@@ -47,7 +47,7 @@ function App() {
               />
             </Col>
             <Col xs={24} lg={17} >
-              {revID ? <NewMainStage revID={revID}/> : <DefaultMainStage/>}
+              {revID && sysID ? <NewMainStage revID={revID} sysID={sysID}/> : <DefaultMainStage/>}
             </Col>
           </Row>
         </Grid>

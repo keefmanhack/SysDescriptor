@@ -1,7 +1,7 @@
 import React from 'react';
 import { Loader } from 'rsuite';
 import { useRevisions } from '../../../../misc/customHooks';
-import {Revision} from './Revision';
+import {Revision} from './Revision/Revision';
 
 const RevList = ({sysID, onRevSelected, revSelectedID}) => {
     const {revs, isUpdating} = useRevisions(sysID);
@@ -10,13 +10,13 @@ const RevList = ({sysID, onRevSelected, revSelectedID}) => {
         <div className='rs-list rs-list-hover v-scroll' style={{marginLeft: '10%'}}>
             {isUpdating ? <Loader style={{padding: '10px'}}/> : null}
             {!isUpdating && revs ? revs.map(val => {
-                const {id, name, timestamp, revisionNumber} = val;
+                const {id, name, timestamp, revNumber} = val;
                     return(
                     <Revision 
                         onSelected={()=>onRevSelected(id)}
                         name={name}
                         timestamp={timestamp}
-                        revisionNumber={revisionNumber}
+                        revNumber={revNumber}
                         key={id}
                         isSelected={revSelectedID===id}
                     />

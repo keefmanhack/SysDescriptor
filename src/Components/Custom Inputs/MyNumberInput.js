@@ -14,10 +14,10 @@ const getWidth = str => {
     return width[str];
 }
 
-const MyNumberInput = ({value, onChange, size='md', style, disabled}) => {
+const MyNumberInput = ({value, onChange, size='md', style, disabled, min=0}) => {
     const width = getWidth(size);
     return (
-        <InputNumber disabled={disabled} value={value} onChange={onChange} size={size} style={{width, ...style}}/>
+        <InputNumber min={min} disabled={disabled} value={value} onChange={onChange} size={size} style={{width, ...style}}/>
     );
 };
 

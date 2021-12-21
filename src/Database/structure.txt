@@ -11,10 +11,10 @@ Database Design
 ->Revisions
     -> SYS_UNIQUE_ID : arr
         ->REV_UNIQUE_ID: arr
-            -> Name
+            -> name
             -> birthdate : Date
             -> lastUpdated : Date
-            -> utfNumber
+            -> revNumber
 ->SubSystems
     ->REV_UNIQUE_ID : arr 
         ->SUBSYS_UNIQUE_ID : arr

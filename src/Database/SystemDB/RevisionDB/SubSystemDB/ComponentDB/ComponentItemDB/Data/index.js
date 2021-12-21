@@ -29,7 +29,6 @@ export class DataDB {
             return data.val();
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -45,7 +44,6 @@ export class DataDB {
             return data.val();
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -65,7 +63,6 @@ export class DataDB {
 
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 
@@ -79,7 +76,6 @@ export class DataDB {
 
         }catch(err){
             Alert.error(err);
-            console.log(err);
         }
     }
 }

@@ -1,9 +1,24 @@
 import React from 'react';
 import { Button, Grid, Row, Col } from 'rsuite';
-import { ComponentDB } from '../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
-import ActiveComp from './ActiveComp';
+import { useToolBar } from '../../../../../Contexts/toolbar.context';
+import { ComponentDB } from '../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
+import Alert from '../../../../../misc/Alert';
+import ActiveComp from './misc/ActiveComp';
 
 const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
+    const {setIsUpdating} = useToolBar();
+
+    const handleCreate = async name => {
+        setIsUpdating(true);
+        try{
+            await ComponentDB.create(subSysID, name);
+            Alert.success(`New ${name} component created`);
+        }catch(err){
+            Alert.error(err);
+        }
+        setIsUpdating(false);
+    }
+
     const dispActiveComps = () => {
         return  activeComps.map(v => {
             const {name, id} =v;
@@ -21,7 +36,7 @@ const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
 
             return (
                 <Col key={name} xs={4} md={2}>
-                    <Button size='xs' className='mr-2' onClick={()=>ComponentDB.create(subSysID, name)}>
+                    <Button size='xs' className='mr-2' onClick={()=>handleCreate(name)}>
                         + {name}
                     </Button>
                 </Col>)

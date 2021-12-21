@@ -52,7 +52,6 @@ export class SubSystemDB {
 
         }catch(err){
             Alert.error(err.message);
-            console.log(err);
         }
     }
 
@@ -69,7 +68,6 @@ export class SubSystemDB {
 
         }catch(err){
             Alert.error(err.message);
-            console.log(err);
         }
     }
 }
