@@ -1,5 +1,13 @@
 import {Document, Packer, Paragraph, HeadingLevel, UnderlineType, TextRun, Table, TableRow, TableCell } from 'docx';
 import {saveAs} from 'file-saver';
+import { RevisionDB } from '../Database/SystemDB/RevisionDB/RevisionDB';
+import { ComponentDB } from '../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
+import { ComponentItemDB } from '../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/ComponentItemDB';
+import { HardWareDataDB } from '../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/Data/HarwareDataDB';
+import { SoftWareDataDB } from '../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/Data/SoftwareDataDB';
+import { SubSystemDB } from '../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB';
+import { SystemDB } from '../Database/SystemDB/SystemDB';
+import Alert from './Alert';
 
 export function makeid(length=5) {
     let result           = '';
@@ -95,194 +103,278 @@ export const snapToArr = snapArr => {
   return arr || [];
 }
 
-export const generateDocument = () => {
-  const doc = new Document({
-    styles: {
-      default: {
-        heading1: {
-            run: {
-                size: convertSize(28),
-                bold: true
-            },
-            paragraph: {
-                spacing: {
-                    after: 120,
-                },
-            },
-        },
-        heading2: {
-            run: {
+
+const dispHardSoftData = (hardData, softData) => {
+  const loopLen = hardData.length > softData.length ? hardData.length : softData.length;
+
+  const returnVar = [];
+
+  for(let i =0; i< loopLen; i++){
+    returnVar.push(
+      new TableRow({
+        children: [
+          softData[i] ?
+          new TableCell({
+            children: [
+              new Paragraph({
+                children: [
+                  new TextRun(`${softData[i].id}:  ${softData[i].value}`)
+                ],
+                style: 'default'
+              }),
+            ],
+          }) : new TableCell({children:[]}),
+        hardData[i] ?
+          new TableCell({
+            children: [
+              new Paragraph({
+                children: [
+                  new TextRun(`${hardData[i].id}:  ${hardData[i].value}`)
+                ],
+                style: 'default'
+              }),
+            ],
+          }) : new TableCell({children:[]}),
+        ]
+      })
+    )
+  }
+
+  return returnVar;
+}
+
+
+
+const dispComponentItemData = async compItems => {
+  const returnvar = [];
+  for(let i =0; i< compItems.length; i++){
+    const item = compItems[i];
+    
+    /* eslint-disable no-await-in-loop */
+    const hardData = idObjToArr(await HardWareDataDB.read(item.id));
+    /* eslint-disable no-await-in-loop */
+    const softData = idObjToArr(await SoftWareDataDB.read(item.id));
+
+    returnvar.push(
+      new Table({
+        rows: [
+          new TableRow({
+            children: [
+              new TableCell({
+                children: [
+                  new Paragraph({
+                    children: [
+                      new TextRun(`${i+1}`)
+                    ],
+                    style: 'default-bold',
+                    
+                  }),
+                ],
+              })
+            ]
+          }),
+          new TableRow({
+            children: [
+              new TableCell({
+                children: [
+                  new Paragraph({
+                    children: [
+                      new TextRun("Hardware")
+                    ],
+                    style: 'default-bold',
+
+                  }),
+                ],
+              }),
+              new TableCell({
+                children: [
+                  new Paragraph({
+                    children: [
+                      new TextRun("Software")
+                    ],
+                    style: 'default-bold'
+                  }),
+                ],
+              })
+            ]
+          }),
+          ...await dispHardSoftData(hardData, softData)
+        ]
+      }),
+    )
+  }
+  return returnvar;
+}
+
+const dispComponenetData = async comps => {
+  const returnvar = [];
+  for(let i =0; i< comps.length; i++){
+    const comp = comps[i];
+    /* eslint-disable no-await-in-loop */
+    const compItems = idObjToArr(await ComponentItemDB.read(comp.id));
+
+    returnvar.push(
+      new Paragraph({
+        text: comp.name,
+        heading: HeadingLevel.HEADING_3,
+      }),
+      ...await dispComponentItemData(compItems)
+    )
+  }
+
+  return returnvar;
+}
+
+const dispSubSystemData = async data => {
+  const returnvar = [];
+
+  for(let i =0; i< data.length; i++){
+    const subSys = data[i];
+    /* eslint-disable no-await-in-loop */
+    const components = idObjToArr(await ComponentDB.read(subSys.id));
+
+    returnvar.push(
+      new Paragraph({
+        text: subSys.name,
+        heading: HeadingLevel.HEADING_2,
+      }),
+      ...await dispComponenetData(components)
+    )
+
+  }
+  return returnvar;
+}
+
+export const generateDocument = async (SYSID, REVID) => {
+  try{
+    const date = new Date();
+
+    const system = await SystemDB.read(SYSID);
+    const revision = await RevisionDB.readSpecific(SYSID, REVID);
+    const subsystems =  idObjToArr(await SubSystemDB.read(REVID));
+    const doc = new Document({
+      styles: {
+        default: {
+          heading1: {
+              run: {
+                  size: convertSize(28),
+                  bold: true,
+                  color: "FFFFFF"
+              },
+              paragraph: {
+                  spacing: {
+                      after: 120,
+                  },
+                  run: {
+                    color: "FFFFFF"
+                  }
+              },
+          },
+          heading2: {
+              run: {
                 size: convertSize(22),
                 bold: true,
                 underline: {
                     type: UnderlineType.SINGLE,
                 },
-            },
-        },
-        listParagraph: {
+                color: "FFFFFF",
+              },
+              paragraph: {
+                spacing: {
+                  after: 100,
+                }
+              }
+          },
+          heading3: {
             run: {
-                color: "#FF0000",
+              size: convertSize(16),
+              bold: true,
+              color: "FFFFFF",
             },
+            paragraph: {
+              spacing: {
+                after: 50,
+              }
+            }
         },
-      },
-      paragraphStyles: [
-      {
-        id: "tech-owner",
-        name: "Technician & Owner",
-        basedOn: "Normal",
-        next: "Normal",
-        quickFormat: true,
-        run: {
-            size: convertSize(14)
+          listParagraph: {
+              run: {
+                  color: "FF0000",
+              },
+          },
         },
-      }]
-    },
-    sections: [{
-      properties: {},
-      children: [
-        new Paragraph({
-          text: "[System Name]",
-          heading: HeadingLevel.HEADING_1,
-        }),
-        new Paragraph({
-          children: [
-            new TextRun("Generated On: "), new TextRun({text:"[Date]", bold: true}),
-          ],
-        }),
-        new Paragraph({
-          children: [
-            new TextRun("Technician: "), new TextRun({text:"[Tech]", bold: true}),
-            new TextRun("Owner: "), new TextRun({text:"[Owner]", bold: true})
-          ],
-          style: "tech-owner"
-        }),
-        new Paragraph(""),
-        new Paragraph({
-          text: "ATC",
-          heading: HeadingLevel.HEADING_2,
-        }),
-        new Table({
-          rows: [
-            new TableRow({
-              children: [
-                new TableCell({
-                  children: [new Paragraph("")]
-                }),
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Part Number", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Build Date", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Build Number", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Board Number", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Rev Number", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Serial Number", bold: true})]})]
-                })
-              ]
-            }),
-            new TableRow({
-              children: [
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "MAIN", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc_main Part number]")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc main Build Date] ")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc main build number")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc_main Board Number]")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc main Rev Number] ")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc main Serial Number")]
-                })
-              ]
-            }),
-            new TableRow({
-              children: [
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Decoder", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[decoder Part number]")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[decoder Build Date] ")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[decoder build number")]
-                })
-              ]
-            }),
-            new TableRow({
-              children: [
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Tach I/O", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[Tach Part number]")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[Tach Build Date] ")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[Tach build number")]
-                })
-              ]
-            }),
-            new TableRow({
-              children: [
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "Cab Test", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[Cab Test Part number]")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[Cab test Build Date] ")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[Cab Test build number")]
-                })
-              ]
-            }),
-            new TableRow({
-              children: [
-                new TableCell({
-                  children: [new Paragraph({children: [new TextRun({text: "MAIN", bold: true})]})]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc_main Part number]")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc main Build Date] ")]
-                }),
-                new TableCell({
-                  children: [new Paragraph("[atc main build number")]
-                })
-              ]
-            })
-          ]
-        })
+        paragraphStyles: [
+        {
+          id: "tech-owner",
+          name: "Technician & Owner",
+          basedOn: "Normal",
+          next: "Normal",
+          quickFormat: true,
+          run: {
+              size: convertSize(14),
+              color: "FFFFFF"
+          },
+          paragraph: {
+            spacing: {
+              before: 100,
+            }
+          }
+        },
+        {
+          id: "default",
+          name: "default",
+          basedOn: "Normal",
+          next: "Normal",
+          quickFormat: true,
+          run: {
+              size: convertSize(10),
+              color: "FFFFFF"
+          },
+        },
+        {
+          id: "default-bold",
+          name: "default-bold",
+          basedOn: "Normal",
+          next: "Normal",
+          quickFormat: true,
+          run: {
+              size: convertSize(10),
+              color: "FFFFFF",
+              bold: true
+          },
+        }
       ],
-    }],
-  });
-  saveDocumentToFile(doc, "New Document.docx");
+      },
+      sections: [{
+        properties: {},
+        children: [
+          new Paragraph({
+            text: `${system.title} -- ${revision.name}`,
+            heading: HeadingLevel.HEADING_1,
+          }),
+          new Paragraph({
+            children: [
+              new TextRun("Generated On: "), new TextRun({text: `${date.toDateString()} ${date.toLocaleTimeString()}`, bold: true}),
+            ],
+            style: 'default'
+          }),
+          new Paragraph({
+            children: [
+              new TextRun("Technician: "), new TextRun({text: system.technician, bold: true}),
+              new TextRun("Owner: "), new TextRun({text: system.owner, bold: true})
+            ],
+            style: "tech-owner"
+          }),
+          new Paragraph(""),
+          ... await dispSubSystemData(subsystems)
+        ],
+      }],
+    });
+    saveDocumentToFile(doc, "New Document.docx");
+  }catch(err){
+    Alert.error('Unable to generate the document');
+    console.log(err);
+  }
 }
 
 

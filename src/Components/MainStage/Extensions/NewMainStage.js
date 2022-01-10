@@ -44,7 +44,7 @@ const NewMainStage = ({sysID, revID, style}) => {
                             <Grid fluid>
                                 <Row>
                                     <Col xs={8}>
-                                        <Button style={{marginRight: '10px'}} onClick={()=>generateDocument()} color='green' appearance="primary">Generate File</Button>
+                                        <Button style={{marginRight: '10px'}} onClick={()=>generateDocument(sysID, revID)} color='green' appearance="primary">Generate File</Button>
                                         <Button appearance='subtle' onClick={onOpen}>Notes</Button>
                                         <SubSystems subSystems={subSystems} revID={revID}/>
                                     </Col>
