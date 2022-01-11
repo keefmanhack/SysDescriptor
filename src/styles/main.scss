@@ -45,3 +45,18 @@ label{
 .rs-panel-header {
     padding-bottom: '5px';
 }
+
+#background-train{
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+}
+
+#tag-line{
+    color: white;
+    position: absolute;
+    top: 20%;
+    left: 90px;
+    width: 609px;
+}
