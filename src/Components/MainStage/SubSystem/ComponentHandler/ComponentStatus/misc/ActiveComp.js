@@ -5,7 +5,7 @@ import { ComponentDB } from '../../../../../../Database/SystemDB/RevisionDB/SubS
 import Alert from '../../../../../../misc/Alert';
 import CompDeleteModal from './CompDeleteModal';
 
-const ActiveComp = ({name, id, subSysID}) => {
+const ActiveComp = ({name, id, subSysID, style}) => {
     const [showModal, setShowModal] = useState(false);
     const {setIsUpdating} = useToolBar();
 
@@ -23,7 +23,7 @@ const ActiveComp = ({name, id, subSysID}) => {
 
      return (
         <>
-            <Button color='green' appearance='primary' size='xs' onClick={()=>setShowModal(true)}> - {name} </Button>
+            <Button style={style} color='green' appearance='primary' size='xs' onClick={()=>setShowModal(true)}> - {name} </Button>
             <CompDeleteModal show={showModal} name={name} id={id} onClose={()=>setShowModal(false)} onDelete={handleDelete}/>
         </>
     );

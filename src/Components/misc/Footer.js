@@ -3,7 +3,7 @@ import { Col, Footer, Grid, Row } from 'rsuite';
 
 const MyFooter = ({style}) => (
     <Footer style={{...style, clear: 'both',
-        position: 'absolute',
+        position: 'fixed',
         bottom: '0px',
         width: '100%',
         padding: '15px',

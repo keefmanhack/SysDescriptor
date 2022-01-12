@@ -23,8 +23,8 @@ const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
         return  activeComps.map(v => {
             const {name, id} =v;
             return (
-                <Col xs={4} md={2} key={id}>
-                    <ActiveComp key={id} subSysID={subSysID} id={id} name={name}/>
+                <Col xs={12} md={8} lg={4} key={id}>
+                    <ActiveComp style={{marginBottom: '5px'}} key={id} subSysID={subSysID} id={id} name={name}/>
                 </Col>)
         })
     }
@@ -35,8 +35,8 @@ const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
             if(activeComps.find(ac => ac.name===name)){return null}
 
             return (
-                <Col key={name} xs={4} md={2}>
-                    <Button size='xs' className='mr-2' onClick={()=>handleCreate(name)}>
+                <Col key={name} xs={12} md={8} lg={4}>
+                    <Button size='xs' className='mr-2 mb-1' style={{marginBottom: '5px'}} onClick={()=>handleCreate(name)}>
                         + {name}
                     </Button>
                 </Col>)

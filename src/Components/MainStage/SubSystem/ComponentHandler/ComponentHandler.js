@@ -17,25 +17,26 @@ const ComponentHandler = ({subSysID, dataKey}) => {
         <div style={{padding: '5px 15px'}}>
             <ComponentStatus activeComps={comps} subSysID={subSysID} possibleComps={Object.keys(possibleComps)}/>
             <hr/>
-            <Grid fluid>
-                <Row>
-                    {comps.map(v=> {
-                        const {name, birthdate, id} = v;
-                        return (
-                            <Col xs={24} md={12} lg={8} key={id}>
-                                <Comp
-                                    name={name}
-                                    birthdate={birthdate}
-                                    key={id}
-                                    compID={id}
-                                    format={possibleComps[name]}
-                                />
-                            </Col>
-                        )
-                    })}
-                </Row>
-            </Grid>
-
+            <div style={{height: '500px', overflowY: 'scroll'}}>
+                <Grid fluid>
+                    <Row>
+                        {comps.map(v=> {
+                            const {name, birthdate, id} = v;
+                            return (
+                                <Col xs={24} md={12} lg={8} key={id}>
+                                    <Comp
+                                        name={name}
+                                        birthdate={birthdate}
+                                        key={id}
+                                        compID={id}
+                                        format={possibleComps[name]}
+                                    />
+                                </Col>
+                            )
+                        })}
+                    </Row>
+                </Grid>
+            </div>
         </div>
     );
 };

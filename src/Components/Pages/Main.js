@@ -7,7 +7,7 @@ import HeaderBar from '../misc/HeaderBar';
 import SideBar from '../SideBar/SideBar';
 import DefaultMainStage from '../MainStage/Extensions/DefaultMainStage';
 import NewMainStage from '../MainStage/Extensions/NewMainStage';
-import Footer from '../misc/Footer';
+import MyFooter from '../misc/Footer';
 
 export default function Main() {
     const [theme, setTheme] = useState('dark')
@@ -39,7 +39,7 @@ export default function Main() {
                     </Col>
                     </Row>
                 </Grid>
-                <Footer style={{width: '100%'}}/>
+                <MyFooter style={{width: '100%'}}/>
             </div>
         </ThemeProvider>
     )

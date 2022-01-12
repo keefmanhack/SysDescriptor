@@ -58,14 +58,12 @@ export class RevisionDB {
             if(!sysID){throw new Error('Missing system identification.')}
             if(!revID){throw new Error('Missing revision identification.')}
 
-            const db = ref(database, `${this.DBPARENT}/${sysID}/${revID}`)
+            let db = ref(database, `${this.DBPARENT}/${sysID}/${revID}/${key}`)
 
-            const payLoad = {
-                [key] : value,
-                lastUpdated: firebase.database.ServerValue.TIMESTAMP
-            }
+            await set(db, value);
 
-            await set(db, payLoad);
+            db = ref(database, `${this.DBPARENT}/${sysID}/${revID}/lastUpdated`);
+            await set(db, firebase.database.ServerValue.TIMESTAMP)
         }catch(err){
             Alert.error(err);
         }
