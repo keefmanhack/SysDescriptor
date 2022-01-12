@@ -2,7 +2,7 @@ import firebase from 'firebase/compat/';
 import { get, ref, push, set, update } from 'firebase/database';
 
 import Alert from "../../misc/Alert";
-import database from "../../misc/firebase";
+import {database} from "../../misc/firebase";
 import { DBHelper } from "../DBHelper";
 import { RevisionDB } from "./RevisionDB/RevisionDB";
 

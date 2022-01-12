@@ -2,7 +2,7 @@ import { get, ref, push, onValue } from "firebase/database";
 import firebase from 'firebase/compat/';
 
 import Alert from "../misc/Alert";
-import database from "../misc/firebase";
+import {database} from "../misc/firebase";
 
 export class DBHelper {
     static read = async (DBPARENT, id) => {

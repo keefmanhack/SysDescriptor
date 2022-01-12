@@ -13,7 +13,7 @@ FunctionInputs
 
 import { get, ref, set } from "firebase/database";
 import Alert from "../../../../../misc/Alert";
-import database from "../../../../../misc/firebase";
+import {database} from "../../../../../misc/firebase";
 import { DBHelper } from "../../../../DBHelper";
 import { ComponentItemDB } from "./ComponentItemDB/ComponentItemDB";
 

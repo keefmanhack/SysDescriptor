@@ -1,10 +1,7 @@
 import React from 'react';
 import {Button, Grid, Row, Col } from 'rsuite';
-import {set, ref} from 'firebase/database';
 
-import database from '../../../misc/firebase';
 import MainStage from '../MainStage';
-import Alert from '../../../misc/Alert';
 import { generateDocument } from '../../../misc/helperfunc';
 import {useModal, useSubSystems} from '../../../misc/customHooks';
 import { NotesDrawer } from '../misc/NotesDrawer';
@@ -18,21 +15,8 @@ import ToolBar from '../misc/ToolBar';
 
 const NewMainStage = ({sysID, revID, style}) => {
     const subSystems = useSubSystems(revID);
-    // const [revision, setRevision] = useState({});
 
     const {isOpen, onOpen, onClose} = useModal();
-
-
-    // const DBROOT= `revisions/${sysID}/${revID}`;
-
-    const updateDB = async (val, path) => {
-        const db = ref(database, path);
-        try{
-            await set(db, val)
-        }catch(err){
-            Alert.error(`Error writing system data of ${val} to the cloud`);
-        }
-    }
 
     return (
         <MainStage
@@ -65,7 +49,7 @@ const NewMainStage = ({sysID, revID, style}) => {
                             onClose={onClose} 
                             // id={revision.notes} 
                             // name={revision.name} 
-                            onChange={(e,path) => updateDB(e, path)}
+                            // onChange={(e,path) => updateDB(e, path)}
                         />
                     </ToolBarProvider>
                 </>

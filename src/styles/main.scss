@@ -24,6 +24,20 @@ label{
     .new{
         color: yellow;
     }
+
+    #join-form{
+        background-color: $less_black;
+    }
+}
+
+.rs-theme-light{
+    #join-form{
+        background-color: white;
+    }
+}
+
+#join-form{
+    background-color: white;
 }
     
 .rs-theme-light .new{

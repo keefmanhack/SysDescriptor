@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/';
 import { SubSystemDB } from "./SubSystemDB/SubSystemDB";
 import Alert from "../../../misc/Alert";
 import { DBHelper } from "../../DBHelper";
-import database from "../../../misc/firebase";
+import {database} from "../../../misc/firebase";
 
 
 export class RevisionDB {

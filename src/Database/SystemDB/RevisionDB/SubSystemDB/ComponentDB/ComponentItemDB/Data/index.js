@@ -14,7 +14,7 @@ FunctionInputs
 import { get, ref, set } from "firebase/database";
 import firebase from 'firebase/compat/';
 import Alert from "../../../../../../../misc/Alert";
-import database from "../../../../../../../misc/firebase";
+import {database} from "../../../../../../../misc/firebase";
 
 
 export class DataDB {
