@@ -373,7 +373,6 @@ export const generateDocument = async (SYSID, REVID) => {
     saveDocumentToFile(doc, "New Document.docx");
   }catch(err){
     Alert.error('Unable to generate the document');
-    console.log(err);
   }
 }
 

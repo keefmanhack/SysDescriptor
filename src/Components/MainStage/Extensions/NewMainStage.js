@@ -47,9 +47,7 @@ const NewMainStage = ({sysID, revID, style}) => {
                         <NotesDrawer 
                             isOpen={isOpen} 
                             onClose={onClose} 
-                            // id={revision.notes} 
-                            // name={revision.name} 
-                            // onChange={(e,path) => updateDB(e, path)}
+                            revID={revID}
                         />
                     </ToolBarProvider>
                 </>

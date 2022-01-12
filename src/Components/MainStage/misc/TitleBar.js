@@ -27,7 +27,7 @@ export const TitleBar = ({sysID, revID}) => {
 
         loadRev();
 
-    }, [revID])
+    }, [revID, sysID])
 
     const handleUpdate = async (key, val) => {
         setIsUpdating(true);

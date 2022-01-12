@@ -16,7 +16,7 @@ const SubSystemNav = ({subSystems=[], revID}) => {
         }else{
             setSelI(null);
         }
-    }, [revID]);
+    }, [revID, subSystems.length]);
 
     const handleDelete = async (id, name) => {
         setIsUpdating(true);

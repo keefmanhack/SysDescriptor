@@ -18,9 +18,6 @@ export default function Landing() {
     const [passwordRetry, setPasswordRetry] = useState('');
     const [showModal, setShowModal] = useState();
 
-    console.log(firstName);
-    console.log(lastName);
-    console.log(email);
   
   
     const model = Schema.Model({

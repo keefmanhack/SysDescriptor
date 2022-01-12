@@ -15,9 +15,5 @@ const config = {
 
 const app = initializeApp(config);
 
-// Get a reference to the database service
-
-console.log(process.env.FIREBASE_API_KEY)
-
 export const database = getDatabase(app);
 export const auth = getAuth(app);
