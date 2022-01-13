@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import {Form, Button, Schema} from 'rsuite';
 
 import Alert from '../../misc/Alert';
-import { useWindowHeight } from '../../misc/customHooks';
+// import { useWindowHeight } from '../../misc/customHooks';
 import { auth } from '../../misc/firebase';
 
 const actionCodeSettings = {
@@ -44,7 +44,7 @@ export default function JoinForm() {
   
   
       const handleNewUser = async () => {
-          if(model.check()){
+          if(model.check({firstName, lastName, email, password, passwordRetry})){
             sendSignInLinkToEmail(auth, email, actionCodeSettings)
             .then(() => {
                 Alert.success(`An email has been sent to ${email}.  Click the link inside to activate your account`, Alert.PlacementType.TOPCENTER, 4000);
@@ -63,7 +63,7 @@ export default function JoinForm() {
             <p>You must be a Siemens employee to make use of this site</p>
             <hr/>
             <Form onSubmit={handleNewUser} model={model}>
-                <div style={{height: `${useWindowHeight() -600}px`, overflowY: 'scroll'}}>
+                <div style={{height: `30vh`, overflowY: 'scroll'}}>
                     <Form.Group controlId='firstName'>
                     <Form.ControlLabel>First Name</Form.ControlLabel>
                     <Form.Control onKeyUp={(v)=>setFirstName(v.target.value)} name='firstName'/>
