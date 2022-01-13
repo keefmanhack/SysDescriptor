@@ -3,7 +3,7 @@ import { Notification, toaster } from "rsuite";
 
 // PlacementType = 'topCenter' | 'bottomCenter' | 'topStart' | 'topEnd' | 'bottomStart' | 'bottomEnd';
 
-const PLACEMENT = 'topEnd'
+
 
 const type = {
     success: 'success',
@@ -12,54 +12,79 @@ const type = {
     info: 'info'
 }
 
+const DEF_DURATION = 1500;
+
 export default class Alert{
-    static duration = 1500; 
+
+    static PlacementType={
+        TOPCENTER: 'topCenter',
+        BOTTOMCENTER: 'bottomCenter',
+        TOPSTART: 'topStart',
+        TOPEND: 'topEnd',
+        BOTTOMSTART: 'bottomStart',
+        BOTTOMEND: 'bottomend'
+    }
+
+    static checkDuration = d => {
+        if(d && Number.isInteger(d)){
+            return d
+        }
+        return DEF_DURATION;
+    }
+
+    static checkPlace = p => {
+        return this.checkPlace[p] === null ? this.PlacementType.TOPEND : p;
+    }
     
-    static success = (msg) => {
+    static success = (msg, place=this.PlacementType.TOPEND, duration) => {
+        const checkedPlace = this.checkPlace(place);
         toaster.push(
         <Notification 
             header={type.success}  
-            duration={this.duration} 
+            duration={this.checkDuration(duration)} 
             closable
             type={type.success}
         >
             {msg}
-        </Notification>, {placement: PLACEMENT});
+        </Notification>, {placement: checkedPlace});
     }
 
-    static warning = (msg) => {
+    static warning = (msg,place=this.PlacementType.TOPEND, duration) => {
+        const checkedPlace = this.checkPlace(place);
         toaster.push(
             <Notification 
                 header={type.warning}  
-                duration={this.duration} 
+                duration={this.checkDuration(duration)} 
                 closable 
                 type={type.warning}
             >
                 {msg}
-            </Notification>, {placement: PLACEMENT});
+            </Notification>, {placement: checkedPlace});
     }
 
-    static info = (msg) => {
+    static info = (msg, place=this.PlacementType.TOPEND, duration) => {
+        const checkedPlace = this.checkPlace(place);
         toaster.push(
             <Notification 
                 header={type.info}  
-                duration={this.duration} 
+                duration={this.checkDuration(duration)} 
                 closable
                 type={type.info}
             >
                 {msg}
-            </Notification>, {placement: PLACEMENT});
+            </Notification>, {placement: checkedPlace});
     }
 
-    static error = (msg) => {
+    static error = (msg, place=this.PlacementType.TOPEND, duration) => {
+        const checkedPlace = this.checkPlace(place);
         toaster.push(
             <Notification 
                 header={type.error}  
-                duration={this.duration} 
+                duration={this.checkDuration(duration)} 
                 closable
                 type={type.error}
             >
                 {msg}
-            </Notification>, {placement: PLACEMENT});
+            </Notification>, {placement: checkedPlace});
     }
 }

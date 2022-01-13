@@ -1,4 +1,4 @@
-import { get, ref, set } from "firebase/database";
+import { get, ref, update } from "firebase/database";
 import firebase from 'firebase/compat/';
 
 import Alert from "../misc/Alert";
@@ -19,22 +19,21 @@ export class ProfileDB {
         }
     }
 
-    static create = async (uid, firstName, lastName, email) => {
+    static create = async (firstName, lastName, email, activeStatus=false) => {
         try{
-            if(!uid){throw new Error('Missing parent ID')}
-
-            const db = ref(database, `profiles/${uid}`)
+            const db = ref(database, `profiles/`)
 
             const payLoad = {
                 firstName,
                 lastName,
                 email,
+                activeStatus,
                 birthdate: firebase.database.ServerValue.TIMESTAMP
             }
 
-            const key = await set(db, payLoad);
+            const id = await update(db, payLoad);
             
-            return key
+            return id
         }catch(err){
             Alert.error(err.message);
         }
