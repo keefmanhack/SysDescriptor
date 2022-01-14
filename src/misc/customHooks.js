@@ -6,6 +6,7 @@ import { RevisionDB } from "../Database/SystemDB/RevisionDB/RevisionDB";
 import { SubSystemDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB";
 import { ComponentDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB";
 import { ComponentItemDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/ComponentItemDB";
+import { HardWareDataDB } from "../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/Data/HarwareDataDB";
 
 
 export const useMediaQuery = query => {
@@ -188,6 +189,19 @@ export const useModal = () => {
   const onClose = useCallback(() => setIsOpen(false), []);
 
   return {isOpen, onOpen, onClose};
+}
+
+
+export const useHardwareSerialNumber = (compItemID) => {
+  const [sn, setSN] = useState('');
+
+  useEffect(() => {
+    HardWareDataDB.onSpecificValue(compItemID, 'Serial Number', (d) => {
+      setSN(d);
+    })
+  }, [compItemID]);
+
+  return sn;
 }
 
 

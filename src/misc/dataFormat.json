@@ -10,18 +10,19 @@
         }
     },
     "General": {
-
-    },
-    "ATC" : {
         "ADU": {
             "Software":{
-                "Build Number": {
-                    "db": "ADU/software/build_number",
+                "Part Number": {
+                    "db": "adu_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
-                    "db": "ADU/software/build_date",
+                    "db": "adu_PCB/software/build_date",
                     "input": "Date"
+                },
+                "Revision": {
+                    "db": "adu_PCB/software/revision",
+                    "input": "Input"
                 }
             },
             "Hardware": {
@@ -32,9 +33,45 @@
                 "Part Number": {
                     "db": "ADU/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
+        "Decelerometer Unit": {
+            "Software":{
+                "Part Number": {
+                    "db": "decel_unit/software/part_number",
+                    "input": "Input"
+                },
+                "Build Date": {
+                    "db": "decel_unit/software/build_date",
+                    "input": "Date"
+                },
+                "Revision": {
+                    "db": "decel_unit/software/revision",
+                    "input": "Input"
+                }
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "Decel/hardware/revision",
+                    "input": "Number"
+                },
+                "Part Number": {
+                    "db": "Decel/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
+        }
+    },
+    "ATC" : {
         "Power Supply Stand Alone": {
             "Software":{
 
@@ -47,27 +84,9 @@
                 "Part Number": {
                     "db": "Power_Sup_SA/hardware/part_number",
                     "input": "Input"
-                }
-            }
-        },
-        "Decelerometer Unit": {
-            "Software":{
-                "Build Number": {
-                    "db": "Decel/software/build_number",
-                    "input": "Input"
                 },
-                "Build Date": {
-                    "db": "Decel/software/build_date",
-                    "input": "Date"
-                }
-            },
-            "Hardware": {
-                "Revision": {
-                    "db": "Decel/hardware/revision",
-                    "input": "Number"
-                },
-                "Part Number": {
-                    "db": "Decel/hardware/part_number",
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -84,6 +103,10 @@
                 "Part Number": {
                     "db": "ATC_int_PCB/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
@@ -98,6 +121,10 @@
                 },
                 "Part Number": {
                     "db": "Fault_Disp_Panel/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -114,13 +141,17 @@
                 "Part Number": {
                     "db": "Multi_func_PCB/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
         "Event Recorder PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "event_rec_PCB/software/build_number",
+                "Part Number": {
+                    "db": "event_rec_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -159,6 +190,10 @@
                 "Part Number": {
                     "db": "Cardfile/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
@@ -173,6 +208,10 @@
                 },
                 "Part Number": {
                     "db": "Power_Sup_PCB/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -189,6 +228,10 @@
                 "Part Number": {
                     "db": "fil_amp_60/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
@@ -203,6 +246,10 @@
                 },
                 "Part Number": {
                     "db": "fil_amp_100/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -219,6 +266,10 @@
                 "Part Number": {
                     "db": "fil_amp_250/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
@@ -233,6 +284,10 @@
                 },
                 "Part Number": {
                     "db": "fil_amp_4550/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -249,13 +304,17 @@
                 "Part Number": {
                     "db": "fil_amp_2340/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
         "Main Micro PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "Main_micro_PCB/software/build_number",
+                "Part Number": {
+                    "db": "Main_micro_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -284,8 +343,8 @@
         },
         "100/250 Decoder Micro PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "100_250_dec_mic_pcb/software/build_number",
+                "Part Number": {
+                    "db": "100_250_dec_mic_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -314,8 +373,8 @@
         },
         "Civil Micro PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "civil_micro_pcb/software/build_number",
+                "Part Number": {
+                    "db": "civil_micro_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -344,8 +403,8 @@
         },
         "I/O Micro PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "i_o_micro_pcb/software/build_number",
+                "Part Number": {
+                    "db": "i_o_micro_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -374,8 +433,8 @@
         },
         "Speed Micro PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "speed_micro_pcb/software/build_number",
+                "Part Number": {
+                    "db": "speed_micro_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -404,8 +463,8 @@
         },
         "Interface PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "interface_pcb/software/build_number",
+                "Part Number": {
+                    "db": "interface_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -434,8 +493,8 @@
         },
         "Cab Test PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "cab_test_pcb/software/build_number",
+                "Part Number": {
+                    "db": "cab_test_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -464,8 +523,8 @@
         },
         "Detector PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "detector_pcb/software/build_number",
+                "Part Number": {
+                    "db": "detector_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -494,8 +553,8 @@
         },
         "Decelerometer PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "decel_pcb/software/build_number",
+                "Part Number": {
+                    "db": "decel_pcb/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -524,28 +583,6 @@
         }
     },
     "ACSES" : {
-        "ADU": {
-            "Software":{
-                "Build Number": {
-                    "db": "ADU/software/build_number",
-                    "input": "Input"
-                },
-                "Build Date": {
-                    "db": "ADU/software/build_date",
-                    "input": "Date"
-                }
-            },
-            "Hardware": {
-                "Revision": {
-                    "db": "ADU/hardware/revision",
-                    "input": "Number"
-                },
-                "Part Number": {
-                    "db": "ADU/hardware/part_number",
-                    "input": "Input"
-                }
-            }
-        },
         "Power Supply": {
             "Software":{
 
@@ -557,6 +594,10 @@
                 },
                 "Part Number": {
                     "db": "Power_Sup/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -573,6 +614,10 @@
                 "Part Number": {
                     "db": "Power_Sup_ctv/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
@@ -587,6 +632,10 @@
                 },
                 "Part Number": {
                     "db": "Power_Sup_radio/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -603,6 +652,10 @@
                 "Part Number": {
                     "db": "Power_Sup_chmm/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
@@ -618,13 +671,17 @@
                 "Part Number": {
                     "db": "AIU/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
         "Configuration Module": {
             "Software":{
-                "Build Number": {
-                    "db": "config_mod/software/build_number",
+                "Part Number": {
+                    "db": "config_mod/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -653,8 +710,8 @@
         },
         "CHMM Module": {
             "Software":{
-                "Build Number": {
-                    "db": "chmm_mod/software/build_number",
+                "Part Number": {
+                    "db": "chmm_mod/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -693,13 +750,17 @@
                 "Part Number": {
                     "db": "decel_unit/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
         "Interconnect PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "inter_PCB/software/build_number",
+                "Part Number": {
+                    "db": "inter_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -738,13 +799,17 @@
                 "Part Number": {
                     "db": "cardfile/hardware/part_number",
                     "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "input": "Input"
                 }
             }
         },
         "Ethernet PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "ether_PCB/software/build_number",
+                "Part Number": {
+                    "db": "ether_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -773,8 +838,8 @@
         },
         "Main Micro PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "main_micro_PCB/software/build_number",
+                "Part Number": {
+                    "db": "main_micro_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -803,8 +868,8 @@
         },
         "COMM PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "comm_PCB/software/build_number",
+                "Part Number": {
+                    "db": "comm_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -833,8 +898,8 @@
         },
         "Recorder PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "recorder_PCB/software/build_number",
+                "Part Number": {
+                    "db": "recorder_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -863,8 +928,8 @@
         },
         "AUX I/O PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "aux_IO_PCB/software/build_number",
+                "Part Number": {
+                    "db": "aux_IO_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -893,8 +958,8 @@
         },
         "Interface PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "interface_PCB/software/build_number",
+                "Part Number": {
+                    "db": "interface_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -923,8 +988,8 @@
         },
         "Tach PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "tach_PCB/software/build_number",
+                "Part Number": {
+                    "db": "tach_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -953,8 +1018,8 @@
         },
         "I/O PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "IO_PCB/software/build_number",
+                "Part Number": {
+                    "db": "IO_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -983,8 +1048,8 @@
         },
         "Decoder PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "decoder_PCB/software/build_number",
+                "Part Number": {
+                    "db": "decoder_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {
@@ -1013,8 +1078,8 @@
         },
         "Transponder Reader PCB": {
             "Software":{
-                "Build Number": {
-                    "db": "trans_reader_PCB/software/build_number",
+                "Part Number": {
+                    "db": "trans_reader_PCB/software/part_number",
                     "input": "Input"
                 },
                 "Build Date": {

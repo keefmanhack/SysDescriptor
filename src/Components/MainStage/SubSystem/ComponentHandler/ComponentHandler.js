@@ -30,6 +30,7 @@ const ComponentHandler = ({subSysID, dataKey}) => {
                                         key={id}
                                         compID={id}
                                         format={possibleComps[name]}
+                                        subSysID={subSysID}
                                     />
                                 </Col>
                             )

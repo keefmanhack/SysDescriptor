@@ -42,7 +42,6 @@ export default function JoinForm() {
                 ProfileDB.create(firstName, lastName, email);
               })
               .catch((e)=> {
-                console.log(e);
                 Alert.error(e.message, Alert.PlacementType.TOPCENTER,4000);
               })
             resetFormState();              

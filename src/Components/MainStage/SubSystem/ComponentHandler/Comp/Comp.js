@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Loader } from 'rsuite';
 import { useToolBar } from '../../../../../Contexts/toolbar.context';
 import { ComponentItemDB } from '../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/ComponentItemDB';
@@ -8,8 +8,11 @@ import { GridHeader } from '../../../../misc/Custom Panel/GridHeader';
 import { useCompItems } from '../../../../../misc/customHooks';
 import { dispTime } from '../../../../../misc/helperfunc';
 import CompItem from './CompItem/CompItem';
+import CompDeleteModal from '../ComponentStatus/misc/CompDeleteModal';
+import { ComponentDB } from '../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
 
-const Comp = ({name, birthdate, compID, format}) => {
+const Comp = ({name, birthdate, compID, subSysID, format}) => {
+    const [show, setShow] = useState(false);
     const {compItems, isUpdating} = useCompItems(compID);
     const {setIsUpdating} = useToolBar();
 
@@ -34,6 +37,19 @@ const Comp = ({name, birthdate, compID, format}) => {
         setIsUpdating(false);
     }
 
+
+    const handleDelete = async () => {
+        setIsUpdating(true); 
+        try{
+            await ComponentDB.deleteSpecific(subSysID, compID);
+            Alert.success(`Successfully deleted ${name}`)
+        }catch(err){
+            Alert.error(err);
+        }
+        setIsUpdating(false)
+    }
+
+
     return (
         <CustomPanel defaultExpand header={name}>
             <GridHeader
@@ -43,7 +59,14 @@ const Comp = ({name, birthdate, compID, format}) => {
                         <span>{dispTime(birthdate)}</span>
                     </div>
             }
-                actionChildren={<Button size='xs' color='blue' appearance='ghost' onClick={newCompItem}>Add</Button>}
+                actionChildren={
+                    <div>
+                        <Button style={{marginBottom: '5px'}}  size='xs' color='blue' appearance='ghost' onClick={newCompItem}>Add</Button>
+                        <Button  size='xs' color='red' appearance='ghost' onClick={()=>setShow(true)}>Remove All</Button>
+                        <CompDeleteModal show={show} onClose={()=>setShow(false)} onDelete={handleDelete} name={name}/>
+                    </div>
+                
+                }
             />
             <hr style={{marginTop: '5px'}}/>
             {showCompItems()}

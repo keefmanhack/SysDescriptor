@@ -3,6 +3,7 @@ import { Button, Grid, Row, Col } from 'rsuite';
 import { useToolBar } from '../../../../../Contexts/toolbar.context';
 import { ComponentDB } from '../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
 import Alert from '../../../../../misc/Alert';
+import HoverShowAll from '../../../../misc/Helper Components/HoverShowAll';
 import ActiveComp from './misc/ActiveComp';
 
 const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
@@ -35,9 +36,13 @@ const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
             if(activeComps.find(ac => ac.name===name)){return null}
 
             return (
-                <Col key={name} xs={12} md={8} lg={4}>
+                <Col key={name} xs={12} md={8} lg={4}> 
                     <Button size='xs' className='mr-2 mb-1' style={{marginBottom: '5px'}} onClick={()=>handleCreate(name)}>
-                        + {name}
+                    <HoverShowAll text={name}>
+                        <span className='ellip-overflow'>
+                            + {name} 
+                        </span>
+                    </HoverShowAll>
                     </Button>
                 </Col>)
         })

@@ -9,8 +9,9 @@ import { dispTime } from '../../../../../../misc/helperfunc';
 import { CompItemOptions } from './CompItemOptions';
 import HardInput from './Local Inputs/HardInput';
 import SoftInput from './Local Inputs/SoftInput';
+import { useHardwareSerialNumber } from '../../../../../../misc/customHooks';
 
-const CompItem = ({name, birthdate, format, itemID, parentID}) => {
+const CompItem = ({birthdate, format, itemID, parentID}) => {
     const {setIsUpdating} = useToolBar();    
     const dispSoftwareData = () => {
         if(!format || !format.Software){return null}
@@ -18,7 +19,7 @@ const CompItem = ({name, birthdate, format, itemID, parentID}) => {
         const dataTitles = Object.keys(format.Software);
         return dataTitles.map((title, i) => {
             return (
-                <Col key={i} xs={24} lg={12}>
+                <Col key={i} md={24} lg={12}>
                     <SoftInput title={title} key={i} itemID={itemID} inputType={format.Software[title].input}/>
                 </Col>
             )
@@ -31,7 +32,7 @@ const CompItem = ({name, birthdate, format, itemID, parentID}) => {
         const dataTitles = Object.keys(format.Hardware);
         return dataTitles.map((title, i) => {
             return (
-                <Col key={i} xs={24} lg={12}>
+                <Col key={i} md={24} lg={12}>
                     <HardInput title={title} key={i} itemID={itemID} inputType={format.Hardware[title].input}/>
                 </Col>
             )
@@ -54,8 +55,10 @@ const CompItem = ({name, birthdate, format, itemID, parentID}) => {
         setIsUpdating(false);
     }
 
+    const snObj = useHardwareSerialNumber(itemID);
+
     return (
-        <CustomPanel defaultExpand={false} header={name}>
+        <CustomPanel defaultExpand={false} header={`SN: ${snObj ? snObj.value : 'not set'}`}>
             <GridHeader
                 dataChildren={<span>{dispTime(birthdate)}</span>}
                 actionChildren={

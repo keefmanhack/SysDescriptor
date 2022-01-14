@@ -3,6 +3,7 @@ import { Button } from 'rsuite';
 import { useToolBar } from '../../../../../../Contexts/toolbar.context';
 import { ComponentDB } from '../../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
 import Alert from '../../../../../../misc/Alert';
+import HoverShowAll from '../../../../../misc/Helper Components/HoverShowAll';
 import CompDeleteModal from './CompDeleteModal';
 
 const ActiveComp = ({name, id, subSysID, style}) => {
@@ -23,7 +24,14 @@ const ActiveComp = ({name, id, subSysID, style}) => {
 
      return (
         <>
-            <Button style={style} color='green' appearance='primary' size='xs' onClick={()=>setShowModal(true)}> - {name} </Button>
+
+            <Button style={style} color='green' appearance='primary' size='xs' onClick={()=>setShowModal(true)}>
+                <HoverShowAll text={name}>
+                    <span className='ellip-overflow'>
+                        - {name} 
+                    </span>
+                </HoverShowAll>
+            </Button>
             <CompDeleteModal show={showModal} name={name} id={id} onClose={()=>setShowModal(false)} onDelete={handleDelete}/>
         </>
     );

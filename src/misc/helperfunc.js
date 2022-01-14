@@ -149,6 +149,8 @@ const dispComponentItemData = async compItems => {
   const returnvar = [];
   for(let i =0; i< compItems.length; i++){
     const item = compItems[i];
+    /* eslint-disable no-await-in-loop */
+    const snObj = await HardWareDataDB.readSpecific(item.id, 'Serial Number');
     
     /* eslint-disable no-await-in-loop */
     const hardData = idObjToArr(await HardWareDataDB.read(item.id));
@@ -164,7 +166,7 @@ const dispComponentItemData = async compItems => {
                 children: [
                   new Paragraph({
                     children: [
-                      new TextRun(`${i+1}`)
+                      new TextRun(`SN: ${snObj.value}`)
                     ],
                     style: 'default-bold',
                     
