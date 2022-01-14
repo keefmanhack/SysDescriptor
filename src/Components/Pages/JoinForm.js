@@ -1,18 +1,11 @@
-import { sendSignInLinkToEmail } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, {useState} from 'react'
 import {Form, Button, Schema} from 'rsuite';
+import { ProfileDB } from '../../Database/ProfileDB';
 
 import Alert from '../../misc/Alert';
 // import { useWindowHeight } from '../../misc/customHooks';
 import { auth } from '../../misc/firebase';
-
-const actionCodeSettings = {
-    // URL you want to redirect back to. The domain (www.example.com) for this
-    // URL must be in the authorized domains list in the Firebase Console.
-    url: `https://sysdescriptor.web.app/finishSignUp'`,
-    // This must be true.
-    handleCodeInApp: true 
-};
 
 
 export default function JoinForm() {
@@ -21,8 +14,6 @@ export default function JoinForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRetry, setPasswordRetry] = useState('');
-
-    console.log(firstName, lastName);
 
     const model = Schema.Model({
         firstName: Schema.Types.StringType().isRequired('This field is required'),
@@ -45,50 +36,51 @@ export default function JoinForm() {
   
       const handleNewUser = async () => {
           if(model.check({firstName, lastName, email, password, passwordRetry})){
-            sendSignInLinkToEmail(auth, email, actionCodeSettings)
-            .then(() => {
-                Alert.success(`An email has been sent to ${email}.  Click the link inside to activate your account`, Alert.PlacementType.TOPCENTER, 4000);
-            })
-            .catch((e) => {
-                console.log(e)
-                Alert.error("Unable to generate user account", Alert.PlacementType.TOPCENTER,4000);
-            })
+              createUserWithEmailAndPassword(auth, email, password)
+              .then(()=> {
+                Alert.success(`Welcome to SysDescriptor ${firstName}`, Alert.PlacementType.TOPCENTER, 4000);
+                ProfileDB.create(firstName, lastName, email);
+              })
+              .catch((e)=> {
+                console.log(e);
+                Alert.error(e.message, Alert.PlacementType.TOPCENTER,4000);
+              })
             resetFormState();              
           }
       }
 
     return (
-        <div style={{ borderRadius: '5px', padding: '10px', width: '350px'}} id='join-form'>
+        <div style={{ borderRadius: '5px', padding: '10px', width: '350px', height: '100%'}} id='join-form'>
             <h2>Join</h2>
             <p>You must be a Siemens employee to make use of this site</p>
             <hr/>
             <Form onSubmit={handleNewUser} model={model}>
-                <div style={{height: `30vh`, overflowY: 'scroll'}}>
+                <div style={{height: '95%', overflowY: 'scroll'}}>
                     <Form.Group controlId='firstName'>
-                    <Form.ControlLabel>First Name</Form.ControlLabel>
-                    <Form.Control onKeyUp={(v)=>setFirstName(v.target.value)} name='firstName'/>
+                        <Form.ControlLabel>First Name</Form.ControlLabel>
+                        <Form.Control value={firstName} onChange={(v)=>setFirstName(v)} name='firstName'/>
                     </Form.Group>
                     <Form.Group controlId='lastName'>
-                    <Form.ControlLabel>Last Name</Form.ControlLabel>
-                    <Form.Control onKeyUp={v=>setLastName(v.target.value)} name='lastName'/>
+                        <Form.ControlLabel>Last Name</Form.ControlLabel>
+                        <Form.Control value={lastName} onChange={v=>setLastName(v)} name='lastName'/>
                     </Form.Group>
                     <Form.Group controlId="email">
-                    <Form.ControlLabel>Siemens Email</Form.ControlLabel>
-                    <Form.Control onKeyUp={v=>setEmail(v.target.value)} name="email" type="email" />
+                        <Form.ControlLabel>Siemens Email</Form.ControlLabel>
+                        <Form.Control value={email} onChange={v=>setEmail(v)} name="email" type="email" />
                     <Form.HelpText tooltip>Valid Siemens email address is required</Form.HelpText>
                     </Form.Group>
                     <Form.Group controlId="password">
-                    <Form.ControlLabel>Password</Form.ControlLabel>
-                    <Form.Control onKeyUp={v=>setPassword(v.target.value)} name="password" type="password" autoComplete="off" />
+                        <Form.ControlLabel>Password</Form.ControlLabel>
+                        <Form.Control value={password} onChange={v=>setPassword(v)} name="password" type="password" autoComplete="off" />
                     </Form.Group>
                     <Form.Group controlId="passwordRetry">
-                    <Form.ControlLabel>Password Retry</Form.ControlLabel>
-                    <Form.Control onKeyUp={v=>setPasswordRetry(v.target.value)} name="passwordRetry" type="password" autoComplete="off" />
+                        <Form.ControlLabel>Password Retry</Form.ControlLabel>
+                        <Form.Control value={passwordRetry} onChange={v=>setPasswordRetry(v)} name="passwordRetry" type="password" autoComplete="off" />
                     </Form.Group>
                 </div>
 
                 <Form.Group>
-                    <Button type='submit' block size='lg' appearance="primary">Join</Button>
+                    <Button style={{marginTop: '15px'}} type='submit' block size='lg' appearance="primary">Join</Button>
                 </Form.Group>
             </Form>
       </div>
