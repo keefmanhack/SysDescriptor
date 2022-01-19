@@ -166,7 +166,7 @@ const dispComponentItemData = async compItems => {
                 children: [
                   new Paragraph({
                     children: [
-                      new TextRun(`SN: ${snObj.value}`)
+                      new TextRun(`SN: ${snObj && snObj.value ? snObj.value : 'undefined'}`)
                     ],
                     style: 'default-bold',
                     
@@ -363,7 +363,7 @@ export const generateDocument = async (SYSID, REVID) => {
           new Paragraph({
             children: [
               new TextRun("Technician: "), new TextRun({text: system.technician, bold: true}),
-              new TextRun("Owner: "), new TextRun({text: system.owner, bold: true})
+              new TextRun(" Owner: "), new TextRun({text: system.owner, bold: true})
             ],
             style: "tech-owner"
           }),

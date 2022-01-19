@@ -3,8 +3,8 @@ import { Button } from 'rsuite';
 import { useToolBar } from '../../../../../../Contexts/toolbar.context';
 import { ComponentDB } from '../../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
 import Alert from '../../../../../../misc/Alert';
+import DeleteModal from '../../../../../misc/DeleteModal';
 import HoverShowAll from '../../../../../misc/Helper Components/HoverShowAll';
-import CompDeleteModal from './CompDeleteModal';
 
 const ActiveComp = ({name, id, subSysID, style}) => {
     const [showModal, setShowModal] = useState(false);
@@ -32,7 +32,18 @@ const ActiveComp = ({name, id, subSysID, style}) => {
                     </span>
                 </HoverShowAll>
             </Button>
-            <CompDeleteModal show={showModal} name={name} id={id} onClose={()=>setShowModal(false)} onDelete={handleDelete}/>
+            <DeleteModal
+                title={`Delete Component ${name}?`}
+                body={
+                    <p>
+                        Are you sure you want to delete the <strong>{name}</strong> component?
+                    </p>
+                }
+                handleClose={()=>setShowModal(false)}
+                show={showModal}
+                handleDelete={handleDelete}
+
+            />
         </>
     );
 };

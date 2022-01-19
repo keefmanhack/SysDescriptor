@@ -8,8 +8,9 @@ import { GridHeader } from '../../../../misc/Custom Panel/GridHeader';
 import { useCompItems } from '../../../../../misc/customHooks';
 import { dispTime } from '../../../../../misc/helperfunc';
 import CompItem from './CompItem/CompItem';
-import CompDeleteModal from '../ComponentStatus/misc/CompDeleteModal';
 import { ComponentDB } from '../../../../../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
+import DeleteModal from '../../../../misc/DeleteModal';
+ 
 
 const Comp = ({name, birthdate, compID, subSysID, format}) => {
     const [show, setShow] = useState(false);
@@ -63,7 +64,17 @@ const Comp = ({name, birthdate, compID, subSysID, format}) => {
                     <div>
                         <Button style={{marginBottom: '5px'}}  size='xs' color='blue' appearance='ghost' onClick={newCompItem}>Add</Button>
                         <Button  size='xs' color='red' appearance='ghost' onClick={()=>setShow(true)}>Remove All</Button>
-                        <CompDeleteModal show={show} onClose={()=>setShow(false)} onDelete={handleDelete} name={name}/>
+                        <DeleteModal
+                            title={`Delete component ${name}`}
+                            body={
+                                <p>
+                                    Are you sure you want to delete the {name} component?
+                                </p>
+                            }
+                            handleClose={()=>setShow(false)}
+                            handleDelete={handleDelete}
+                            show={show}
+                        />
                     </div>
                 
                 }

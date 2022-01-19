@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
-import {Input, InputGroup, Loader, List} from 'rsuite';
+import {Input, InputGroup, Loader, List, Button} from 'rsuite';
 import { Close } from '@rsuite/icons';
 
 import {useMediaQuery, useSystems} from '../../misc/customHooks'
 import { System } from './System/System';
 import NewSystemModal from './SystemModal/NewSystemModal';
-import { SystemDB } from '../../Database/SystemDB/SystemDB';
-
 
 // const selectedStyle = {
 //     borderLeft: '4px solid lightgreen',
@@ -27,19 +25,21 @@ const findSearchResults = (systems, searchText) => {
 
 const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) => {
     const [searchText, setSearchText] = useState('');
+    const [showModal, setShowModal] = useState(false);
 
     const isDesktop = useMediaQuery('(min-width: 1200px)');
     const {systems, isUpdating} = useSystems();
 
     const searchResults =  findSearchResults(systems, searchText);
 
-    const onDeleteSystem = async id => {
-        await SystemDB.delete(id);
-    }
  
    return (
         <div className='br-r h-100 p-1' style={{}}>
-            <NewSystemModal/>
+            <Button color="blue" appearance='primary' onClick={()=> setShowModal(true)} style={{marginBottom: '20px', display: 'block'}}>New System</Button>
+            <NewSystemModal
+                show={showModal}
+                handleClose={()=>setShowModal(false)}
+            />
             <InputGroup style={{width: '80%'}} className='mx-auto'>
                 <Input value={searchText} onChange={(e) => setSearchText(e)} placeholder='Search' size='md'/>
                 <InputGroup.Button onClick={()=>setSearchText('')}>
@@ -69,7 +69,6 @@ const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) =
                         isSelected={sysSelectedID===id}
                         revSelectedID={revSelectedID}
                         onNewRevision={()=>onNewRevision(id)}
-                        onDeleteSystem={()=>onDeleteSystem(id)}
                         onRevSelected={(revID)=>onRevSelected(id, revID)}
                     />
                 })}

@@ -33,3 +33,10 @@ dist/
 .yarn-integrity
 
 .env
+env.js
+
+build/
+
+.vscode/
+.github/
+.firebase/

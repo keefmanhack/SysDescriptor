@@ -5,15 +5,18 @@ import {Grid, Row, Col, Button, Header, Container} from 'rsuite';
 import landingtrain from '../../images/landing-train.jpg';
 import MyFooter from '../misc/Footer';
 import JoinForm from './JoinForm';
+import ResetPasswordModal from './ResetPasswordModal';
 import SignInModal from './SignInModal'; 
 
 export default function Landing() {
-    const [showModal, setShowModal] = useState();
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showResetModal, setShowResetModal] = useState(false);
 
     return (
         <Container>
           <div id='background-train' style={{backgroundImage: `url(${landingtrain})`  }}> 
-            <SignInModal show={showModal} onClose={() => setShowModal(false)}/>
+            <SignInModal show={showLoginModal} onClose={() => setShowLoginModal(false)} handlePassReset={()=> {setShowResetModal(true); setShowLoginModal(false);}}/>
+            <ResetPasswordModal show={showResetModal} onClose={()=>setShowResetModal(false)}/>
               <Header className='light-shade-c white-c p-1'>
                 <Grid fluid>
                   <Row>
@@ -22,7 +25,7 @@ export default function Landing() {
                     </Col>
                     <Col xs={4}>
                       <div>
-                      <Button onClick={()=>setShowModal(true)} style={{marginTop: '5%', marginRight: '10%', float: 'right', color: 'white', fontSize: '16px'}} className='white-c' appearance='link'>Sign In</Button>
+                      <Button onClick={()=>setShowLoginModal(true)} style={{marginTop: '5%', marginRight: '10%', float: 'right', color: 'white', fontSize: '16px'}} className='white-c' appearance='link'>Sign In</Button>
                       </div>
                     </Col>
                   </Row>

@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Col, Row, Grid } from 'rsuite';
 import TrashIcon from '@rsuite/icons/Trash';
 import moment from 'moment';
 
 import { useHover } from '../../../../../misc/customHooks';
 import HoverShowAll from '../../../../misc/Helper Components/HoverShowAll';
+import { RevisionDB } from '../../../../../Database/SystemDB/RevisionDB/RevisionDB';
+import Alert from '../../../../../misc/Alert';
+import DeleteModal from '../../../../misc/DeleteModal';
 
 
-export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected}) => {
+export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, id, sysID}) => {
+    const [showModal, setShowModal] = useState(false);
+
     const [ref, hover] = useHover();
     name=name || 'Untitled';
 
@@ -40,12 +45,26 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected})
                         </span>
                     </Col>
                     <Col xs={2}>
-                        <Button size='xs' appearance='subtle' color='red' style={{position: 'absolute', left: '1px', top: '4px', display: hover ? 'inline-block' : 'none' }}>
+                        <Button onClick={(e)=>{e.stopPropagation(); setShowModal(true)}} size='xs' appearance='subtle' color='red' style={{position: 'absolute', left: '1px', top: '4px', display: hover ? 'inline-block' : 'none' }}>
                             <TrashIcon/>
                         </Button>
                     </Col>
                 </Row>
-            </Grid>
+            </Grid> 
+            <DeleteModal
+                show={showModal}
+                handleClose={()=>setShowModal(false)}
+                title={`Delete ${name}?`}
+                body={`Are you sure you want to delete ${name} revision`}
+                handleDelete={async () => {
+                    try{
+                        await RevisionDB.deleteSpecific(sysID, id);
+                        Alert.success('Successfully deleted the revision');
+                    }catch(e){
+                        Alert.error('Unable to delete the revision');
+                    }
+                }}
+            />
         </div>
     )
 }

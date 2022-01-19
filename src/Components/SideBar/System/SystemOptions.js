@@ -3,11 +3,11 @@ import { Button, Dropdown, Popover, Whisper } from 'rsuite';
 import MoreIcon from '@rsuite/icons/More';
 
 
-const OptionsPopOver = React.forwardRef(({ handleSelect, ...rest }, ref) => (
+const OptionsPopOver = React.forwardRef(({handleSelect, ...rest }, ref) => (
     <Popover ref={ref} {...rest} full>
       <Dropdown.Menu onSelect={(n, e)=>{handleSelect(n); e.stopPropagation()}}>
         <Dropdown.Item eventKey={1} >New Revision</Dropdown.Item>
-        <Dropdown.Item>Edit System</Dropdown.Item>
+        <Dropdown.Item eventKey={2}>Edit System</Dropdown.Item>
         <Dropdown.Item eventKey={3}>Delete System</Dropdown.Item>
       </Dropdown.Menu>
     </Popover>
@@ -15,11 +15,13 @@ const OptionsPopOver = React.forwardRef(({ handleSelect, ...rest }, ref) => (
 
 
 
-export const SystemOptions = ({onNewRevision, onDeleteSystem}) => {
+export const SystemOptions = ({onNewRevision, onEditSystem, onDeleteSystem}) => {
   const ref = useRef();
   const handleSelect = n => {
     if(n===1){
       onNewRevision();
+    }else if(n===2){
+      onEditSystem();
     }else if(n===3){
       onDeleteSystem();
     }

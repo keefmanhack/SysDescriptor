@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Col, Footer, Grid, Row } from 'rsuite';
 
 const MyFooter = ({style}) => (
@@ -30,12 +31,15 @@ const MyFooter = ({style}) => (
             <Col xs={4} lg={2}>
               <a href='/'>Accessibility</a>
             </Col>
-            <Col xs={12} lg={18}>
-            <div>
-            <p style={{textAlign: 'right'}}>
-               Developed by Siemen Engineer <a href='https://www.linkedin.com/in/keefergregoire/'>Keefer Gregoire</a>
-             </p>
-            </div>
+            <Col xs={4} lg={2}>
+              <Link to='/revisionNotes'>Revision Notes</Link>
+            </Col>
+            <Col xs={8} lg={16}>
+              <div>
+                <p style={{textAlign: 'right'}}>
+                  Developed by Siemen Engineer <a href='https://www.linkedin.com/in/keefergregoire/'>Keefer Gregoire</a>
+                </p>
+              </div>
             </Col>
           </Row>
         </Grid>

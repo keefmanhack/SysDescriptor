@@ -19,6 +19,8 @@ const RevList = ({sysID, onRevSelected, revSelectedID}) => {
                         revNumber={revNumber}
                         key={id}
                         isSelected={revSelectedID===id}
+                        id={id}
+                        sysID={sysID}
                     />
                 )
             }): null}

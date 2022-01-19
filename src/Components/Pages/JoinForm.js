@@ -66,7 +66,7 @@ export default function JoinForm() {
                     <Form.Group controlId="email">
                         <Form.ControlLabel>Siemens Email</Form.ControlLabel>
                         <Form.Control value={email} onChange={v=>setEmail(v)} name="email" type="email" />
-                    <Form.HelpText tooltip>Valid Siemens email address is required</Form.HelpText>
+                        <Form.HelpText tooltip>Valid Siemens email address is required</Form.HelpText>
                     </Form.Group>
                     <Form.Group controlId="password">
                         <Form.ControlLabel>Password</Form.ControlLabel>
