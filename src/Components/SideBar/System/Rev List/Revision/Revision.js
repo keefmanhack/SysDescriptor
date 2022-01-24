@@ -34,7 +34,9 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, 
     }
 
 
-    const handleClick = () => {onSelected()}
+    const handleClick = () => {
+        if(!showDelModal && !showMoveModal){onSelected()}
+    }
     return (
         <div type='button' tabIndex={0} role="button" styling="link" onClick={handleClick} onKeyDown={handleClick} style={{display: 'block', width: '100%', ...selStyle}} className='rs-list-item pointer p-1'>
             <Grid fluid>
