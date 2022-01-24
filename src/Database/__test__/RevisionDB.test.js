@@ -1,4 +1,4 @@
-import { makeid } from "../../misc/helperfunc"
+import { idObjToArr, makeid } from "../../misc/helperfunc"
 import { RevisionDB } from "../SystemDB/RevisionDB/RevisionDB";
 import { SubSystemDB } from "../SystemDB/RevisionDB/SubSystemDB/SubSystemDB";
 
@@ -14,6 +14,19 @@ it('Can create revisions', async () => {
 
     await RevisionDB.deleteAll(sysID1);
     
+})
+
+it('Can make a duplicate', async () => {
+    const id = `${makeid(5)}test`;
+
+    const revID = await RevisionDB.create(id, 'rev name');
+    const dupID = await RevisionDB.duplicate(id, revID);
+
+    const dupRev = await RevisionDB.readSpecific(id, dupID);
+
+    expect(dupRev.name).toEqual('rev name-dup');
+
+    await RevisionDB.deleteAll(id);
 })
 
 it ('Can update a specific revision', async () => {

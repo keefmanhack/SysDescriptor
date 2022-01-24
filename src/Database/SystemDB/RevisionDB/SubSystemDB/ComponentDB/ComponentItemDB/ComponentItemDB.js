@@ -14,6 +14,7 @@ FunctionInputs
 import { get, ref, set } from "firebase/database";
 import Alert from "../../../../../../misc/Alert";
 import {database} from "../../../../../../misc/firebase";
+import { idObjToArr } from "../../../../../../misc/helperfunc";
 import { DBHelper } from "../../../../../DBHelper";
 import { HardWareDataDB } from "./Data/HarwareDataDB";
 import { SoftWareDataDB } from "./Data/SoftwareDataDB";
@@ -34,6 +35,24 @@ export class ComponentItemDB {
 
     static create = async (compID, name) => {
         return DBHelper.create(this.DBPARENT, compID, name);
+    }
+
+    static duplicate = async (orgID, dupID) => {
+        try{
+            if(!orgID){throw new Error('Missing orginal identification.')}
+            if(!dupID){throw new Error('Missing duplicate identification.')}
+
+            const compItems = idObjToArr(await this.read(orgID));
+
+            for(let i =0; i<compItems.length; i++){
+                const item = compItems[i];
+                const newItemID = await this.create(dupID, item.name);
+                await SoftWareDataDB.duplicate(item.id, newItemID);
+                await HardWareDataDB.duplicate(item.id, newItemID);
+            }
+        }catch(err){
+            Alert.error(err);
+        }
     }
 
     static delete = async (compID) => {

@@ -18,4 +18,8 @@ export class SoftWareDataDB {
     static delete = async componentID => {
         await DataDB.delete(this.DBPARENT, componentID);
     }
+
+    static duplicate = async (orgID, dupID) => {
+        await DataDB.duplicate(this.DBPARENT, orgID, dupID);
+    }
 }

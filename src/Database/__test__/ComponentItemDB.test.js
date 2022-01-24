@@ -1,4 +1,4 @@
-import { makeid } from "../../misc/helperfunc";
+import { idObjToArr, makeid } from "../../misc/helperfunc";
 import { ComponentItemDB } from "../SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/ComponentItemDB";
 import { HardWareDataDB } from "../SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentItemDB/Data/HarwareDataDB";
 
@@ -15,6 +15,23 @@ it('Can create a component id', async () => {
     await ComponentItemDB.delete(id);
 
 })
+
+it('Can make a duplicate', async () => {
+    const id = `${makeid(5)}test`;
+    const dupID = `${makeid(5)}test`;
+
+    await ComponentItemDB.create(id, 'comp name');
+    await ComponentItemDB.duplicate(id, dupID);
+
+    const dupComp = idObjToArr(await ComponentItemDB.read(dupID));
+
+    expect(dupComp[0].name).toEqual('comp name');
+
+
+    await ComponentItemDB.delete(id);
+    await ComponentItemDB.delete(dupID);
+})
+
 
 it('Can delete the component and all of its children', async () => {
     const id = `${makeid(5)}test`;

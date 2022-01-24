@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
-import { Button, Col, Row, Grid } from 'rsuite';
-import TrashIcon from '@rsuite/icons/Trash';
+import {Col, Row, Grid } from 'rsuite';
 import moment from 'moment';
 
-import { useHover } from '../../../../../misc/customHooks';
 import HoverShowAll from '../../../../misc/Helper Components/HoverShowAll';
 import { RevisionDB } from '../../../../../Database/SystemDB/RevisionDB/RevisionDB';
 import Alert from '../../../../../misc/Alert';
 import DeleteModal from '../../../../misc/DeleteModal';
+import { OptionsPopUp } from '../../../../misc/Helper Components/OptionsPopUp';
+import MoveModal from './MoveModal';
 
 
 export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, id, sysID}) => {
-    const [showModal, setShowModal] = useState(false);
+    const [showDelModal, setshowDelModal] = useState(false);
+    const [showMoveModal, setShowMoveModal] = useState(false);
 
-    const [ref, hover] = useHover();
     name=name || 'Untitled';
 
     const t = moment(timestamp);
@@ -21,9 +21,22 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, 
 
     const selStyle = isSelected ? {borderLeft: '2px solid white'} : null;
 
+
+    const handleMove = () => {console.log('moved')}
+
+    const handleDuplicate = async () => {
+        try{   
+            await RevisionDB.duplicate(sysID, id);
+            Alert.success(`Successfully duplicated revision ${name}`)
+        }catch(e){
+            Alert.error(`Unable to duplicate revision ${name}`)
+        }
+    }
+
+
     const handleClick = () => {onSelected()}
     return (
-        <div type='button' tabIndex={0} role="button" styling="link" onClick={handleClick} onKeyDown={handleClick} style={{display: 'block', width: '100%', ...selStyle}}  ref={ref} className='rs-list-item pointer p-1'>
+        <div type='button' tabIndex={0} role="button" styling="link" onClick={handleClick} onKeyDown={handleClick} style={{display: 'block', width: '100%', ...selStyle}} className='rs-list-item pointer p-1'>
             <Grid fluid>
                 <Row>
                     <Col xs={5}>
@@ -45,15 +58,38 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, 
                         </span>
                     </Col>
                     <Col xs={2}>
-                        <Button onClick={(e)=>{e.stopPropagation(); setShowModal(true)}} size='xs' appearance='subtle' color='red' style={{position: 'absolute', left: '1px', top: '4px', display: hover ? 'inline-block' : 'none' }}>
+                        <OptionsPopUp
+                            nameEvtObj={[
+                                {
+                                    name: 'Move',
+                                    eventHandler: () => setShowMoveModal(true)
+                                },
+                                {
+                                    name: 'Duplicate',
+                                    eventHandler: ()=>handleDuplicate()
+                                },
+                                {
+                                    name: 'Delete',
+                                    eventHandler: ()=>setshowDelModal(true)
+                                }
+                            ]}
+                        />
+                        {/* <Button onClick={(e)=>{e.stopPropagation(); setshowDelModal(true)}} size='xs' appearance='subtle' color='red' style={{position: 'absolute', left: '1px', top: '4px', display: hover ? 'inline-block' : 'none' }}>
                             <TrashIcon/>
-                        </Button>
+                        </Button> */}
                     </Col>
                 </Row>
-            </Grid> 
+            </Grid>
+            <MoveModal
+                show={showMoveModal}
+                handleClose={()=>setShowMoveModal(false)}
+                handleMove={handleMove}
+                revName={name}
+                curSysID={sysID}
+            />
             <DeleteModal
-                show={showModal}
-                handleClose={()=>setShowModal(false)}
+                show={showDelModal}
+                handleClose={()=>setshowDelModal(false)}
                 title={`Delete ${name}?`}
                 body={`Are you sure you want to delete ${name} revision`}
                 handleDelete={async () => {

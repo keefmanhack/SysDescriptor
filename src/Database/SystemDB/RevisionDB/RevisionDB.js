@@ -18,6 +18,23 @@ export class RevisionDB {
        return DBHelper.onValue(this.DBPARENT, sysID, cb);
     }
 
+    static duplicate = async (sysID, revID) => {
+        try{
+            if(!sysID){throw new Error('Missing system identification.')}
+            if(!revID){throw new Error('Missing revision identification.')}
+
+            const org = await this.readSpecific(sysID, revID);
+
+            const dupID = await this.create(sysID, `${org.name}-dup`);
+
+            await SubSystemDB.duplicate(revID, dupID);
+
+            return dupID;
+        }catch(err){
+            Alert.error(err);
+        }
+    }
+
     static readSpecific = async (sysID, revID) => {
         try{
             if(!sysID){throw new Error('Missing system identification.')}

@@ -15,6 +15,7 @@ import { get, ref, set } from "firebase/database";
 import firebase from 'firebase/compat/';
 import Alert from "../../../../../../../misc/Alert";
 import {database} from "../../../../../../../misc/firebase";
+import { idObjToArr } from "../../../../../../../misc/helperfunc";
 
 
 export class DataDB {
@@ -74,6 +75,21 @@ export class DataDB {
 
             await set(db, null);
 
+        }catch(err){
+            Alert.error(err);
+        }
+    }
+
+    static duplicate = async (DBPARENT, orgID, dupID) => {
+        try{
+            if(!orgID){throw new Error('Missing orginal identification.')}
+            if(!dupID){throw new Error('Missing duplicate identification.')}
+
+            const items = idObjToArr(await this.read(DBPARENT, orgID)); 
+            for(let i =0; i<items.length; i++){
+                const item = items[i];
+                await this.update(DBPARENT, dupID, item.id, item.value);
+            }
         }catch(err){
             Alert.error(err);
         }

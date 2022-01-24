@@ -14,6 +14,7 @@ FunctionInputs
 import { get, ref, set } from "firebase/database";
 import Alert from "../../../../misc/Alert";
 import {database} from "../../../../misc/firebase";
+import { idObjToArr } from "../../../../misc/helperfunc";
 import { DBHelper } from "../../../DBHelper";
 import { ComponentDB } from "./ComponentDB/ComponentDB";
 
@@ -32,6 +33,23 @@ export class SubSystemDB {
 
     static create = async (revID, name) => {
         return DBHelper.create(this.DBPARENT, revID, name);
+    }
+
+    static duplicate =async (orgID, dupID) => {
+        try{
+            if(!orgID){throw new Error('Missing orginal identification.')}
+            if(!dupID){throw new Error('Missing duplicate identification.')}
+
+            const subSystems = idObjToArr(await this.read(orgID));
+            for(let i =0; i<subSystems.length; i++){
+                const subSys = subSystems[i];
+                const newSubSysID = await this.create(dupID, subSys.name);
+                await ComponentDB.duplicate(subSys.id, newSubSysID);
+            }
+
+        }catch(err){
+            Alert.error(err);
+        }
     }
 
     static delete = async (revID) => {
