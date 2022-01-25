@@ -7,32 +7,49 @@ export default function RevisionNotes() {
             <a href='/'>Back</a>
             <hr/>
 
-            <h4>0.2.1 - Jan. 19th. 2022</h4>
-            <p>Author: Keefer Gregoire</p>
-            <ul>
-                <li>
-                    Added password reset feature using FireBase password reset UI
-                </li>
-                <li>
-                    Component names were updated from indexes to the hardware serial numbers for each component
-                </li>
-                <li>
-                    ADU and Decel were moved to General tab instead of having seperate definitions in ACSES and ATC tabs
-                </li>
-                <li>
-                    Added functionality to update Systems
-                </li>
-                <li>
-                    Added functionality to delete revisions
-                </li>
-                <li>
-                    Added serial number inputs to hardware section for every component
-                </li>
-                <li>
-                    Added confirmation modals when attempting to delete revisions and systems
-                </li>
-            </ul>
+            <div>
+                <h4>0.2.2 - Jan. 25th. 2022</h4>
+                <p>Author: Keefer Gregoire</p>
+                <ul>
+                    <li>
+                        Added functionality to move revisions from system to system
+                    </li>
+                    <li>
+                        Added functionality to duplicate revisions.  This combined with the move functionality will allow any revision definition to be migrated to any existing system
+                    </li>
+                    <li>
+                        Fixed a few bugs left over from deleting systems/revisions in which the RevisionEditor screen would continue to display the data of the deleted revision.
+                    </li>
+                </ul>
+            </div>
 
+            <div>
+                <h4>0.2.1 - Jan. 19th. 2022</h4>
+                <p>Author: Keefer Gregoire</p>
+                <ul>
+                    <li>
+                        Added password reset feature using FireBase password reset UI
+                    </li>
+                    <li>
+                        Component names were updated from indexes to the hardware serial numbers for each component
+                    </li>
+                    <li>
+                        ADU and Decel were moved to General tab instead of having seperate definitions in ACSES and ATC tabs
+                    </li>
+                    <li>
+                        Added functionality to update Systems
+                    </li>
+                    <li>
+                        Added functionality to delete revisions
+                    </li>
+                    <li>
+                        Added serial number inputs to hardware section for every component
+                    </li>
+                    <li>
+                        Added confirmation modals when attempting to delete revisions and systems
+                    </li>
+                </ul>
+            </div>
         </div>
     )
 }

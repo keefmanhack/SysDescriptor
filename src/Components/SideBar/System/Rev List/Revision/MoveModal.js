@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Form, InputPicker, Modal } from 'rsuite'
+import { SystemDB } from '../../../../../Database/SystemDB/SystemDB';
 import Alert from '../../../../../misc/Alert';
-import { useSystems } from '../../../../../misc/customHooks';
-
+import { idObjToArr } from '../../../../../misc/helperfunc';
 
 const createDataLabelObj = (sys, curSysID) => {
     if(!curSysID || !sys || !sys.length===0){return [];}
@@ -24,8 +24,20 @@ const createDataLabelObj = (sys, curSysID) => {
 
 const MoveModal = ({show, handleClose, handleMove, revName, curSysID}) => {
     const [selID, setSelID] = useState(null);
-    const {systems, isUpdating} = useSystems();
+    const [isUpdating, setIsUpdating] = useState(true);
+    const [systems, setSystems] = useState([]);
     const transPosSys = createDataLabelObj(systems, curSysID);
+
+    useEffect(()=> {
+        const getSystems = async () => {
+            const data = idObjToArr(await SystemDB.readAll());
+            setSystems(data);
+            setIsUpdating(false);
+        }
+
+        getSystems();
+    }, []);
+
 
     const localHandleMove = async () => {
         if(!selID){

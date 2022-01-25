@@ -94,7 +94,7 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, 
                         />
                     </Col>
                 </Row>
-            </Grid>
+            </Grid> 
             <MoveModal
                 show={showMoveModal}
                 handleClose={()=>setShowMoveModal(false)}

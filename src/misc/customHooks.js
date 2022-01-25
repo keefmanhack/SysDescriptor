@@ -95,18 +95,19 @@ export const useSystems = () => {
   const sysRef = useRef();
   useEffect(() => {
     setIsUpdating(true);
-    
     sysRef.current = SystemDB.addListener((v) => {
       const systemsObj = v;
       const systemsArr = idObjToArr(systemsObj);
       setSystems(systemsArr);
       setIsUpdating(false);
     })
-    
+  }, []);
+
+  useEffect(() => {
     return () => {
       off(sysRef.current);
     }
-  }, []);
+  }, [])
   return {systems, isUpdating}
 }
 

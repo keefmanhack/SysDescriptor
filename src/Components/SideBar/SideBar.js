@@ -23,7 +23,7 @@ const findSearchResults = (systems, searchText) => {
     return results;
 }
 
-const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) => {
+const SideBar = () => {
     const [searchText, setSearchText] = useState('');
     const [showModal, setShowModal] = useState(false);
 
@@ -66,10 +66,6 @@ const SideBar = ({onNewRevision, onRevSelected, sysSelectedID, revSelectedID}) =
                         revIDs={revIDs}
                         key={id}
                         sysID={id}
-                        isSelected={sysSelectedID===id}
-                        revSelectedID={revSelectedID}
-                        onNewRevision={()=>onNewRevision(id)}
-                        onRevSelected={(revID)=>onRevSelected(id, revID)}
                     />
                 })}
             </List>

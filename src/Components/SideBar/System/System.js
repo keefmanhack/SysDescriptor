@@ -42,10 +42,9 @@ export const System = ({sysID, title='Untitled', partNumber, sysNumber, technici
         try{
             Alert.info(`Deleting system ${title}`);
             setShowDeleteModal(false);
-
-            await SystemDB.delete(sysID);
             if(isSelected){selectNone()}
 
+            await SystemDB.delete(sysID);
             Alert.success('Successfully deleted the system');
         }catch(e){
             Alert.error('Unable to delete system');
