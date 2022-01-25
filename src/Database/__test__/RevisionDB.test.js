@@ -1,6 +1,7 @@
 import { idObjToArr, makeid } from "../../misc/helperfunc"
 import { RevisionDB } from "../SystemDB/RevisionDB/RevisionDB";
 import { SubSystemDB } from "../SystemDB/RevisionDB/SubSystemDB/SubSystemDB";
+import { SystemDB } from "../SystemDB/SystemDB";
 
 it('Can create revisions', async () => {
     const sysID1 = makeid();
@@ -15,6 +16,25 @@ it('Can create revisions', async () => {
     await RevisionDB.deleteAll(sysID1);
     
 })
+
+it('Can move a rev to new system', async () => {
+    const sys1ID = await SystemDB.create('sys1test');
+    const sys2ID = await SystemDB.create('sys2test');
+
+    const revID = await RevisionDB.create(sys1ID, 'rev name');
+    await RevisionDB.move(sys1ID, revID, sys2ID);
+
+    const sys1Rev =  idObjToArr(await RevisionDB.readAll(sys1ID));
+    const sys2Rev =  idObjToArr(await RevisionDB.readAll(sys2ID));
+
+    expect(sys1Rev.length).toEqual(0);
+    expect(sys2Rev.length).toEqual(1);
+    
+    expect(sys2Rev[0].name).toEqual('rev name');
+
+    await SystemDB.delete(sys1ID);
+    await SystemDB.delete(sys2ID);
+} )
 
 it('Can make a duplicate', async () => {
     const id = `${makeid(5)}test`;

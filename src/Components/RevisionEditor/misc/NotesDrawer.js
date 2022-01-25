@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Drawer, Input } from 'rsuite';
+import { useSelection } from '../../../Contexts/selection.context';
 import { useToolBar } from '../../../Contexts/toolbar.context';
 import {NotesDB} from '../../../Database/SystemDB/RevisionDB/NotesDB/NotesDB';
 
-export const NotesDrawer = ({isOpen,revID,onClose}) => {
+export const NotesDrawer = ({isOpen, onClose}) => {
+    const {selRevID} = useSelection();
+    
     const [isEnlarged, setIsEnlarged] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [value, setValue] = useState('');
@@ -13,17 +16,17 @@ export const NotesDrawer = ({isOpen,revID,onClose}) => {
     useEffect(()=> {
         const getValue = async () => {
             setValue('');
-            const v = await NotesDB.read(revID);
+            const v = await NotesDB.read(selRevID);
             setValue(v);
             setIsLoading(false);
         }
 
         getValue();
-    }, [revID]);
+    }, [selRevID]);
 
     const handleUpdate = async (v) => {
         setIsUpdating(true);
-        await NotesDB.update(revID, v);
+        await NotesDB.update(selRevID, v);
         setIsUpdating(false);
     }
 

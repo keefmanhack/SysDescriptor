@@ -1,9 +1,12 @@
 import React from 'react';
 import { Loader } from 'rsuite';
+import { useSelection } from '../../../../Contexts/selection.context';
 import { useRevisions } from '../../../../misc/customHooks';
 import {Revision} from './Revision/Revision';
 
-const RevList = ({sysID, onRevSelected, revSelectedID}) => {
+const RevList = ({sysID}) => {
+    const {selRevID, setSelection} = useSelection();
+
     const {revs, isUpdating} = useRevisions(sysID);
 
     return (
@@ -13,12 +16,12 @@ const RevList = ({sysID, onRevSelected, revSelectedID}) => {
                 const {id, name, timestamp, revNumber} = val;
                     return(
                     <Revision 
-                        onSelected={()=>onRevSelected(id)}
+                        onSelected={()=>setSelection(id, sysID)}
                         name={name}
                         timestamp={timestamp}
                         revNumber={revNumber}
                         key={id}
-                        isSelected={revSelectedID===id}
+                        isSelected={selRevID===id}
                         id={id}
                         sysID={sysID}
                     />

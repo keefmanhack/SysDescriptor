@@ -49,7 +49,7 @@ export class RevisionDB {
         }
     }
 
-    static create = async (sysID, name='Untitled', revNumber=0) => {
+    static create = async (sysID, name='Untitled', revNumber=0, birthday=firebase.database.ServerValue.TIMESTAMP) => {
         try{
             if(!sysID){throw new Error('Missing system identification.')}
 
@@ -58,12 +58,28 @@ export class RevisionDB {
             const payLoad = {
                 name,
                 revNumber,
-                birthday: firebase.database.ServerValue.TIMESTAMP,
+                birthday,
                 lastUpdated: firebase.database.ServerValue.TIMESTAMP
             }
 
            const data = await push(db, payLoad);
            return data.key
+        }catch(err){
+            Alert.error(err);
+        }
+    }
+    
+    static move = async (orgSysID, revID, newSysID) => {
+        try{
+            if(!orgSysID){throw new Error('Missing system identification.')}
+            if(!newSysID){throw new Error('Missing system identification.')}
+            if(!revID){throw new Error('Missing revision identification.')}
+
+            const orgRev = await this.readSpecific(orgSysID, revID);
+            const newID =  await this.create(newSysID, orgRev.name, orgRev.revNumber, orgRev.birthday);
+            await this.deleteSpecific(orgSysID, revID);
+
+            return newID;
         }catch(err){
             Alert.error(err);
         }

@@ -3,8 +3,6 @@ import { Notification, toaster } from "rsuite";
 
 // PlacementType = 'topCenter' | 'bottomCenter' | 'topStart' | 'topEnd' | 'bottomStart' | 'bottomEnd';
 
-
-
 const type = {
     success: 'success',
     error: 'error',

@@ -5,7 +5,10 @@ $light_grey: #767676;
 $muted_grey: #7e7e7e;
 $siemens_color: #009999;
 
-$red: red;
+$contentContainer-Dark: #282828;
+$contentContainer-Light: #e6ebeb;
+
+
 
 .muted-c{
     color: $muted_grey,
@@ -17,7 +20,7 @@ label{
 }
 
 .c-r{
-    color: $red;
+    color: red;
 }
 
 .rs-theme-dark{
@@ -28,11 +31,19 @@ label{
     #join-form{
         background-color: $less_black;
     }
+
+    #content-container{
+        background-color: $contentContainer-Dark;
+    }
 }
 
 .rs-theme-light{
     #join-form{
         background-color: white;
+    }
+
+    #content-container{
+        background-color: $contentContainer-Light;
     }
 }
 

@@ -13,8 +13,8 @@ const ToolBar = () => {
         <div>
             <ButtonToolbar style={{display: 'inline'}}>
                 <ButtonGroup>
-                    <Button size='xs' appearance='subtle'><FontAwesomeIcon icon={faUndo}/></Button>
-                    <Button size='xs' appearance='subtle'><FontAwesomeIcon icon={faRedo}/></Button>
+                    <Button size='xs' disabled appearance='subtle'><FontAwesomeIcon icon={faUndo}/></Button>
+                    <Button size='xs' disabled appearance='subtle'><FontAwesomeIcon icon={faRedo}/></Button>
                 </ButtonGroup>
             </ButtonToolbar>
             <span style={{marginRight: '5px', marginLeft: '5px', borderRight: '1px solid white'}}/>

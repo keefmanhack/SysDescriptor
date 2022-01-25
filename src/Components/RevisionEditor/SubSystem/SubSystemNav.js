@@ -5,8 +5,10 @@ import { SubSystemDB } from '../../../Database/SystemDB/RevisionDB/SubSystemDB/S
 import ComponentHandler from './ComponentHandler/ComponentHandler';
 import Alert from '../../../misc/Alert';
 import { useToolBar } from '../../../Contexts/toolbar.context';
+import { useSelection } from '../../../Contexts/selection.context';
 
-const SubSystemNav = ({subSystems=[], revID}) => {
+const SubSystemNav = ({subSystems=[]}) => {
+    const {selRevID} = useSelection();
     const {setIsUpdating} = useToolBar();
     const [selI, setSelI] = useState(null);
 
@@ -16,12 +18,12 @@ const SubSystemNav = ({subSystems=[], revID}) => {
         }else{
             setSelI(null);
         }
-    }, [revID, subSystems.length]);
+    }, [selRevID, subSystems.length]);
 
     const handleDelete = async (id, name) => {
         setIsUpdating(true);
         try{
-            await SubSystemDB.deleteSpecific(revID, id);
+            await SubSystemDB.deleteSpecific(selRevID, id);
 
 
             if(selI-1 >=0){

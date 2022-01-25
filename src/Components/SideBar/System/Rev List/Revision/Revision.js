@@ -8,13 +8,15 @@ import Alert from '../../../../../misc/Alert';
 import DeleteModal from '../../../../misc/DeleteModal';
 import { OptionsPopUp } from '../../../../misc/Helper Components/OptionsPopUp';
 import MoveModal from './MoveModal';
+import { useSelection } from '../../../../../Contexts/selection.context';
 
 
 export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, id, sysID}) => {
+    const {setSelection, selectNone} = useSelection();
     const [showDelModal, setshowDelModal] = useState(false);
     const [showMoveModal, setShowMoveModal] = useState(false);
 
-    name=name || 'Untitled';
+    name=name || 'Untitled'; 
 
     const t = moment(timestamp);
     const isNew = moment().subtract(2, "days").isBefore(t);
@@ -22,11 +24,25 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, 
     const selStyle = isSelected ? {borderLeft: '2px solid white'} : null;
 
 
-    const handleMove = () => {console.log('moved')}
+    const handleMove = async (newSysID, sysName) => {
+        try{
+            setShowMoveModal(false);
+            selectNone();
+            Alert.info(`Moving ${name} to ${sysName}...`);
+
+
+            const newID = await RevisionDB.move(sysID, id, newSysID);
+            setSelection(newID, newSysID);
+            Alert.success(`Moved revision ${name} to ${sysName}`);
+        }catch(err){
+            Alert.error(`Unable to move revision ${name} to ${sysName}`)
+        }
+    }
 
     const handleDuplicate = async () => {
         try{   
-            await RevisionDB.duplicate(sysID, id);
+            const dupID = await RevisionDB.duplicate(sysID, id);
+            setSelection(dupID, sysID);
             Alert.success(`Successfully duplicated revision ${name}`)
         }catch(e){
             Alert.error(`Unable to duplicate revision ${name}`)
@@ -76,9 +92,6 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, 
                                 }
                             ]}
                         />
-                        {/* <Button onClick={(e)=>{e.stopPropagation(); setshowDelModal(true)}} size='xs' appearance='subtle' color='red' style={{position: 'absolute', left: '1px', top: '4px', display: hover ? 'inline-block' : 'none' }}>
-                            <TrashIcon/>
-                        </Button> */}
                     </Col>
                 </Row>
             </Grid>
@@ -97,6 +110,7 @@ export const Revision = ({onSelected, name, timestamp, revNumber=0, isSelected, 
                 handleDelete={async () => {
                     try{
                         await RevisionDB.deleteSpecific(sysID, id);
+                        selectNone();
                         Alert.success('Successfully deleted the revision');
                     }catch(e){
                         Alert.error('Unable to delete the revision');

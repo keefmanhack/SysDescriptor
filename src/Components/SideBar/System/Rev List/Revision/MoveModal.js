@@ -23,16 +23,16 @@ const createDataLabelObj = (sys, curSysID) => {
 
 
 const MoveModal = ({show, handleClose, handleMove, revName, curSysID}) => {
-    const [selI, setSelI] = useState(null);
+    const [selID, setSelID] = useState(null);
     const {systems, isUpdating} = useSystems();
     const transPosSys = createDataLabelObj(systems, curSysID);
 
-    const localHandleMove = () => {
-        if(!selI){
+    const localHandleMove = async () => {
+        if(!selID){
             Alert.error('Select a system to move the revision');
         }
-
-        handleMove();
+        const item = transPosSys.find((v) => v.value===selID);
+        handleMove(item.value, item.label);
     }
 
     
@@ -49,8 +49,8 @@ const MoveModal = ({show, handleClose, handleMove, revName, curSysID}) => {
                         <InputPicker 
                             data={transPosSys} 
                             disabled={isUpdating}
-                            onClean={()=>setSelI(null)}
-                            onChange={(i)=>{setSelI(i)}}
+                            onClean={()=>setSelID(null)}
+                            onChange={(id)=>{setSelID(id)}}
                         />
                     </Form.Group>
                 </Form>

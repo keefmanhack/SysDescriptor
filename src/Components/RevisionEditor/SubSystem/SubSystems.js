@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'rsuite';
+import { useSelection } from '../../../Contexts/selection.context';
 import { useToolBar } from '../../../Contexts/toolbar.context';
 import { SubSystemDB } from '../../../Database/SystemDB/RevisionDB/SubSystemDB/SubSystemDB';
 import Alert from '../../../misc/Alert';
@@ -11,13 +12,14 @@ const possSubs = {
 }
 
 
-const SubSystems = ({subSystems, revID}) => {
+const SubSystems = ({subSystems}) => {
+    const {selRevID} = useSelection();
     const {setIsUpdating} = useToolBar();
     
     const handleAdd = async name => {
         setIsUpdating(true);
         try{
-            await SubSystemDB.create(revID, name);
+            await SubSystemDB.create(selRevID, name);
             Alert.success(`Created new subsystem ${name}`)
         }catch(err){
             Alert.error(err);

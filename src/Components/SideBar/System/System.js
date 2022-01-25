@@ -9,26 +9,43 @@ import DeleteModal from '../../misc/DeleteModal';
 import { SystemDB } from '../../../Database/SystemDB/SystemDB';
 import Alert from '../../../misc/Alert';
 import EditSystemModal from '../SystemModal/EditSystemModal';
+import { useSelection } from '../../../Contexts/selection.context';
+import { RevisionDB } from '../../../Database/SystemDB/RevisionDB/RevisionDB';
 
-export const System = ({sysID, title='Untitled', partNumber, sysNumber, technician, owner, onRevSelected, onNewRevision, isSelected, revSelectedID}) => {
+export const System = ({sysID, title='Untitled', partNumber, sysNumber, technician, owner}) => {
+    const {selSysID, setSelection, selectNone} = useSelection(); 
+
     const [isExpanded, setIsExpanded] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const isSelected = selSysID===sysID;
 
     title = title ==='' ? 'Untitled' : title;
+
 
     const selStyle= isSelected ? {borderLeft: '1px solid lightgreen'} : null
 
     const handleClick = () => {setIsExpanded(v => !v)}
 
-    const handleNewRev = () => {
-        onNewRevision();
-        if(!isExpanded){setIsExpanded(true)}
+    const handleNewRev = async () => {
+        try{
+            const id = await RevisionDB.create(sysID);
+            setSelection(id, sysID);
+            if(!isExpanded){setIsExpanded(true)}
+            Alert.success(`Created new revision for system ${title}`);
+        }catch(e){
+            Alert.error(`Unabled to create new revision for system ${title}`);
+        }
     }
 
     const handleDelete = async () => {
         try{
+            Alert.info(`Deleting system ${title}`);
+            setShowDeleteModal(false);
+
             await SystemDB.delete(sysID);
+            if(isSelected){selectNone()}
+
             Alert.success('Successfully deleted the system');
         }catch(e){
             Alert.error('Unable to delete system');
@@ -110,7 +127,7 @@ export const System = ({sysID, title='Untitled', partNumber, sysNumber, technici
                     </>
                 }
             />
-            {isExpanded ? <RevList revSelectedID={revSelectedID} onRevSelected={(id)=>onRevSelected(id)} sysID={sysID}/> : null}           
+            {isExpanded ? <RevList sysID={sysID}/> : null}           
         </div>
     )
 }
