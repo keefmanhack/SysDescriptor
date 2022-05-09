@@ -8,6 +8,21 @@ export default function RevisionNotes() {
             <hr/>
 
             <div>
+                <h4>0.2.3 - May. 9th. 2022</h4>
+                <p>Author: Keefer Gregoire</p>
+                <ul>
+                    <li>
+                        Updated Generate File functionality so that 1) The word document font is set to black by default 2) Added a 
+                        sign off line for Technician and Tester.
+                    </li>
+                    <li>
+                        Added new components to General: Remote Speed Sensor Module Assembly, ALC42 Comms Controller, ATC Interconnect Board, ACSES Interconnect Board,
+                        12V Powersupply, and 32V Powersupply
+                    </li>
+                </ul>
+            </div>
+
+            <div>
                 <h4>0.2.2 - Jan. 25th. 2022</h4>
                 <p>Author: Keefer Gregoire</p>
                 <ul>

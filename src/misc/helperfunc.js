@@ -261,14 +261,14 @@ export const generateDocument = async (SYSID, REVID) => {
               run: {
                   size: convertSize(28),
                   bold: true,
-                  color: "FFFFFF"
+                  color: "#000000"
               },
               paragraph: {
                   spacing: {
                       after: 120,
                   },
                   run: {
-                    color: "FFFFFF"
+                    color: "#000000"
                   }
               },
           },
@@ -279,7 +279,7 @@ export const generateDocument = async (SYSID, REVID) => {
                 underline: {
                     type: UnderlineType.SINGLE,
                 },
-                color: "FFFFFF",
+                color: "#000000",
               },
               paragraph: {
                 spacing: {
@@ -291,7 +291,7 @@ export const generateDocument = async (SYSID, REVID) => {
             run: {
               size: convertSize(16),
               bold: true,
-              color: "FFFFFF",
+              color: "#000000",
             },
             paragraph: {
               spacing: {
@@ -301,7 +301,7 @@ export const generateDocument = async (SYSID, REVID) => {
         },
           listParagraph: {
               run: {
-                  color: "FF0000",
+                  color: "#000000",
               },
           },
         },
@@ -314,7 +314,7 @@ export const generateDocument = async (SYSID, REVID) => {
           quickFormat: true,
           run: {
               size: convertSize(14),
-              color: "FFFFFF"
+              color: "#000000"
           },
           paragraph: {
             spacing: {
@@ -330,7 +330,7 @@ export const generateDocument = async (SYSID, REVID) => {
           quickFormat: true,
           run: {
               size: convertSize(10),
-              color: "FFFFFF"
+              color: "#000000"
           },
         },
         {
@@ -341,7 +341,7 @@ export const generateDocument = async (SYSID, REVID) => {
           quickFormat: true,
           run: {
               size: convertSize(10),
-              color: "FFFFFF",
+              color: "#000000",
               bold: true
           },
         }
@@ -368,7 +368,16 @@ export const generateDocument = async (SYSID, REVID) => {
             style: "tech-owner"
           }),
           new Paragraph(""),
-          ... await dispSubSystemData(subsystems)
+          ... await dispSubSystemData(subsystems),
+          new Paragraph(""),
+          new Paragraph(""),
+          new Paragraph({
+            text: "Technician:___________________________________________ Date:___________"
+          }),
+          new Paragraph(""),
+          new Paragraph({
+            text: "Tester:_______________________________________________ Date:___________"
+          })
         ],
       }],
     });

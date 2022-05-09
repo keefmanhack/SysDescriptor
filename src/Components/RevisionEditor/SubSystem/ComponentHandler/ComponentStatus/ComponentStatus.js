@@ -37,12 +37,12 @@ const ComponentStatus = ({subSysID, activeComps, possibleComps})  => {
 
             return (
                 <Col key={name} xs={12} md={8} lg={4}> 
-                    <Button size='xs' className='mr-2 mb-1' style={{marginBottom: '5px'}} onClick={()=>handleCreate(name)}>
-                    <HoverShowAll text={name}>
-                        <span className='ellip-overflow'>
-                            + {name} 
-                        </span>
-                    </HoverShowAll>
+                    <Button size='xs' className='mr-2 mb-1 ellip-overflow' style={{marginBottom: '5px', width: "-webkit-fill-available"}} onClick={()=>handleCreate(name)}>
+                        <HoverShowAll text={name}>
+                            <span className='ellip-overflow'>
+                                + {name} 
+                            </span>
+                        </HoverShowAll>
                     </Button>
                 </Col>)
         })

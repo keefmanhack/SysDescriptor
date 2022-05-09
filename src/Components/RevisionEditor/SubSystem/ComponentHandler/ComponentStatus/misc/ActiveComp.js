@@ -25,7 +25,7 @@ const ActiveComp = ({name, id, subSysID, style}) => {
      return (
         <>
 
-            <Button style={style} color='green' appearance='primary' size='xs' onClick={()=>setShowModal(true)}>
+            <Button className='overflow' style={{...style, width: "-webkit-fill-available"}} color='green' appearance='primary' size='xs' onClick={()=>setShowModal(true)}>
                 <HoverShowAll text={name}>
                     <span className='ellip-overflow'>
                         - {name} 

@@ -35,7 +35,7 @@
                     "input": "Input"
                 },
                 "Serial Number": {
-                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "db": "ADU/hardware/serial_number",
                     "input": "Input"
                 }
             }
@@ -65,7 +65,165 @@
                     "input": "Input"
                 },
                 "Serial Number": {
-                    "db": "Main_micro_PCB/hardware/serial_number",
+                    "db": "Decel/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
+        },
+        "Remote Speed Sensor Module Assembly": {
+            "Software":{
+                "Part Number": {
+                    "db": "rssm/software/part_number",
+                    "input": "Input"
+                },
+                "Build Date": {
+                    "db": "rssm/software/build_date",
+                    "input": "Date"
+                },
+                "Revision": {
+                    "db": "rssm/software/revision",
+                    "input": "Input"
+                }
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "rssm/hardware/revision",
+                    "input": "Input"
+                },
+                "Part Number": {
+                    "db": "rssm/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "rssm/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
+        },
+        "ALC42 Comms Controller": {
+            "Software":{
+                "Part Number": {
+                    "db": "alc_cc/software/part_number",
+                    "input": "Input"
+                },
+                "Build Date": {
+                    "db": "alc_cc/software/build_date",
+                    "input": "Date"
+                },
+                "Revision": {
+                    "db": "alc_cc/software/revision",
+                    "input": "Input"
+                }
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "alc_cc/hardware/revision",
+                    "input": "Input"
+                },
+                "Part Number": {
+                    "db": "alc_cc/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "alc_cc/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
+        },
+        "ATC Interconnect Board": {
+            "Software":{
+                "Part Number": {
+                    "db": "atc_ib/software/part_number",
+                    "input": "Input"
+                },
+                "Build Date": {
+                    "db": "atc_ib/software/build_date",
+                    "input": "Date"
+                },
+                "Revision": {
+                    "db": "atc_ib/software/revision",
+                    "input": "Input"
+                }
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "atc_ib/hardware/revision",
+                    "input": "Input"
+                },
+                "Part Number": {
+                    "db": "atc_ib/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "atc_ib/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
+        },
+        "ACSES Interconnect Board": {
+            "Software":{
+                "Part Number": {
+                    "db": "acess_ib/software/part_number",
+                    "input": "Input"
+                },
+                "Build Date": {
+                    "db": "acess_ib/software/build_date",
+                    "input": "Date"
+                },
+                "Revision": {
+                    "db": "acess_ib/software/revision",
+                    "input": "Input"
+                }
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "acess_ib/hardware/revision",
+                    "input": "Input"
+                },
+                "Part Number": {
+                    "db": "acess_ib/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "acess_ib/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
+        },
+        "12V Power Supply": {
+            "Software":{
+
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "ps_12v/hardware/revision",
+                    "input": "Input"
+                },
+                "Part Number": {
+                    "db": "ps_12v/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "ps_12v/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
+        },
+        "32V Power Supply": {
+            "Software":{
+
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "ps_32v/hardware/revision",
+                    "input": "Input"
+                },
+                "Part Number": {
+                    "db": "ps_32v/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "ps_32v/hardware/serial_number",
                     "input": "Input"
                 }
             }
