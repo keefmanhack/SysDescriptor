@@ -6,6 +6,21 @@ export default function RevisionNotes() {
             <h1>Release Notes</h1>
             <a href='/'>Back</a>
             <hr/>
+            <div>
+                <h4>0.2.4 - May. 12th. 2022</h4>
+                <p>Author: Keefer Gregoire</p>
+                <ul>
+                    <li>
+                        Added Cutout Panel to General.
+                    </li>
+                    <li>
+                        Fixed bug on print-out where Software and Hardware data was flipped.
+                    </li>
+                    <li>
+                        Updated signoff on the printout to include a section to print and sign names.
+                    </li>
+                </ul>
+            </div>
 
             <div>
                 <h4>0.2.3 - May. 9th. 2022</h4>

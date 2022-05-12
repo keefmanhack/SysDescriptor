@@ -181,7 +181,7 @@ const dispComponentItemData = async compItems => {
                 children: [
                   new Paragraph({
                     children: [
-                      new TextRun("Hardware")
+                      new TextRun("Software")
                     ],
                     style: 'default-bold',
 
@@ -192,7 +192,7 @@ const dispComponentItemData = async compItems => {
                 children: [
                   new Paragraph({
                     children: [
-                      new TextRun("Software")
+                      new TextRun("Hardware")
                     ],
                     style: 'default-bold'
                   }),
@@ -372,12 +372,19 @@ export const generateDocument = async (SYSID, REVID) => {
           new Paragraph(""),
           new Paragraph(""),
           new Paragraph({
-            text: "Technician:___________________________________________ Date:___________"
+            text: "Owner (Printed): _________________________________"
+          }),
+          new Paragraph({
+            text: "Owner: ___________________________________________ Date: ___________"
           }),
           new Paragraph(""),
+          new Paragraph(""),
           new Paragraph({
-            text: "Tester:_______________________________________________ Date:___________"
-          })
+            text: "Technician (Printed): _________________________________"
+          }),
+          new Paragraph({
+            text: "Technician: ___________________________________________ Date: ___________"
+          }),
         ],
       }],
     });

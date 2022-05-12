@@ -227,6 +227,25 @@
                     "input": "Input"
                 }
             }
+        },
+        "Cutout Panel": {
+            "Software":{
+
+            },
+            "Hardware": {
+                "Revision": {
+                    "db": "cutout/hardware/revision",
+                    "input": "Input"
+                },
+                "Part Number": {
+                    "db": "cutout/hardware/part_number",
+                    "input": "Input"
+                },
+                "Serial Number": {
+                    "db": "cutout/hardware/serial_number",
+                    "input": "Input"
+                }
+            }
         }
     },
     "ATC" : {
