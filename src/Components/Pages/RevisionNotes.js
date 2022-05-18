@@ -6,6 +6,20 @@ export default function RevisionNotes() {
             <h1>Release Notes</h1>
             <a href='/'>Back</a>
             <hr/>
+
+            <div>
+                <h4>0.2.5 - May. 18th. 2022</h4>
+                <p>Author: Keefer Gregoire</p>
+                <ul>
+                    <li>
+                        Cleaned up the generated file.  Expanded the width table and reformatted the header.
+                    </li>
+                    <li>
+                        Updated Generate File button to be disabled while a file is being generated so the user does not spam the button waiting for file to be generated.
+                    </li>
+                </ul>
+            </div>    
+
             <div>
                 <h4>0.2.4 - May. 12th. 2022</h4>
                 <p>Author: Keefer Gregoire</p>

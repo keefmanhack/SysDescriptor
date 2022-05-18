@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Button, Grid, Row, Col } from 'rsuite';
 
 import { generateDocument } from '../../misc/helperfunc';
@@ -14,10 +14,17 @@ import { useSelection } from '../../Contexts/selection.context';
 
 
 const RevisionEditor = () => {
+    const [geningFile, setGeningFile] = useState(false);
     const {selRevID, selSysID} = useSelection();
     const subSystems = useSubSystems(selRevID);
 
     const {isOpen, onOpen, onClose} = useModal();
+
+    const handleGenClick = async () => {
+        setGeningFile(true);
+        await generateDocument(selSysID, selRevID);
+        setGeningFile(false);
+    }
 
     return (
         <div>
@@ -26,7 +33,7 @@ const RevisionEditor = () => {
                     <Grid fluid>
                         <Row>
                             <Col xs={8}>
-                                <Button style={{marginRight: '10px'}} onClick={()=>generateDocument(selSysID, selRevID)} color='green' appearance="primary">Generate File</Button>
+                                <Button style={{marginRight: '10px'}} disabled={geningFile} onClick={()=>handleGenClick()} color='green' appearance="primary">Generate File</Button>
                                 <Button appearance='subtle' onClick={onOpen}>Notes</Button>
                                 <SubSystems subSystems={subSystems}/>
                             </Col>

@@ -1,4 +1,4 @@
-import {Document, Packer, Paragraph, HeadingLevel, UnderlineType, TextRun, Table, TableRow, TableCell } from 'docx';
+import {Document, WidthType, BorderStyle, Packer, Paragraph, HeadingLevel, UnderlineType, TextRun, Table, TableRow, TableCell } from 'docx';
 import {saveAs} from 'file-saver';
 import { RevisionDB } from '../Database/SystemDB/RevisionDB/RevisionDB';
 import { ComponentDB } from '../Database/SystemDB/RevisionDB/SubSystemDB/ComponentDB/ComponentDB';
@@ -110,34 +110,112 @@ const dispHardSoftData = (hardData, softData) => {
   const returnVar = [];
 
   for(let i =0; i< loopLen; i++){
-    returnVar.push(
-      new TableRow({
-        children: [
-          softData[i] ?
-          new TableCell({
-            children: [
-              new Paragraph({
-                children: [
-                  new TextRun(`${softData[i].id}:  ${softData[i].value}`)
-                ],
-                style: 'default'
-              }),
-            ],
-          }) : new TableCell({children:[]}),
-        hardData[i] ?
-          new TableCell({
-            children: [
-              new Paragraph({
-                children: [
-                  new TextRun(`${hardData[i].id}:  ${hardData[i].value}`)
-                ],
-                style: 'default'
-              }),
-            ],
-          }) : new TableCell({children:[]}),
-        ]
-      })
-    )
+    if(softData[i] && hardData [i]){
+      returnVar.push(
+        new TableRow({
+          children: [
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${softData[i].id}:`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            }),
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${softData[i].value}`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            }),
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${hardData[i].id}:`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            }),
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${hardData[i].value}`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            })
+          ]
+        })
+      )
+    }else if(softData[i]){
+      returnVar.push(
+        new TableRow({
+          children: [
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${softData[i].id}:`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            }),
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${softData[i].value}`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            }),
+            new TableCell({children: []}),
+            new TableCell({children: []})
+          ]
+        })
+      )
+    }else if(hardData[i]){
+      returnVar.push(
+        new TableRow({
+          children: [
+            new TableCell({children: []}),
+            new TableCell({children: []}),
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${hardData[i].id}:`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            }),
+            new TableCell({
+              children: [
+                new Paragraph({
+                  children: [
+                    new TextRun(`${hardData[i].value}`)
+                  ],
+                  style: 'default'
+                }),
+              ],
+            })
+          ]
+        })
+      )
+    }
   }
 
   return returnVar;
@@ -168,10 +246,10 @@ const dispComponentItemData = async compItems => {
                     children: [
                       new TextRun(`SN: ${snObj && snObj.value ? snObj.value : 'undefined'}`)
                     ],
-                    style: 'default-bold',
-                    
+                    style: 'default-bold',                  
                   }),
                 ],
+                columnSpan: 4
               })
             ]
           }),
@@ -187,6 +265,11 @@ const dispComponentItemData = async compItems => {
 
                   }),
                 ],
+                columnSpan: 2,
+                width: {
+                  size: 4000,
+                  type: WidthType.DXA
+                }
               }),
               new TableCell({
                 children: [
@@ -197,6 +280,11 @@ const dispComponentItemData = async compItems => {
                     style: 'default-bold'
                   }),
                 ],
+                columnSpan: 2,
+                width: {
+                  size: 4000,
+                  type: WidthType.DXA
+                }
               })
             ]
           }),
@@ -248,6 +336,21 @@ const dispSubSystemData = async data => {
 }
 
 export const generateDocument = async (SYSID, REVID) => {
+  const noBorder = {
+    top: {
+      style: BorderStyle.NIL
+    },
+    bottom: {
+      style: BorderStyle.NIL
+    },
+    left: {
+      style: BorderStyle.NIL
+    },
+    right: {
+      style: BorderStyle.NIL
+    }
+  }
+
   try{
     const date = new Date();
 
@@ -315,11 +418,6 @@ export const generateDocument = async (SYSID, REVID) => {
           run: {
               size: convertSize(14),
               color: "#000000"
-          },
-          paragraph: {
-            spacing: {
-              before: 100,
-            }
           }
         },
         {
@@ -329,7 +427,7 @@ export const generateDocument = async (SYSID, REVID) => {
           next: "Normal",
           quickFormat: true,
           run: {
-              size: convertSize(10),
+              size: convertSize(12),
               color: "#000000"
           },
         },
@@ -344,28 +442,106 @@ export const generateDocument = async (SYSID, REVID) => {
               color: "#000000",
               bold: true
           },
-        }
+        },
+        {
+          id: "sysrev",
+          name: "sysrev",
+          basedOn: "Normal",
+          next: "Normal",
+          quickFormat: true,
+          run: {
+              size: convertSize(18),
+              color: "#000000"
+          },
+        },
       ],
       },
       sections: [{
         properties: {},
         children: [
-          new Paragraph({
-            text: `${system.title} -- ${revision.name}`,
-            heading: HeadingLevel.HEADING_1,
-          }),
-          new Paragraph({
-            children: [
-              new TextRun("Generated On: "), new TextRun({text: `${date.toDateString()} ${date.toLocaleTimeString()}`, bold: true}),
-            ],
-            style: 'default'
-          }),
-          new Paragraph({
-            children: [
-              new TextRun("Technician: "), new TextRun({text: system.technician, bold: true}),
-              new TextRun(" Owner: "), new TextRun({text: system.owner, bold: true})
-            ],
-            style: "tech-owner"
+          new Table({
+            rows : [
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Paragraph({text: "System: ", style: 'sysrev'})
+                    ],
+                    borders: noBorder
+                  }),
+                  new TableCell({
+                    children: [
+                      new Paragraph({children: [new TextRun({text: system.title, bold: true})], style: 'sysrev'})
+                    ],
+                    borders: noBorder
+                  })
+                ],
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Paragraph({text: "Revision: ", style: 'sysrev'})
+                    ],
+                    borders: noBorder
+                  }),
+                  new TableCell({
+                    children: [
+                      new Paragraph({children: [new TextRun({text: revision.name, bold: true})], style: 'sysrev'})
+                    ],
+                    borders: noBorder
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Paragraph({text: "Technician: ", style: 'tech-owner'})
+                    ],
+                    borders: noBorder
+                  }),
+                  new TableCell({
+                    children: [
+                      new Paragraph({children: [new TextRun({text: system.technician, bold: true})], style: 'tech-owner'})
+                    ],
+                    borders: noBorder
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Paragraph({text: "Owner: ", style: 'tech-owner'})
+                    ],
+                    borders: noBorder
+                  }),
+                  new TableCell({
+                    children: [
+                      new Paragraph({children: [new TextRun({text: system.owner, bold: true})], style: 'tech-owner'})
+                    ],
+                    borders: noBorder
+                  })
+                ]
+              }),
+              new TableRow({
+                children: [
+                  new TableCell({
+                    children: [
+                      new Paragraph({text: "Date: ", style: 'tech-owner'})
+                    ],
+                    borders: noBorder
+                  }),
+                  new TableCell({
+                    children: [
+                      new Paragraph({children: [new TextRun({text: `${date.toDateString()} ${date.toLocaleTimeString()}`, bold: true})], style: 'default'})
+                    ],
+                    borders: noBorder
+                  })
+                ]
+              })
+            ]
           }),
           new Paragraph(""),
           ... await dispSubSystemData(subsystems),
